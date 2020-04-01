@@ -1,0 +1,58 @@
+-----------------------------------------------
+Name               Properties
+-----------------------------------------------
+Point
+Line      
+Plane
+
+Segment            length
+ConvexPolygen      length, area
+ConvexPolyhedron   length, area, volume
+-----------------------------------------------
+
+
+-----------------------------------------------
+functions:
+-----------------------------------------------
+__contains__ 
+__eq__
+__getitem__
+__setitem__
+move
+__hash__
+-----------------------------------------------
+
+
+
+-----------------------------------------------
+intersection:
+-----------------------------------------------
+obj1          obj2                output obj
+-----------------------------------------------
+Point       - Point            -> None, Point
+Point       - Line             -> None, Point
+Point       - Plane            -> None, Point
+Point       - Segment          -> None, Point
+Point       - ConvexPolygen    -> None, Point
+Point       - ConvexPolyhedron -> None, Point
+
+Line        - Line             -> None, Point, Line
+Line        - Plane            -> None, Point, Line
+Line        - Segment          -> None, Point, Segment
+Line        - ConvexPolygen    -> None, Point, Segment
+Line        - polygedron       -> None, Point, Segment
+
+Plane       - Plane            -> None, Point, Line, Plane
+Plane       - Segment          -> None, Point, Segment
+Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen
+Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen
+
+Segment     - Segment          -> None, Point, Segment
+Segment     - ConvexPolygen    -> None, Point, Segment
+Segment     - ConvexPolyhedron -> None, Point, Segment
+
+ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen
+ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen
+
+ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron
+-----------------------------------------------

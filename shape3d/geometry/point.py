@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from .util import unify_types
+from ..utils.util import unify_types
 import math
 
 import numpy as np
-from .constant import *
-
+from ..utils.constant import *
+from ..utils.vector import Vector
 
 class Point(object):
     """Provides a basic Point in the 3D space"""
@@ -46,50 +46,38 @@ class Point(object):
 
     def __eq__(self, other):
         """Checks if two Points are equal. Always use == and not 'is'!"""
-        return (abs(self.x - other.x) < EPS_F and
-                abs(self.y - other.y) < EPS_F and
-                abs(self.z - other.z) < EPS_F)
+        if isinstance(other,Point):
+            return (abs(self.x - other.x) < EPS_F and
+                    abs(self.y - other.y) < EPS_F and
+                    abs(self.z - other.z) < EPS_F)
+        else:
+            return False
 
     def __getitem__(self, item):
         return (self.x, self.y, self.z)[item]
 
     def __setitem__(self, item, value):
         setattr(self, "xyz"[item], value)
+    
     def tonumpy(self):
         return np.array((self.x,self.y,self.z))
+
     def pv(self):
         """Return the position vector of the point."""
-        from .vector import Vector
         return Vector(self.x, self.y, self.z)
 
-    def moved(self, v):
-        """Return the point that you get when you move self by vector v."""
-        return Point(self.pv() + v)
+    def move(self, v):
+        """Return the point that you get when you move self by vector v, self is also moved"""
+        if isinstance(v,Vector):
+            self.x += v[0]
+            self.y += v[1]
+            self.z += v[2]
+            return Point(self.pv())
+        else:
+            raise NotImplementedError("The second parameter for move function must be Vector")
     
     def distance(self,other):
         """Return the distance between self and other"""
         return math.sqrt((self.x -other.x) ** 2 + (self.y -other.y) ** 2 + (self.z -other.z) ** 2)
-    
-    def draw(self, renderer, box, color=(1, 0, 1), radius=0.2):
-        """Draws the point, represented by a little sphere, on the
-        given renderer (vtk).
-
-        The box argument is ignored. You have to make sure that the
-        point is inside the cuboid by yourself.
-
-        color defaults to a pinkish one.
-        radius defaults to 0.2.
-        """
-        import vtk
-        source = vtk.vtkSphereSource()
-        source.SetCenter(self.y, self.z, self.x)
-        source.SetRadius(radius)
-        mapper = vtk.vtkPolyDataMapper()
-        mapper.SetInput(source.GetOutput())
-        actor = vtk.vtkActor()
-        actor.SetMapper(mapper)
-        actor.GetProperty().SetColor(*color)
-        renderer.AddActor(actor)
-
 
 __all__ = ("Point",)

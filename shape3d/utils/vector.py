@@ -10,6 +10,21 @@ class Vector(object):
     def zero(cls):
         """Returns the zero vector (0 | 0 | 0)"""
         return cls(0, 0, 0)
+    
+    @classmethod
+    def x_unit_vector(cls):
+        """Returns the unit vector (1 | 0 | 0)"""
+        return cls(1, 0, 0)
+    
+    @classmethod
+    def y_unit_vector(cls):
+        """Returns the unit vector (0 | 1 | 0)"""
+        return cls(0, 1, 0)
+
+    @classmethod
+    def z_unit_vector(cls):
+        """Returns the unit vector (0 | 0 | 1)"""
+        return cls(0, 0, 1)
 
     def __init__(self, *args):
         """Vector(x, y, z)

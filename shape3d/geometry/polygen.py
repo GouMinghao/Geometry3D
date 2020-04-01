@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
 from .point import Point
-from .vector import Vector
+from ..utils.vector import Vector
 from .line import Line
 from .segment import Segment
 from .plane import Plane
-from .constant import *
+from ..utils.constant import *
 import math
 
 def get_triangle_area(pa,pb,pc):

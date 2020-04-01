@@ -6,16 +6,16 @@ def read(name):
         return fd.read()
 
 setup(
-        name="sgl",
+        name="shape3d",
         version="0.0.1",
 
-        description="A small analytic geometry lib",
+        description="a 3d geometry lib",
         long_description=read("README.md"),
 
-        url="http://github.com/Kingdread/sgl",
+        url="http://github.com/GouMinghao/shape3d",
 
         author="Daniel Schadt",
-        author_email="daniel@kingdread.de",
+        author_email="gouminghao@gmail.com",
 
         license="GPL",
 
@@ -36,7 +36,7 @@ setup(
             "Programming Language :: Python :: 3",
         ],
 
-        keywords="analytic geometry",
+        keywords="analytic geometry 3d",
 
         install_requires=['matplotlib','numpy'],
 )

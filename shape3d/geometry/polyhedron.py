@@ -5,8 +5,8 @@ from .line import Line
 from .segment import Segment
 from .plane import Plane
 from .pyramid import Pyramid
-from .vector import Vector
-from .constant import *
+from ..utils.vector import Vector
+from ..utils.constant import *
 class ConvexPolyhedron(GeoBody):
     """Provides a convex polyhedron in 3d space"""
     def __init__(self,convex_polygens):

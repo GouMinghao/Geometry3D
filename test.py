@@ -7,12 +7,51 @@
 
 # todo list
 
-from sgl import *
-from sgl.render import Renderer
+
+
+from shape3d import *
+# from shape3d.render import Renderer
 import time
+
+
+import logging
+from logging.config import dictConfig
+logging_config = dict(
+    version=1,
+    formatters=
+    {
+        'f':
+        {
+            'format':'%(asctime)s %(levelname)-9s%(message)s'
+        },
+        'f1':
+        {
+            'format':'%(asctime)s %(levelname)-10s%(message)s'
+        }
+    },
+    handlers={
+        'h': 
+        {
+            'class': 'logging.StreamHandler',
+            'formatter': 'f',
+            'level': logging.DEBUG
+        }
+    },
+    root=
+    {
+        'handlers': ['h'],
+        'level': logging.DEBUG,
+    },
+)
+
+dictConfig(logging_config)
+logger = logging.getLogger()
 
 t1 = time.time()
 o = Point(0,0,0)
+t2 = time.time()
+logger.info('create point time:%f' %(t2 - t1,))
+
 a = Point(1,1,1)
 b = Point(-1,1,1)
 c = Point(-1,-1,1)
@@ -22,14 +61,19 @@ f = Point(-1,1,-1)
 g = Point(-1,-1,-1)
 h = Point(1,-1,-1)
 
+t3 = time.time()
 cpg0 = ConvexPolygen((a,d,h,e))
+t4 = time.time()
+logger.info('create polygen time:%f' %(t4 - t3,))
 cpg1 = ConvexPolygen((a,e,f,b))
 cpg2 = ConvexPolygen((c,b,f,g))
 cpg3 = ConvexPolygen((c,g,h,d))
 cpg4 = ConvexPolygen((a,b,c,d))
 cpg5 = ConvexPolygen((e,h,g,f))
+t5 = time.time()
 cph0 = ConvexPolyhedron((cpg0,cpg1,cpg2,cpg3,cpg4,cpg5))
-
+t6 = time.time()
+logger.info('create polyhedron time:%f' %(t6 - t5,))
 cpg12 = ConvexPolygen((e,c,h))
 cpg13 = ConvexPolygen((e,f,c))
 cpg14 = ConvexPolygen((c,f,g))
@@ -61,11 +105,13 @@ cph2 = ConvexPolyhedron((cpg6,cpg7,cpg8,cpg9,cpg10,cpg11))
 
 # print(cph1)
 # print(volume(cph1))
-
+t7 = time.time()
 cph3 = intersection(cph0,cph2)
+t8 = time.time()
+logger.info('calculate intersection time:%f' %(t8 - t7,))
 cph4 = intersection(cph1,cph2)
 
-t2 = time.time()
+# t2 = time.time()
 
 print('time:{}'.format(t2 - t1))
 r = Renderer()

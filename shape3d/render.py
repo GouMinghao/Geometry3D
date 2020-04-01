@@ -1,15 +1,15 @@
 """model to visualize some geometries"""
-from .point import Point
+from .geometry.point import Point
 # from .vector import Vector
 # from .line import Line
-from .segment import Segment
+from .geometry.segment import Segment
 # from .plane import Plane
-from .polygen import ConvexPolygen
-from .polyhedron import ConvexPolyhedron
+from .geometry.polygen import ConvexPolygen
+from .geometry.polyhedron import ConvexPolyhedron
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
-from .constant import *
+from .utils.constant import *
 class Arrow():
     def __init__(self,x,y,z,u,v,w,length):
         self.x = x

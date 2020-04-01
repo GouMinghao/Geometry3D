@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
 from .point import Point
-from .vector import Vector
+from ..utils.vector import Vector
 from .line import Line
 from .segment import Segment
 from .polyhedron import ConvexPolyhedron

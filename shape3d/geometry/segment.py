@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
 from .point import Point
-from .vector import Vector
+from ..utils.vector import Vector
 from .line import Line
-from .constant import *
+from ..utils.constant import *
 class Segment(GeoBody):
     """Provides a line segment in 3d space"""
     def __init__(self,a,b):

@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 import math
-from .line import Line
-from .plane import Plane
-from .point import Point
+from ..geometry.line import Line
+from ..geometry.plane import Plane
+from ..geometry.point import Point
 from .solver import solve, null
 from .vector import Vector
-from .segment import Segment
-from .polygen import ConvexPolygen
-from .pyramid import Pyramid
-from .polyhedron import ConvexPolyhedron
+from ..geometry.segment import Segment
+from ..geometry.polygen import ConvexPolygen
+from ..geometry.pyramid import Pyramid
+from ..geometry.polyhedron import ConvexPolyhedron
 
 def acute(rad):
     """If the given angle is >90° (pi/2), return the opposite angle"""
     if rad > 0.5 * math.pi:
         rad = math.pi - rad
     return rad
-
+ 
       
 def intersection(a, b):
     """Return the intersection between two objects. This can either be
