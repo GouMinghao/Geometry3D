@@ -56,7 +56,7 @@ class Line(GeoBody):
     # needs to be modified #
     ########################
     def __hash__(self):
-        return hash("Line",self.sv,self.dv)
+        return hash(("Line",self.sv,self.dv))
     
     def move(self, v):
         """Return the line that you get when you move self by vector v, self is also moved"""

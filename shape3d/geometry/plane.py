@@ -111,7 +111,14 @@ class Plane(GeoBody):
         )
 
     def __hash__(self):
-        return hash("Plane",self.p,self.n)
+        return hash(("Plane",round(self.n[0],SIG_FIGURES),round(self.n[1],SIG_FIGURES),round(self.n[2],SIG_FIGURES),round(self.n * self.p.pv(),SIG_FIGURES)))
+    
+    def move(self,v):
+        if isinstance(v,Vector):
+            self.p.move(v)
+            return Plane(self.p,self.n)
+        else:
+            return NotImplementedError("The second parameter for move function must be Vector")
 
     def parametric(self):
         """Returns (u, v, w) so that you can build the equation
