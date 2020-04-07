@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
-from .point import Point
+from .point import Point,origin
+from .line import Line
 from ..utils.solver import solve
-from ..utils.vector import Vector
+from ..utils.vector import Vector,x_unit_vector,y_unit_vector,z_unit_vector
 from ..utils.constant import *
 class Plane(GeoBody):
     """A Plane (not the flying one)"""
+    class_level = 2
+    
+    @classmethod
+    def xy_plane(cls):
+        return cls(origin,z_unit_vector)
+
+    @classmethod
+    def yz_plane(cls):
+        return cls(origin,x_unit_vector)
+
+    @classmethod
+    def xz_plane(cls):
+        return cls(origin,y_unit_vector)
+    
     def __init__(self, *args):
         """Plane(Point, Point, Point):
         Initialise a plane going through the three given points.
@@ -74,11 +89,14 @@ class Plane(GeoBody):
         """Checks if a Point lies on the Plane or a Line is a subset of
         the plane.
         """
-        from .line import Line
         if isinstance(other, Point):
             return abs(other.pv() * self.n - self.p.pv() * self.n) < EPS_F
         elif isinstance(other, Line):
             return Point(other.sv) in self and self.parallel(other)
+        elif other.class_level > self.class_level:
+            return other._in(self)
+        else:
+            raise NotImplementedError("")
 
     def __repr__(self):
         return "Plane({}, {})".format(self.p, self.n)
@@ -146,4 +164,8 @@ class Plane(GeoBody):
     def __neg__(self):
         return Plane(self.p,-self.n)
 
-__all__ = ("Plane",)
+xy_plane = Plane.xy_plane()
+yz_plane = Plane.yz_plane()
+xz_plane = Plane.xz_plane()
+
+__all__ = ("Plane","xy_plane","yz_plane","xz_plane")

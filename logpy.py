@@ -8,10 +8,6 @@ logging_config = dict(
         {
             'format':'%(asctime)s %(name)-5s %(levelname)-9s%(message)s'
         },
-        'f1':
-        {
-            'format':'%(asctime)s %(name)-5s %(levelname)-10s%(message)s'
-        }
     },
     handlers={
         'h': 
@@ -20,13 +16,6 @@ logging_config = dict(
             'formatter': 'f',
             'level': logging.DEBUG
         }
-        # },
-        # 'h1':
-        # {
-        #     'class': 'logging.StreamHandler',
-        #     'formatter': 'f1',
-        #     'level': logging.INFO
-        # }
     },
     root=
     {

@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
-from .point import Point
+from .point import Point,origin
 from ..utils.vector import Vector
-
+from ..utils.constant import *
 class Line(GeoBody):
     """Provides a line in 3d space"""
+    class_level = 1
+    @classmethod
+    def x_axis(cls):
+        return cls(origin,Point(1,0,0))
+    
+    @classmethod
+    def y_axis(cls):
+        return cls(origin,Point(0,1,0))
+
+    @classmethod
+    def z_axis(cls):
+        return cls(origin,Point(0,0,1))
+    
     def __init__(self, a, b):
         """Line(Point, Point):
         A Line going through both given points.
@@ -37,11 +50,13 @@ class Line(GeoBody):
         """expresion of a line"""
         return "Line(sv={},dv={})".format(self.sv, self.dv)
 
-    def __contains__(self, point):
-        """Checks if a point lies on a line"""
-        if isinstance(point,Point):
-            v = point.pv() - self.sv
+    def __contains__(self, other):
+        """Checks if a object lies on a line"""
+        if isinstance(other,Point):
+            v = other.pv() - self.sv
             return v.parallel(self.dv)
+        elif other.class_level > self.class_level:
+            return other._in(self)
         else:
             raise NotImplementedError("")
 
@@ -52,11 +67,12 @@ class Line(GeoBody):
         else:
             return False
 
-    ########################
-    # needs to be modified #
-    ########################
     def __hash__(self):
-        return hash(("Line",self.sv,self.dv))
+        return hash(("Line",
+        round(self.dv[0],SIG_FIGURES),
+        round(self.dv[1],SIG_FIGURES),
+        round(self.dv[0] * self.sv[1] - self.dv[1] * self.sv[0],SIG_FIGURES)
+        ))
     
     def move(self, v):
         """Return the line that you get when you move self by vector v, self is also moved"""
@@ -75,4 +91,8 @@ class Line(GeoBody):
         """
         return (self.sv, self.dv)
 
-__all__ = ("Line",)
+x_axis = Line.x_axis()
+y_axis = Line.y_axis()
+z_axis = Line.z_axis()
+
+__all__ = ("Line","x_axis","y_axis","z_axis")

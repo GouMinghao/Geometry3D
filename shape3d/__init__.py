@@ -18,5 +18,15 @@ __all__ = (
     "parallel",
     "solve",
     "volume",
-    "Renderer"
+    "Renderer",
+    "origin",
+    "x_axis",
+    "y_axis",
+    "z_axis",
+    "x_unit_vector",
+    "y_unit_vector",
+    "z_unit_vector",
+    "xy_plane",
+    "yz_plane",
+    "xz_plane",
 )

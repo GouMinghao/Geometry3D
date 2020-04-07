@@ -150,47 +150,7 @@ class Vector(object):
         return float(1 / self.length()) * self
     unit = normalized
 
-    def draw(self, renderer, box, origin=(0, 0, 0), color=(1, 0, 0)):
-        """Draw the vector, represented by an arrow, starting at the
-        given origin on the given renderer (vtk).
-
-        The box argument is ignored.
-
-        origin defaults to (0 | 0 | 0).
-        color defaults to red.
-        """
-        from .point import Point
-        import vtk
-        if not isinstance(origin, Point):
-            origin = Point(origin)
-        # Drawing arrows needs transformation matrices, which I don't
-        # know anything about, so we just draw a simple line and put
-        # a little hat (cone) on it. This the easier way for us
-        # mortals.
-        lineSrc = vtk.vtkLineSource()
-        # Again, using switched coordinates
-        lineSrc.SetPoint1(origin.y, origin.z, origin.x)
-        end = Point(origin.pv() + self)
-        lineSrc.SetPoint2(end.y, end.z, end.x)
-        lineMap = vtk.vtkPolyDataMapper()
-        lineMap.SetInput(lineSrc.GetOutput())
-        lineAct = vtk.vtkActor()
-        lineAct.SetMapper(lineMap)
-        lineAct.GetProperty().SetColor(*color)
-        renderer.AddActor(lineAct)
-
-        # draw the cone
-        coneSrc = vtk.vtkConeSource()
-        coneSrc.SetCenter(end.y, end.z, end.x)
-        coneSrc.SetHeight(1)
-        coneSrc.SetRadius(0.2)
-        coneSrc.SetDirection(self[1], self[2], self[0])
-        coneMap = vtk.vtkPolyDataMapper()
-        coneMap.SetInput(coneSrc.GetOutput())
-        coneAct = vtk.vtkActor()
-        coneAct.SetMapper(coneMap)
-        coneAct.GetProperty().SetColor(*color)
-        renderer.AddActor(coneAct)
-
-
-__all__ = ("Vector",)
+x_unit_vector = Vector.x_unit_vector()
+y_unit_vector = Vector.y_unit_vector()
+z_unit_vector = Vector.z_unit_vector()
+__all__ = ("Vector","x_unit_vector","y_unit_vector","z_unit_vector")

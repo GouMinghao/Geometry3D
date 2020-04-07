@@ -5,6 +5,7 @@ from ..utils.vector import Vector
 from .line import Line
 from ..utils.constant import *
 class Segment(GeoBody):
+    class_level = 3
     """Provides a line segment in 3d space"""
     def __init__(self,a,b):
         if isinstance(a,Point) and isinstance(b,Point):
