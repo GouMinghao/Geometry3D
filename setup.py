@@ -14,7 +14,7 @@ setup(
 
         url="http://github.com/GouMinghao/shape3d",
 
-        author="Daniel Schadt",
+        author="Minghao Gou",
         author_email="gouminghao@gmail.com",
 
         license="GPL",
@@ -32,7 +32,6 @@ setup(
 
             "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
 
-            "Programming Language :: Python :: 2",
             "Programming Language :: Python :: 3",
         ],
 

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from .body import GeoBody
 from .point import Point
+from .plane import Plane
 from ..utils.vector import Vector
 from .line import Line
 from ..utils.constant import *
+import math
+
 class Segment(GeoBody):
     class_level = 3
     """Provides a line segment in 3d space"""
@@ -33,12 +36,47 @@ class Segment(GeoBody):
         r3 = point.x <= (max(self.start_point.x,self.end_point.x) + EPS_F)
         return r1 and r2 and r3
 
+    def in_(self,other):
+        """other can be plane or line"""
+        if isinstance(other,Line):
+            return (self.start_point in other) and (self.end_point in other)
+        elif isinstance(other,Plane):
+            return (self.start_point in other) and (self.end_point in other)
+        else:
+            return NotImplementedError("")
+
     def __hash__(self):
-        return hash(("Segment", hash(self.start_point) + hash(self.end_point)))
+        return hash(("Segment",
+        hash(self.start_point) + hash(self.end_point),
+        hash(self.start_point) * hash(self.end_point)
+        ))
+
+    def __getitem__(self,idx):
+        return (self.start_point,self.end_point)[idx]
+
+    def __setitem__(self,idx,value):
+        if idx == 0:
+            self.start_point = value
+        elif idx == 1:
+            self.end_point = value
+        else:
+            raise IndexError("Index out of range")
+
+    def move(self, v):
+        """Return the point that you get when you move self by vector v, self is also moved"""
+        if isinstance(v,Vector):
+            self.start_point.move(v)
+            self.end_point.move(v)
+            return Segment(self.start_point,self.end_point)
+        else:
+            raise NotImplementedError("The second parameter for move function must be Vector")
 
     def parametric(self):
         """Returns (start_point, end_point) so that you can build the information for the segment
         """
         return (self.start_point, self.end_point)
+
+    def length(self):
+        return self.start_point.distance(self.end_point)
 
 __all__ = ("Segment",)

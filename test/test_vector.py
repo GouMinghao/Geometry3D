@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
 import unittest
-from sgl import Vector
+from shape3d import Vector
 
 
 class VectorTest(unittest.TestCase):

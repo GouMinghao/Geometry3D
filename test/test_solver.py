@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from sgl import solve
+from shape3d import solve
 
 
 class SolverTest(unittest.TestCase):

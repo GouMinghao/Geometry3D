@@ -56,7 +56,7 @@ class Line(GeoBody):
             v = other.pv() - self.sv
             return v.parallel(self.dv)
         elif other.class_level > self.class_level:
-            return other._in(self)
+            return other.in_(self)
         else:
             raise NotImplementedError("")
 

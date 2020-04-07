@@ -94,7 +94,7 @@ class Plane(GeoBody):
         elif isinstance(other, Line):
             return Point(other.sv) in self and self.parallel(other)
         elif other.class_level > self.class_level:
-            return other._in(self)
+            return other.in_(self)
         else:
             raise NotImplementedError("")
 

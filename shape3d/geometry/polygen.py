@@ -26,10 +26,11 @@ def get_triangle_area(pa,pb,pc):
 
 class ConvexPolygen(GeoBody):
     """Provides a convex polygen in 3d space"""
-    def __init__(self,points,reverse = False):
+    def __init__(self,points,reverse = False, check=False):
         """points: a tuple of points
         The points given shold be in order
         """
+        
         self.points = points
         if len(points) < 3:
             raise ValueError('Cannot build a polygen with number of points smaller than 3')
@@ -42,7 +43,6 @@ class ConvexPolygen(GeoBody):
 
         self._check_and_sort_points()
 
-        self.area = self._get_area()
         self.segment_list = self._get_segment_list()
 
     def _get_segment_list(self):
@@ -76,7 +76,7 @@ class ConvexPolygen(GeoBody):
             z += point.z
         return Point(float(x) / num_points,float(y) / num_points,float(z) / num_points)
     
-    def _get_area(self):
+    def area(self):
         """
         Input:
         self
@@ -111,7 +111,6 @@ class ConvexPolygen(GeoBody):
         for point in self.points:
             if not point in self.plane:
                 raise ValueError('Convex Check Fails Because {} Is Not On {}'.format(point,self.plane))
-                return False
             pv = point.pv() - self.center_point.pv()
             y_coordinate = pv * v0
             z_coordinate = pv * v1
@@ -122,6 +121,7 @@ class ConvexPolygen(GeoBody):
             angle_point_dict[vector_angle] = point
         point_list = [angle_point_dict[angle] for angle in sorted(angle_point_dict)]
         self.points = tuple(point_list)
+        return True
     
     def __repr__(self):
         return "ConvexPolygen({})".format(self.points)

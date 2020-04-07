@@ -20,6 +20,7 @@ __getitem__
 __setitem__
 move
 __hash__
+_in(self in low level object)
 rotate?
 scale?
 transform?

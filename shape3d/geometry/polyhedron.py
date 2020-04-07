@@ -44,7 +44,7 @@ class ConvexPolyhedron(GeoBody):
         number_points = len(self.point_set)
         number_segments = len(self.segment_set)
         number_polygens = len(self.convex_polygens)
-        print('V:{},E:{},F:{}'.format(number_points,number_segments,number_polygens))
+        # print('V:{},E:{},F:{}'.format(number_points,number_segments,number_polygens))
         return number_points - number_segments + number_polygens == 2
 
     def _check_normal(self):
