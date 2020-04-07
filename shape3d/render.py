@@ -102,7 +102,7 @@ class Renderer():
         elif isinstance(obj[0],ConvexPolygen):
             for point in obj[0].points:
                 self.add((point,obj[1],obj[2]))
-            for segment in obj[0].segment_list:
+            for segment in obj[0].segments():
                 self.add((segment,obj[1],obj[2]))
             if normal_length > 0:
                 cpg = obj[0]

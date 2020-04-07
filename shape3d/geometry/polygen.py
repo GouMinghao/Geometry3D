@@ -6,6 +6,7 @@ from .line import Line
 from .segment import Segment
 from .plane import Plane
 from ..utils.constant import *
+import copy
 import math
 
 def get_triangle_area(pa,pb,pc):
@@ -25,13 +26,15 @@ def get_triangle_area(pa,pb,pc):
     return math.sqrt(p * (p - a) * (p - b) * (p - c))
 
 class ConvexPolygen(GeoBody):
+    class_level = 4
     """Provides a convex polygen in 3d space"""
-    def __init__(self,points,reverse = False, check=False):
+    def __init__(self,pts,reverse = False, check_convex=False):
         """points: a tuple of points
         The points given shold be in order
         """
-        
-        self.points = points
+        # merge same points
+        points = copy.deepcopy(pts)
+        self.points = sorted(set(points),key=points.index)
         if len(points) < 3:
             raise ValueError('Cannot build a polygen with number of points smaller than 3')
         if reverse:
@@ -43,24 +46,20 @@ class ConvexPolygen(GeoBody):
 
         self._check_and_sort_points()
 
-        self.segment_list = self._get_segment_list()
-
-    def _get_segment_list(self):
+    def segments(self):
         """Input:
         self
 
         Output:
         a list of segments
         """
-        segment_list = []
         for i in range(len(self.points)):
             index_0 = i
             if i == len(self.points) - 1:
                 index_1 = 0
             else:
                 index_1 = i + 1
-            segment_list.append(Segment(self.points[index_0],self.points[index_1]))
-        return segment_list
+            yield Segment(self.points[index_0],self.points[index_1])
     
     def _get_center_point(self):
         """Input:
@@ -126,10 +125,10 @@ class ConvexPolygen(GeoBody):
     def __repr__(self):
         return "ConvexPolygen({})".format(self.points)
 
-    def __contains__(self, obj):
+    def __contains__(self, other):
         """Checks if a point or segment lies in a ConvexPolygen"""
-        if isinstance(obj,Point):
-            r1 = obj in self.plane
+        if isinstance(other,Point):
+            r1 = other in self.plane
             # requirement 1: the point is on the plane
             the_normal = self.plane.n.normalized()
             r2 = True
@@ -144,16 +143,59 @@ class ConvexPolygen(GeoBody):
                 # self.points[index_0] and self.points[index_1] is the i^th segment
                 v0 = Vector(self.points[index_0],self.points[index_1])
                 v1 = the_normal.cross(v0)
-                vec = Vector(self.points[index_0],obj)
+                vec = Vector(self.points[index_0],other)
                 if vec * v1 < - EPS_F:
                     r2 = False
                     break
             return r1 and r2
         
-        elif isinstance(obj,Segment):
-            return (obj.start_point in self) and (obj.end_point in self) 
+        elif isinstance(other,Segment):
+            return (other.start_point in self) and (other.end_point in self)
+    
+    def in_(self,other):
+        if isinstance(other,Plane):
+            return self.plane == other
+        else:
+            raise NotImplementedError("")
+
+    def __eq__(self,other):
+        if isinstance(other,ConvexPolygen):
+            return (hash(self) == hash(other))
+        else:
+            return False
+    
+    # the hash function is not accurate
+    # in some extreme case, this function may fail
+    def _get_point_hash_sum(self):
+        hash_sum = 0
+        for point in self.points:
+            hash_sum += hash(point)
+        return hash_sum
+
+    def __hash__(self):
+            return hash(("ConvexPolygen",
+            round(self._get_point_hash_sum(),SIG_FIGURES),
+            hash(self.plane)
+            ))
 
     def __neg__(self):
         return ConvexPolygen(self.points,reverse=True)
 
+    def length(self):
+        length = 0
+        for segment in self.segments():
+            length += segment.length()
+        return length
+
+    def move(self,v):
+        if isinstance(v,Vector):
+            point_list = []
+            for point in self.points:
+                point_list.append(point.move(v))
+            self.points = tuple(point_list)
+            self.plane = Plane(self.points[0],self.points[1],self.points[2])
+            self.center_point = self._get_center_point()
+            return ConvexPolygen(self.points)
+        else:
+            raise NotImplementedError("The second parameter for move function must be Vector")
 __all__ = ("ConvexPolygen",)

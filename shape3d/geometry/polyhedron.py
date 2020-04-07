@@ -8,6 +8,7 @@ from .pyramid import Pyramid
 from ..utils.vector import Vector
 from ..utils.constant import *
 class ConvexPolyhedron(GeoBody):
+    class_level = 5
     """Provides a convex polyhedron in 3d space"""
     def __init__(self,convex_polygens):
         """Input:
@@ -25,7 +26,7 @@ class ConvexPolyhedron(GeoBody):
         for convex_polygen in self.convex_polygens:    
             for point in convex_polygen.points:
                 self.point_set.add(point)
-            for segment in convex_polygen.segment_list:
+            for segment in convex_polygen.segments():
                 self.segment_set.add(segment)
         
         self.center_point = self._get_center_point()

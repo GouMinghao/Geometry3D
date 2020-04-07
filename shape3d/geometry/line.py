@@ -8,15 +8,15 @@ class Line(GeoBody):
     class_level = 1
     @classmethod
     def x_axis(cls):
-        return cls(origin,Point(1,0,0))
+        return cls(origin(),Point(1,0,0))
     
     @classmethod
     def y_axis(cls):
-        return cls(origin,Point(0,1,0))
+        return cls(origin(),Point(0,1,0))
 
     @classmethod
     def z_axis(cls):
-        return cls(origin,Point(0,0,1))
+        return cls(origin(),Point(0,0,1))
     
     def __init__(self, a, b):
         """Line(Point, Point):
@@ -91,8 +91,8 @@ class Line(GeoBody):
         """
         return (self.sv, self.dv)
 
-x_axis = Line.x_axis()
-y_axis = Line.y_axis()
-z_axis = Line.z_axis()
+x_axis = Line.x_axis
+y_axis = Line.y_axis
+z_axis = Line.z_axis
 
 __all__ = ("Line","x_axis","y_axis","z_axis")

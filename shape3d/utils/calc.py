@@ -327,7 +327,7 @@ def ConvexPolyhedron_ConvexPolygen_intersection(cph,cpg):
         if point in cph:
             point_set.add(point)
     # intersection points of polygen segment and convexpolyhedron convexpolygen
-    for segment in cpg.segment_list:
+    for segment in cpg.segments():
         for polygen in cph.convex_polygens:
             point = intersection(polygen,segment)
             if point is not None:
@@ -335,7 +335,7 @@ def ConvexPolyhedron_ConvexPolygen_intersection(cph,cpg):
                     point_set.add(point)
     # intersection points of convexpolyhedron segmetn and polygen
     for polygen in cph.convex_polygens:
-        for segment in polygen.segment_list:
+        for segment in polygen.segments():
             point = intersection(segment,cpg)
             if point is not None:
                 if point in cpg:

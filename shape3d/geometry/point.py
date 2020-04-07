@@ -13,7 +13,6 @@ class Point(object):
     def origin(cls):
         """Returns the origin (0 | 0 | 0)"""
         return cls(0, 0, 0)
-    o = origin
     
     def __init__(self, *args):
         """Point(a, b, c)
@@ -81,6 +80,6 @@ class Point(object):
         """Return the distance between self and other"""
         return math.sqrt((self.x -other.x) ** 2 + (self.y -other.y) ** 2 + (self.z -other.z) ** 2)
 
-origin = Point.origin()
+origin = Point.origin
 
 __all__ = ("Point","origin")

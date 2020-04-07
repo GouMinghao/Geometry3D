@@ -116,23 +116,8 @@ class Vector(object):
             return True
         if self == other:
             return True
-        # linear combination:
-        # a * self + b * other = 0
-        # solution = solve([
-        #     [self[0], other[0], 0],
-        #     [self[1], other[1], 0],
-        #     [self[2], other[2], 0],
-        # ])
 
-        return abs(self * other - self.length() * other.length()) < EPS_F 
-
-        # Trivial solution is a = b = 0
-        # if there are no other solutions, the vectors are not parallel!
-        # otherwise there are infinitely many solutions and the vectors
-        # are parallel.
-        if solution.exact:
-            return False
-        return True
+        return abs(abs(self * other) - self.length() * other.length()) < EPS_F 
 
     def orthogonal(self, other):
         """Returns true if the two vectors are orthogonal"""

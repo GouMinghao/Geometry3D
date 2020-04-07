@@ -11,15 +11,15 @@ class Plane(GeoBody):
     
     @classmethod
     def xy_plane(cls):
-        return cls(origin,z_unit_vector)
+        return cls(origin(),z_unit_vector)
 
     @classmethod
     def yz_plane(cls):
-        return cls(origin,x_unit_vector)
+        return cls(origin(),x_unit_vector)
 
     @classmethod
     def xz_plane(cls):
-        return cls(origin,y_unit_vector)
+        return cls(origin(),y_unit_vector)
     
     def __init__(self, *args):
         """Plane(Point, Point, Point):
@@ -81,7 +81,7 @@ class Plane(GeoBody):
         if the representation is different!
         """
         if isinstance(other,Plane):
-            return self.p in other and self.parallel(other)
+            return self.p in other and self.n.parallel(other.n)
         else:
             return False
 
@@ -164,8 +164,8 @@ class Plane(GeoBody):
     def __neg__(self):
         return Plane(self.p,-self.n)
 
-xy_plane = Plane.xy_plane()
-yz_plane = Plane.yz_plane()
-xz_plane = Plane.xz_plane()
+xy_plane = Plane.xy_plane
+yz_plane = Plane.yz_plane
+xz_plane = Plane.xz_plane
 
 __all__ = ("Plane","xy_plane","yz_plane","xz_plane")
