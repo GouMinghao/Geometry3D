@@ -3,9 +3,10 @@ from .body import GeoBody
 from .point import Point
 from ..utils.vector import Vector
 from .line import Line
-from .segment import Segment
 from .polygen import ConvexPolygen
 
+# Pyramid is an auxilary geometry
+# Calculation of pyramids should be applied using ConvexPolygen
 class Pyramid(GeoBody):
     """Provides a pyramid in 3d space"""
     def __init__(self,cp,p):
@@ -23,5 +24,13 @@ class Pyramid(GeoBody):
     
     def __repr__(self):
         return "Pyramid({}, {})".format(self.convex_polygen, self.point)
+    
+    def height(self):
+        p0 = self.convex_polygen.points[0]
+        return abs(Vector(p0,self.point)*self.convex_polygen.plane.n.normalized())
+    
+    def volume(self):
+        h = self.height()
+        return 1 / 3 * h * self.convex_polygen.area()
 
 __all__ = ("Pyramid",)

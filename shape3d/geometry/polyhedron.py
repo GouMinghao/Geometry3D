@@ -7,6 +7,7 @@ from .plane import Plane
 from .pyramid import Pyramid
 from ..utils.vector import Vector
 from ..utils.constant import *
+import copy
 class ConvexPolyhedron(GeoBody):
     class_level = 5
     """Provides a convex polyhedron in 3d space"""
@@ -18,7 +19,8 @@ class ConvexPolyhedron(GeoBody):
 
         The normal of the convex polygens are not checked not which should be in the outer direction
         """
-        self.convex_polygens = list(convex_polygens)
+        self.convex_polygens = list(copy.deepcopy(convex_polygens))
+        # self.convex_polygens = list(convex_polygens)
         self.point_set = set()
         self.segment_set = set()
         self.pyramid_set = set()
@@ -39,7 +41,7 @@ class ConvexPolyhedron(GeoBody):
         if not self._check_normal():
             raise ValueError('Check Normal Fails For The Convex Polyhedron')
         if not self._euler_check():
-            raise ValueError('Check for the number of vertices, faces and edges')
+            raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
 
     def _euler_check(self):
         number_points = len(self.point_set)
@@ -73,18 +75,112 @@ class ConvexPolyhedron(GeoBody):
     def __repr__(self):
         return "ConvecPolyhedron\npyramid set:{}\npoint set:{}".format(self.pyramid_set,self.point_set)
 
-    def __contains__(self,point):
+    def __contains__(self,other):
         """Input:
-        point: a Point
+        point: a Object
 
         Output:
         Whether the polyhedron contains the point
         """
-        for polygen in self.convex_polygens:
-            direction_vector = Vector(polygen.center_point,point)
-            if direction_vector * polygen.plane.n > - EPS_F:
-                return False
-        return True
+        if isinstance(other,Point):
+            for polygen in self.convex_polygens:
+                direction_vector = Vector(polygen.center_point,other)
+                if direction_vector * polygen.plane.n > EPS_F:
+                    return False
+            return True
+
+        elif isinstance(other,Segment):
+            return ((other.start_point in self) and (other.end_point in self))
         
+        elif isinstance(other,ConvexPolygen):
+            for point in other.points:
+                if not point in self:
+                    return False
+            return True
+        else:
+            raise NotImplementedError("")
+
+    def __eq__(self,other):
+        if isinstance(other,ConvexPolyhedron):
+            return (hash(self) == hash(other))
+        else:
+            return False
+
+    def move(self,v):
+        if isinstance(v,Vector):
+            convexpolygen_list = []
+            for convexpolygen in self.convex_polygens:
+                convexpolygen_list.append(convexpolygen.move(v))
+            self.convex_polygens = tuple(convexpolygen_list)   
+            self.point_set = set()
+            self.segment_set = set()
+            self.pyramid_set = set()
+            for convex_polygen in self.convex_polygens: 
+                for point in convex_polygen.points:
+                    self.point_set.add(point)
+                for segment in convex_polygen.segments():
+                    self.segment_set.add(segment)
+        
+            self.center_point = self._get_center_point()
+
+            for i in range(len(self.convex_polygens)):
+                convex_polygen = self.convex_polygens[i]
+                if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -EPS_F:
+                    self.convex_polygens[i] = - convex_polygen
+                self.pyramid_set.add(Pyramid(convex_polygen,self.center_point))
+            if not self._check_normal():
+                raise ValueError('Check Normal Fails For The Convex Polyhedron')
+            if not self._euler_check():
+                raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
+            return ConvexPolyhedron(self.convex_polygens)
+        else:
+            raise NotImplementedError("The second parameter for move function must be Vector")
+
+    def _get_polygen_hash_sum(self):
+        hash_sum = 0
+        for polygen in self.convex_polygens:
+            hash_sum += hash(polygen)
+        return hash_sum
+
+    def _get_point_hash_sum(self):
+        hash_sum = 0
+        for point in self.point_set:
+            hash_sum += hash(point)
+        return hash_sum
+
+    # the hash function is not accurate
+    # in some extreme case, this function may fail
+    # which means it's vulnerable to attacks.
+    def __hash__(self):
+        return hash((
+            "ConvexPolyhedron",
+            round(self._get_polygen_hash_sum(),SIG_FIGURES),
+            round(self._get_point_hash_sum(),SIG_FIGURES)
+        ))
+
+    #no in_ function
+
+    def length(self):
+        """return the total length of the polyhedron"""
+        l = 0
+        for segment in self.segment_set:
+            l += segment.length()
+        return l
+
+    def area(self):
+        """return the total area of the polyhedron"""
+        a = 0
+        for polygen in self.convex_polygens:
+            a += polygen.area()
+        return a
+
+    def volume(self):
+        """return the total volume of the polyhedron"""
+        v = 0
+        for pyramid in self.pyramid_set:
+            v += pyramid.volume()
+        return v
+
+__all__=("ConvexPolyhedron",) 
 
         

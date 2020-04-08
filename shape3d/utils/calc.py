@@ -115,8 +115,13 @@ def intersection(a, b):
         elif isinstance(p,Line):
             if (a.start_point in b) and (a.end_point in b):
                 return a
-            intersection_point_set = set()
-            
+            else:
+                intersection_point_set = set()
+                #######################
+                # not implemented now #
+                #######################
+        elif p is None:
+            return None
     
     elif isinstance(a,ConvexPolygen) and isinstance(b,Segment):
         # Segment in ConvexPolygen needs to be handled
@@ -131,7 +136,7 @@ def intersection(a, b):
     elif isinstance(a,ConvexPolygen) and isinstance(b,ConvexPolyhedron):
         return ConvexPolyhedron_ConvexPolygen_intersection(b,a)
     
-    return NotImplemented
+    raise NotImplementedError("not implement intersecting %s with %s"%(type(a),type(b)))
 
 
 def parallel(a, b):
@@ -281,7 +286,7 @@ def volume(arg):
     """
     if isinstance(arg,Pyramid):
         height = distance(arg.point,arg.convex_polygen.plane)
-        return 1 / 3 * height * arg.convex_polygen.area
+        return 1 / 3 * height * arg.convex_polygen.area()
     elif isinstance(arg,ConvexPolyhedron):
         total_volume = 0
         for pyramid in arg.pyramid_set:

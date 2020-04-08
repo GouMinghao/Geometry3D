@@ -151,6 +151,8 @@ class ConvexPolygen(GeoBody):
         
         elif isinstance(other,Segment):
             return (other.start_point in self) and (other.end_point in self)
+        else:
+            return NotImplementedError("")
     
     def in_(self,other):
         if isinstance(other,Plane):
@@ -164,14 +166,16 @@ class ConvexPolygen(GeoBody):
         else:
             return False
     
-    # the hash function is not accurate
-    # in some extreme case, this function may fail
+    
     def _get_point_hash_sum(self):
         hash_sum = 0
         for point in self.points:
             hash_sum += hash(point)
         return hash_sum
 
+    # the hash function is not accurate
+    # in some extreme case, this function may fail
+    # which means it's vulnerable to attacks.
     def __hash__(self):
             return hash(("ConvexPolygen",
             round(self._get_point_hash_sum(),SIG_FIGURES),

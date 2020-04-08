@@ -70,6 +70,7 @@ cpg2 = ConvexPolygen((c,b,f,g))
 cpg3 = ConvexPolygen((c,g,h,d))
 cpg4 = ConvexPolygen((a,b,c,d))
 cpg5 = ConvexPolygen((e,h,g,f))
+
 t5 = time.time()
 cph0 = ConvexPolyhedron((cpg0,cpg1,cpg2,cpg3,cpg4,cpg5))
 t6 = time.time()

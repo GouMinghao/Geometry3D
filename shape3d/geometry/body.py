@@ -26,3 +26,4 @@ class GeoBody(object):
     def orthogonal(self, other):
         from .calc import orthogonal
         return orthogonal(self, other)
+
