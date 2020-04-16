@@ -7,12 +7,12 @@ def read(name):
 
 setup(
         name="shape3d",
-        version="0.0.1",
+        version="0.1.0",
 
         description="a 3d geometry lib",
         long_description=read("README.md"),
 
-        url="http://github.com/GouMinghao/shape3d",
+        url="https://github.com/GouMinghao/shape3d",
 
         author="Minghao Gou",
         author_email="gouminghao@gmail.com",
@@ -22,7 +22,7 @@ setup(
         packages=find_packages(),
     
         classifiers=[
-            "Developement Status :: 3 - Alpha",
+            "Developement Status :: Beta",
 
             "Intended Audience :: Developers",
             "Intended Audience :: Education"
