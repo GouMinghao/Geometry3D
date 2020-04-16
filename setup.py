@@ -35,7 +35,7 @@ setup(
             "Programming Language :: Python :: 3",
         ],
 
-        keywords="analytic geometry 3d",
+        keywords="analytic geometry intersection 3d",
 
         install_requires=['matplotlib','numpy'],
 )

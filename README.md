@@ -6,9 +6,11 @@
 shape3d is a small Python library that's useful for 3D analytic geometry.
 It has representations for Points, Vectors, Lines, Planes, Segments, Convex Polygens and Convex Polyhedrons and can do some calculations such as the distance, length, area and volume.
 
-All the geometries are convex so intersection of any object is supported.
+All the geometries are convex so intersection of objects  supported.
 
 The library also implements a naive renderer based on matplotlib.
+
+Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
 
 ## Requirements
@@ -74,4 +76,4 @@ Tests
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Contact
-gouminghao@sjtu.edu.cn
+gouminghao@gmail.com
