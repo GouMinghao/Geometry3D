@@ -9,14 +9,9 @@ from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
+from .acute import acute
+from .angle import angle, parallel, orthogonal
 
-def acute(rad):
-    """If the given angle is >90° (pi/2), return the opposite angle"""
-    if rad > 0.5 * math.pi:
-        rad = math.pi - rad
-    return rad
- 
-      
 def intersection(a, b):
     """Return the intersection between two objects. This can either be
     - None (no intersection)
@@ -138,83 +133,6 @@ def intersection(a, b):
     
     raise NotImplementedError("not implement intersecting %s with %s"%(type(a),type(b)))
 
-
-def parallel(a, b):
-    """Checks if two objects are parallel. This can check
-    - Line/Line
-    - Plane/Line
-    - Plane/Plane
-    - Vector/Vector
-    """
-    if isinstance(a, Line) and isinstance(b, Line):
-        return a.dv.parallel(b.dv)
-
-    elif isinstance(a, Line) and isinstance(b, Plane):
-        return a.dv.orthogonal(b.n)
-    elif isinstance(a, Plane) and isinstance(b, Line):
-        return parallel(b, a)
-    
-    elif isinstance(a, Plane) and isinstance(b, Plane):
-        return a.n.parallel(b.n)
-    
-    elif isinstance(a, Vector) and isinstance(b, Vector):
-        return a.parallel(b)
-
-    return NotImplemented
-
-
-def angle(a, b):
-    """Returns the angle (in radians) between
-    - Line/Line
-    - Plane/Line
-    - Plane/Plane
-    - Vector/Vector
-    """
-    if isinstance(a, Line) and isinstance(b, Line):
-        return acute(a.dv.angle(b.dv))
-
-    elif isinstance(a, Line) and isinstance(b, Plane):
-        rad = acute(a.dv.angle(b.n))
-        # What we are actually calculating is the angle between
-        # the normal of the plane and the line, but the normal
-        # is 90° from the plane. So the actual angle between a plane
-        # a line is 90° - that angle
-        return 0.5 * math.pi - rad
-    
-    elif isinstance(a, Plane) and isinstance(b, Line):
-        return angle(b, a)
-
-    elif isinstance(a, Plane) and isinstance(b, Plane):
-        return acute(a.n.angle(b.n))
-
-    elif isinstance(a, Vector) and isinstance(b, Vector):
-        return acute(a.angle(b))
-    
-    return NotImplemented
-
-
-def orthogonal(a, b):
-    """Checks if two objects are orthogonal. This can check
-    - Line/Line
-    - Plane/Line
-    - Plane/Plane
-    - Vector/Vector
-    """
-    if isinstance(a, Line) and isinstance(b, Line):
-        return null(a.dv * b.dv)
-
-    elif isinstance(a, Line) and isinstance(b, Plane):
-        return a.dv.parallel(b.n)
-    elif isinstance(a, Plane) and isinstance(b, Line):
-        return orthogonal(b, a)
-
-    elif isinstance(a, Plane) and isinstance(b, Plane):
-        return a.n.orthogonal(b.n)
-    elif isinstance(a, Vector) and isinstance(b, Vector):
-        return a.orthogonal(b)
-    return NotImplemented
-
-
 def distance(a, b):
     """Returns the distance between two objects. This includes
     - Point/Point
@@ -279,21 +197,7 @@ def distance(a, b):
 
     return NotImplemented
 
-def volume(arg):
-    """Returns the object. This includes
-    - Pyramid
-    - ConvexPolyhedron
-    """
-    if isinstance(arg,Pyramid):
-        height = distance(arg.point,arg.convex_polygen.plane)
-        return 1 / 3 * height * arg.convex_polygen.area()
-    elif isinstance(arg,ConvexPolyhedron):
-        total_volume = 0
-        for pyramid in arg.pyramid_set:
-            total_volume += volume(pyramid)
-        return total_volume
-    else:
-        return 
+
 
 def ConvexPolyhedron_intersection(cph1,cph2):
     """Input:
