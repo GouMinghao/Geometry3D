@@ -8,22 +8,22 @@ class GeoBody(object):
     intersection(L1, L2)
     """
     def intersection(self, other):
-        from ..utils.calc import intersection
+        from ..calc.calc import intersection
         return intersection(self, other)
 
     def distance(self, other):
-        from ..utils.calc import distance
+        from ..calc.calc import distance
         return distance(self, other)
 
     def parallel(self, other):
-        from ..utils.calc import parallel
+        from ..calc.calc import parallel
         return parallel(self, other)
 
     def angle(self, other):
-        from ..utils.calc import angle
+        from ..calc.calc import angle
         return angle(self, other)
 
     def orthogonal(self, other):
-        from .calc import orthogonal
+        from ..calc.calc import orthogonal
         return orthogonal(self, other)
 

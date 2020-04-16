@@ -1,5 +1,6 @@
 from .utils import *
 from .geometry import *
+from .calc import *
 from .render import Renderer
 __all__ = (
     "ConvexPolyhedron",

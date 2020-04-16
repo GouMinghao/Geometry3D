@@ -3,8 +3,8 @@ import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
 from ..geometry.point import Point
-from .solver import solve, null
-from .vector import Vector
+from ..utils.solver import solve, null
+from ..utils.vector import Vector
 from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.pyramid import Pyramid
