@@ -47,9 +47,9 @@ class Point(object):
     def __eq__(self, other):
         """Checks if two Points are equal. Always use == and not 'is'!"""
         if isinstance(other,Point):
-            return (abs(self.x - other.x) < EPS_F and
-                    abs(self.y - other.y) < EPS_F and
-                    abs(self.z - other.z) < EPS_F)
+            return (abs(self.x - other.x) < get_eps() and
+                    abs(self.y - other.y) < get_eps() and
+                    abs(self.z - other.z) < get_eps())
         else:
             return False
 

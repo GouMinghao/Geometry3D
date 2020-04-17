@@ -60,3 +60,12 @@ ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen
 
 ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron
 -----------------------------------------------
+
+intersection 补全
+补充特殊图形（三角形（三个点），平行四边形，平行六面体）
+作平行线，平行面和垂线
+方程？
+测试文件
+doc
+arxiv论文
+logger

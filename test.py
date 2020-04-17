@@ -110,8 +110,11 @@ t7 = time.time()
 cph3 = intersection(cph0,cph2)
 t8 = time.time()
 logger.info('calculate intersection time:%f' %(t8 - t7,))
-cph4 = intersection(cph1,cph2)
 
+cph4 = intersection(cph1,cph2)
+logger.info('volume:%f' % (cph2.volume(),))
+t9 = time.time()
+logger.info('calculate volume time:%f' %(t9 - t8,))
 # t2 = time.time()
 
 print('time:{}'.format(t2 - t1))

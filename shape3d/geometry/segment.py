@@ -32,8 +32,8 @@ class Segment(GeoBody):
     def __contains__(self, point):
         """Checks if a point lies on a segment"""
         r1 = point in self.line
-        r2 = point.x >= (min(self.start_point.x,self.end_point.x) - EPS_F)
-        r3 = point.x <= (max(self.start_point.x,self.end_point.x) + EPS_F)
+        r2 = point.x >= (min(self.start_point.x,self.end_point.x) - get_eps())
+        r3 = point.x <= (max(self.start_point.x,self.end_point.x) + get_eps())
         return r1 and r2 and r3
 
     def in_(self,other):

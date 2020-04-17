@@ -144,7 +144,7 @@ class ConvexPolygen(GeoBody):
                 v0 = Vector(self.points[index_0],self.points[index_1])
                 v1 = the_normal.cross(v0)
                 vec = Vector(self.points[index_0],other)
-                if vec * v1 < - EPS_F:
+                if vec * v1 < - get_eps():
                     r2 = False
                     break
             return r1 and r2
@@ -182,6 +182,18 @@ class ConvexPolygen(GeoBody):
             hash(self.plane)
             ))
 
+
+    def eq_without_narmal(self,other):
+        if isinstance(other,ConvexPolygen):
+            return (self.hash_without_normal() == other.hash_without_normal())
+        else:
+            return False
+
+    def hash_without_normal(self):
+        return hash(("ConvexPolygen",
+        round(self._get_point_hash_sum(),SIG_FIGURES),
+        hash(self.plane) + hash(-self.plane)
+        ))
     def __neg__(self):
         return ConvexPolygen(self.points,reverse=True)
 

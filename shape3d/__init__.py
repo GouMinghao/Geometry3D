@@ -1,7 +1,8 @@
 from .utils import *
 from .geometry import *
 from .calc import *
-from .render import Renderer
+from .render import *
+
 __all__ = (
     "ConvexPolyhedron",
     "ConvexPolygen",
@@ -30,4 +31,8 @@ __all__ = (
     "xy_plane",
     "yz_plane",
     "xz_plane",
+    "set_eps",
+    "get_eps",
+    "get_sig_figures",
+    "set_sig_figures",
 )

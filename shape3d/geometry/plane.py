@@ -90,7 +90,7 @@ class Plane(GeoBody):
         the plane.
         """
         if isinstance(other, Point):
-            return abs(other.pv() * self.n - self.p.pv() * self.n) < EPS_F
+            return abs(other.pv() * self.n - self.p.pv() * self.n) < get_eps()
         elif isinstance(other, Line):
             return Point(other.sv) in self and self.parallel(other)
         elif other.class_level > self.class_level:

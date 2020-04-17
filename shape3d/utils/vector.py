@@ -2,7 +2,7 @@
 import math
 import numpy as np
 from .util import unify_types
-from .constant import *
+from .constant import get_eps
 
 class Vector(object):
     """Provides a basic vector"""
@@ -117,7 +117,7 @@ class Vector(object):
         if self == other:
             return True
 
-        return abs(abs(self * other) - self.length() * other.length()) < EPS_F 
+        return abs(abs(self * other) - self.length() * other.length()) < get_eps() 
 
     def orthogonal(self, other):
         """Returns true if the two vectors are orthogonal"""

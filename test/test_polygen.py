@@ -58,6 +58,14 @@ class ConvexPolygenTest(unittest.TestCase):
             ConvexPolygen((a,b,d,c)),
             -ConvexPolygen((c,a,b,d))
         )
+
+    def test_eq_without_normal(self):
+        self.assertTrue(
+            ConvexPolygen((a,b,d,c)).eq_without_narmal(ConvexPolygen((c,a,b,d)))
+        )
+        self.assertTrue(
+            ConvexPolygen((a,b,d,c)).eq_without_narmal(-ConvexPolygen((c,a,b,d)))
+        )
     
     def test_hash(self):
         s = set()

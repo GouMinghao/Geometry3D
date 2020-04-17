@@ -35,7 +35,7 @@ class ConvexPolyhedron(GeoBody):
 
         for i in range(len(self.convex_polygens)):
             convex_polygen = self.convex_polygens[i]
-            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -EPS_F:
+            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
                 self.convex_polygens[i] = - convex_polygen
             self.pyramid_set.add(Pyramid(convex_polygen,self.center_point))
         if not self._check_normal():
@@ -53,7 +53,7 @@ class ConvexPolyhedron(GeoBody):
     def _check_normal(self):
         """return True if all the polygens' normals point to the outside"""
         for convex_polygen in self.convex_polygens:
-            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -EPS_F:
+            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
                 return False
         return True
     
@@ -85,7 +85,7 @@ class ConvexPolyhedron(GeoBody):
         if isinstance(other,Point):
             for polygen in self.convex_polygens:
                 direction_vector = Vector(polygen.center_point,other)
-                if direction_vector * polygen.plane.n > EPS_F:
+                if direction_vector * polygen.plane.n > get_eps():
                     return False
             return True
 
@@ -125,7 +125,7 @@ class ConvexPolyhedron(GeoBody):
 
             for i in range(len(self.convex_polygens)):
                 convex_polygen = self.convex_polygens[i]
-                if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -EPS_F:
+                if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
                     self.convex_polygens[i] = - convex_polygen
                 self.pyramid_set.add(Pyramid(convex_polygen,self.center_point))
             if not self._check_normal():

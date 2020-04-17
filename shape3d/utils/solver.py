@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-from .constant import *
+from .constant import get_eps
 def shape(m):
     if not m:
         return (0, 0)
     return (len(m), len(m[0]))
 
 def null(f):
-    return abs(f) < EPS_F
+    return abs(f) < get_eps()
 
 def nullrow(r):
     return all(map(null, r))

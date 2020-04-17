@@ -1,51 +1,19 @@
 """model to visualize some geometries"""
-from .geometry.point import Point
+from ..geometry.point import Point
 # from .vector import Vector
 # from .line import Line
-from .geometry.segment import Segment
+from ..geometry.segment import Segment
 # from .plane import Plane
-from .geometry.polygen import ConvexPolygen
-from .geometry.polyhedron import ConvexPolyhedron
+from ..geometry.polygen import ConvexPolygen
+from ..geometry.polyhedron import ConvexPolyhedron
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
-from .utils.constant import *
-class Arrow():
-    def __init__(self,x,y,z,u,v,w,length):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.u = u
-        self.v = v
-        self.w = w
-        self.length = length
 
-    def __eq__(self,other):
-        return (
-            abs(self.x - other.x) < EPS_F and
-            abs(self.y - other.y) < EPS_F and
-            abs(self.z - other.z) < EPS_F and 
-            abs(self.u - other.u) < EPS_F and
-            abs(self.v - other.v) < EPS_F and
-            abs(self.w - other.w) < EPS_F and
-            abs(self.length - other.length) < EPS_F)
-    
-    def __hash__(self):
-        return hash((
-            round(self.x,SIG_FIGURES),
-            round(self.y,SIG_FIGURES),
-            round(self.z,SIG_FIGURES),
-            round(self.u,SIG_FIGURES),
-            round(self.v,SIG_FIGURES),
-            round(self.w,SIG_FIGURES),
-            round(self.length,SIG_FIGURES)
-        ))
-    
-    def get_tuple(self):
-        return (self.x,self.y,self.z,self.u,self.v,self.w,self.length)
+from .arrow import Arrow
         
 
-class Renderer():
+class MatplotlibRenderer():
     """ Renderer module to visualize geometries"""
     def __init__(self):
         """Input:
