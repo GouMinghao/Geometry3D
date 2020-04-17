@@ -80,3 +80,7 @@ class ConvexPolygenTest(unittest.TestCase):
         cpg0 = ConvexPolygen((a,b,d,c))
         cpg1 = ConvexPolygen((a.move(v),b.move(v),c.move(v),d.move(v)))
         self.assertEqual(cpg0.move(v),cpg1)
+
+    def test_Parallelogram(self):
+        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)).eq_without_narmal(ConvexPolygen((origin(),Point(3,0,1),Point(1,0,0),Point(2,0,1)))))
+        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)).eq_without_narmal(ConvexPolygen((origin(),Point(2,0,1),Point(1,0,0),Point(3,0,1)))))

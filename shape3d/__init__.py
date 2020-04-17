@@ -6,8 +6,8 @@ from .render import *
 __all__ = (
     "ConvexPolyhedron",
     "ConvexPolygen",
+    "Parallelogram",
     "Pyramid",
-    "Cubic",
     "Segment",
     "Line",
     "Plane",

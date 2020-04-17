@@ -27,6 +27,26 @@ def get_triangle_area(pa,pb,pc):
 
 class ConvexPolygen(GeoBody):
     class_level = 4
+
+    """a special method for Parallelogram"""
+    @classmethod
+    def Parallelogram(cls,base_point,v1,v2):
+        """The four points are base_point, base_point + v1, base_point + v2 and base_point + v1 + v2"""
+        if isinstance(base_point,Point) and isinstance(v1,Vector) and isinstance(v2,Vector):
+            if v1.length() == 0 or v2.length == 0:
+                raise ValueError("The length for the two vector shouldn't be zero")
+            elif v1.parallel(v2):
+                raise ValueError("The two vectors shouldn't be parallel to each other")
+            else:
+                return cls((
+                    base_point,
+                    copy.deepcopy(base_point).move(v1),
+                    copy.deepcopy(base_point).move(v2),
+                    copy.deepcopy(base_point).move(v1).move(v2)
+                ))
+        else:
+            raise TypeError("Parallelogram should be initialized with Point, Vector and Vector, but the given types are %s, %s and %s" %(type(base_point),type(v1),type(v2)))
+    
     """Provides a convex polygen in 3d space"""
     def __init__(self,pts,reverse = False, check_convex=False):
         """points: a tuple of points
@@ -214,4 +234,7 @@ class ConvexPolygen(GeoBody):
             return ConvexPolygen(self.points)
         else:
             raise NotImplementedError("The second parameter for move function must be Vector")
-__all__ = ("ConvexPolygen",)
+
+Parallelogram = ConvexPolygen.Parallelogram
+
+__all__ = ("ConvexPolygen","Parallelogram")

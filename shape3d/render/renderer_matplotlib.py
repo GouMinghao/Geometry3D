@@ -1,9 +1,6 @@
 """model to visualize some geometries"""
 from ..geometry.point import Point
-# from .vector import Vector
-# from .line import Line
 from ..geometry.segment import Segment
-# from .plane import Plane
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.polyhedron import ConvexPolyhedron
 from matplotlib import pyplot as plt
