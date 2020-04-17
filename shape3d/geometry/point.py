@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from ..utils.util import unify_types
 import math
-
+from ..utils.logger import get_main_logger
 import numpy as np
 from ..utils.constant import *
 from ..utils.vector import Vector
@@ -33,6 +33,8 @@ class Point(object):
             raise TypeError("Point() takes one or three arguments, not {}"
                     .format(len(args)))
         self.x, self.y, self.z = unify_types(coords)
+        get_main_logger().debug('Create %s' %(self.__repr__(),))
+
 
     def __repr__(self):
         return "Point({}, {}, {})".format(

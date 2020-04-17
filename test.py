@@ -10,43 +10,10 @@
 
 
 from shape3d import *
-# from shape3d.render import Renderer
 import time
 
-
-import logging
-from logging.config import dictConfig
-logging_config = dict(
-    version=1,
-    formatters=
-    {
-        'f':
-        {
-            'format':'%(asctime)s %(levelname)-9s%(message)s'
-        },
-        'f1':
-        {
-            'format':'%(asctime)s %(levelname)-10s%(message)s'
-        }
-    },
-    handlers={
-        'h': 
-        {
-            'class': 'logging.StreamHandler',
-            'formatter': 'f',
-            'level': logging.DEBUG
-        }
-    },
-    root=
-    {
-        'handlers': ['h'],
-        'level': logging.DEBUG,
-    },
-)
-
-dictConfig(logging_config)
-logger = logging.getLogger()
-
+set_log_level('INFO')
+logger = get_main_logger()
 t1 = time.time()
 o = Point(0,0,0)
 t2 = time.time()
@@ -70,9 +37,8 @@ cpg2 = ConvexPolygen((c,b,f,g))
 cpg3 = ConvexPolygen((c,g,h,d))
 cpg4 = ConvexPolygen((a,b,c,d))
 cpg5 = ConvexPolygen((e,h,g,f))
-
+# set_log_level('WARNING')
 t5 = time.time()
-# cph0 = ConvexPolyhedron((cpg0,cpg1,cpg2,cpg3,cpg4,cpg5))
 cph0 = Parallelepiped(Point(-1,-1,-1),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
 t6 = time.time()
 logger.info('create polyhedron time:%f' %(t6 - t5,))
@@ -83,8 +49,7 @@ cpg15 = ConvexPolygen((h,c,g))
 cpg16 = ConvexPolygen((h,g,f,e))
 cph1 = ConvexPolyhedron((cpg12,cpg13,cpg14,cpg15,cpg16))
 
-# print(cph0)
-# print(volume(cph0))
+# set_log_level('INFO')
 
 a1 = Point(1.5,1.5,1.5)
 b1 = Point(-0.5,1.5,1.5)
@@ -110,7 +75,7 @@ cph2 = ConvexPolyhedron((cpg6,cpg7,cpg8,cpg9,cpg10,cpg11))
 t7 = time.time()
 cph3 = intersection(cph0,cph2)
 t8 = time.time()
-logger.info('calculate intersection time:%f' %(t8 - t7,))
+logger.warning('calculate intersection time:%f' %(t8 - t7,))
 
 cph4 = intersection(cph1,cph2)
 logger.info('volume:%f' % (cph2.volume(),))
@@ -118,7 +83,7 @@ t9 = time.time()
 logger.info('calculate volume time:%f' %(t9 - t8,))
 # t2 = time.time()
 
-logger.info('total time:{}'.format(t9 - t1))
+logger.critical('total time:{}'.format(t9 - t1))
 r = Renderer()
 r.add((cph0,'r',1),normal_length = 0)
 r.add((cph1,'r',1),normal_length = 0)

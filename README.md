@@ -1,4 +1,4 @@
-#shape3d
+# shape3d
 
 
 ![Screenshot](/Screenshot.png?raw=true)
@@ -6,7 +6,7 @@
 shape3d is a small Python library that's useful for 3D analytic geometry.
 It has representations for Points, Vectors, Lines, Planes, Segments, Convex Polygens and Convex Polyhedrons and can do some calculations such as the distance, length, area and volume.
 
-All the geometries are convex so intersection of objects  supported.
+All the geometries are convex so intersection of objects is supported.
 
 The library also implements a naive renderer based on matplotlib.
 
@@ -14,7 +14,6 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 
 
 ## Requirements
-
 
 * [Python](http://www.python.org) 3 (python2 is not supported now)
 * matplotlib and numpy.
@@ -48,17 +47,12 @@ interactive representation of your objects
 
     >>> plane = Plane(Point(0, 0, 0), Vector(1, 0, 0))
     >>> line = Line(Point(0, 0, 5), Vector(1, 0, 0))
-    >>> draw([plane, line, plane.intersection(line)])
 
-[2] nice is of course subject to the eyes of the beholder
 
 ## Todo
 
-Examples
-More objects like triangles
-Full intersection support
-GUI
-Tests
+Examples  
+More objects like Full intersection support
 
 ## License
 

@@ -36,4 +36,6 @@ __all__ = (
     "get_eps",
     "get_sig_figures",
     "set_sig_figures",
+    "get_main_logger",
+    'set_log_level'
 )
