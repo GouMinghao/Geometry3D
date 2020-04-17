@@ -1,5 +1,5 @@
 from .body import GeoBody
-from .polygen import ConvexPolygen
+from .polygen import ConvexPolygen,Parallelogram
 from .point import Point
 from .line import Line
 from .segment import Segment
@@ -10,6 +10,28 @@ from ..utils.constant import *
 import copy
 class ConvexPolyhedron(GeoBody):
     class_level = 5
+    
+    """a special method for Parallelepiped"""
+    @classmethod
+    def Parallelepiped(cls,base_point,v1,v2,v3):
+        if isinstance(base_point,Point) and isinstance(v1,Vector) and isinstance(v2,Vector) and isinstance(v3,Vector):
+            if v1.length() == 0 or v2.length == 0 or v3.length == 0:
+                raise ValueError("The length for the three vector shouldn't be zero")
+            elif v1.parallel(v2) or v1.parallel(v3) or v2.parallel(v3):
+                raise ValueError("The three vectors shouldn't be parallel to each other")
+            else:
+                p_diag = copy.deepcopy(base_point).move(v1).move(v2).move(v3)
+                rectangle0=Parallelogram(base_point,v1,v2)
+                rectangle1=Parallelogram(base_point,v2,v3)
+                rectangle2=Parallelogram(base_point,v1,v3)
+                rectangle3=Parallelogram(p_diag,-v1,-v2)
+                rectangle4=Parallelogram(p_diag,-v2,-v3)
+                rectangle5=Parallelogram(p_diag,-v1,-v3)
+                return cls((rectangle0,rectangle1,rectangle2,rectangle3,rectangle4,rectangle5))
+
+        else:
+            raise TypeError("Parallelepiped should be initialized with Point, Vector, Vector and Vector, but the given types are %s, %s, %s and %s" %(type(base_point),type(v1),type(v2),type(v3)))
+
     """Provides a convex polyhedron in 3d space"""
     def __init__(self,convex_polygens):
         """Input:
@@ -47,7 +69,6 @@ class ConvexPolyhedron(GeoBody):
         number_points = len(self.point_set)
         number_segments = len(self.segment_set)
         number_polygens = len(self.convex_polygens)
-        # print('V:{},E:{},F:{}'.format(number_points,number_segments,number_polygens))
         return number_points - number_segments + number_polygens == 2
 
     def _check_normal(self):
@@ -181,6 +202,5 @@ class ConvexPolyhedron(GeoBody):
             v += pyramid.volume()
         return v
 
-__all__=("ConvexPolyhedron",) 
-
-        
+Parallelepiped = ConvexPolyhedron.Parallelepiped
+__all__=("ConvexPolyhedron","Parallelepiped")

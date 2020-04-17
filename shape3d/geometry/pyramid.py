@@ -6,7 +6,9 @@ from .line import Line
 from .polygen import ConvexPolygen
 
 # Pyramid is an auxilary geometry
+# Direct use is not suggested
 # Calculation of pyramids should be applied using ConvexPolygen
+
 class Pyramid(GeoBody):
     """Provides a pyramid in 3d space"""
     def __init__(self,cp,p):

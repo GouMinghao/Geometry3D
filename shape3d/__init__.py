@@ -5,6 +5,7 @@ from .render import *
 
 __all__ = (
     "ConvexPolyhedron",
+    "Parallelepiped",
     "ConvexPolygen",
     "Parallelogram",
     "Pyramid",

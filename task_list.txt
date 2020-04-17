@@ -62,7 +62,6 @@ ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, Con
 -----------------------------------------------
 
 intersection 补全
-补充特殊图形（平行六面体）
 作平行线，平行面和垂线
 方程？
 测试文件

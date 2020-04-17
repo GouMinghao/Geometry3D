@@ -5,9 +5,10 @@ from .point import Point,origin
 from .segment import Segment
 from .polygen import ConvexPolygen,Parallelogram
 from .pyramid import Pyramid
-from .polyhedron import ConvexPolyhedron
+from .polyhedron import ConvexPolyhedron,Parallelepiped
 __all__ = (
     "ConvexPolyhedron",
+    "Parallelepiped",
     "ConvexPolygen",
     "Parallelogram",
     "Pyramid",

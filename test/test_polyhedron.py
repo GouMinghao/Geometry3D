@@ -75,3 +75,7 @@ class ConvexPolyhedronTest(unittest.TestCase):
         self.assertTrue(origin() in cph00)
         self.assertTrue(a in cph00)
         self.assertFalse(g in cph2)
+    
+    def test_(self):
+        cph = Parallelepiped(Point(-1,-1,-1),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
+        self.assertAlmostEqual(cph.volume(),8)
