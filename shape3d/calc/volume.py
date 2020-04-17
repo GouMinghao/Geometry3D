@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
-from .calc import distance
+from .distance import distance
+
 def volume(arg):
     """Returns the object. This includes
     - Pyramid
@@ -17,3 +18,5 @@ def volume(arg):
         return total_volume
     else:
         raise ValueError("No attribut volume for this object")
+
+__all__=('Volume',)

@@ -62,8 +62,8 @@ ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, Con
 -----------------------------------------------
 
 intersection 补全
-作平行线，平行面和垂线
-方程？
+# 作平行线，平行面和垂线 #
+# 方程 #
 测试文件
 doc
 arxiv论文

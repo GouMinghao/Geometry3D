@@ -13,11 +13,29 @@ from .acute import acute
 from .angle import angle, parallel, orthogonal
 
 def intersection(a, b):
-    """Return the intersection between two objects. This can either be
-    - None (no intersection)
-    - a Point (Line/Line, Plane/Line and Segment/ConvexPolygen intersection)
-    - a Line (Plane/Plane intersection)
-    """
+    """Return the intersection between two objects."""
+    if isinstance(a,Point) and isinstance(b,Point):
+        return inter_point_point(a,b)
+    elif isinstance(a,Point) and isinstance(b,Line):
+        return inter_point_line(a,b)
+    elif isinstance(a,Line) and isinstance(b,Point):
+        return inter_point_line(b,a)
+    elif isinstance(a,Point) and isinstance(b,Plane):
+        return inter_point_plane(a,b)
+    elif isinstance(a,Plane) and isinstance(b,Point):
+        return inter_point_plane(b,a)
+    elif isinstance(a,Point) and isinstance(b,Segment):
+        return inter_point_segment(a,b)
+    elif isinstance(a,Segment) and isinstance(b,Point):
+        return inter_point_segment(b,a)
+    elif isinstance(a,Point) and isinstance(b,ConvexPolygen):
+        return inter_point_convexpolygen(a,b)
+    elif isinstance(a,ConvexPolygen) and isinstance(b,Point):
+        return inter_point_convexpolygen(b,a)
+    elif isinstance(a,Point) and isinstance(b,ConvexPolyhedron):
+        return inter_point_convexpolyhedron(a,b)
+    elif isinstance(a,ConvexPolyhedron) and isinstance(b,Point):
+        return inter_point_convexpolyhedron(b,a)
     if isinstance(a, Line) and isinstance(b, Line):
         if a == b:
             return a
@@ -133,72 +151,6 @@ def intersection(a, b):
     
     raise NotImplementedError("not implement intersecting %s with %s"%(type(a),type(b)))
 
-def distance(a, b):
-    """Returns the distance between two objects. This includes
-    - Point/Point
-    - Line/Point
-    - Line/Line
-    - Plane/Point
-    - Plane/Line
-    """
-    if isinstance(a, Point) and isinstance(b, Point):
-        # The distance between two Points A and B is just the length of
-        # the vector AB
-        return Vector(a, b).length()
-
-    elif isinstance(a, Point) and isinstance(b, Line):
-        # To get the distance between a point and a line, we place an
-        # auxiliary plane P. P is orthogonal to the line and contains
-        # the point. To achieve this, we just use the direction vector
-        # of the line as the normal vector of the plane.
-        aux_plane = Plane(a, b.dv)
-        # We then calculate the intersection of the auxiliary plane and
-        # the line
-        foot = intersection(aux_plane, b)
-        # And finally the distance between the point and the
-        # intersection point, which can be reduced to a Point-Point
-        # distance
-        return distance(a, foot)
-    elif isinstance(a, Line) and isinstance(b, Point):
-        return distance(b, a)
-
-    elif isinstance(a, Line) and isinstance(b, Line):
-        # To get the distance between two lines, we just use the formula
-        #        _   _    _
-        # d = | (q - p) * n |
-        # where n is a vector orthogonal to both lines and with length 1!
-        # We can achieve this by using the normalized cross product
-        normale = a.dv.cross(b.dv).normalized()
-        return abs((b.sv - a.sv) * normale)
-
-    elif isinstance(a, Point) and isinstance(b, Plane):
-        # To get the distance between a point and a plane, we just take
-        # a line that's orthogonal to the plane and goes through the
-        # point
-        aux_line = Line(a, b.n)
-        # We then get the intersection point...
-        foot = intersection(aux_line, b)
-        # ...and finally the distance
-        return distance(a, foot)
-    elif isinstance(a, Plane) and isinstance(b, Point):
-        return distance(b, a)
-
-    elif isinstance(a, Line) and isinstance(b, Plane):
-        if parallel(a, b):
-            # If the line is parallel, every point has the same distance
-            # to the plane, so we just pick one point and calculate its
-            # distance
-            return distance(Point(a.sv), b)
-        # If they are not parallel, they will eventually intersect, so
-        # the distance is 0
-        return 0.0
-    elif isinstance(a, Plane) and isinstance(b, Line):
-        return distance(b, a)
-
-    return NotImplemented
-
-
-
 def ConvexPolyhedron_intersection(cph1,cph2):
     """Input:
     cph1: a ConvexPolyhedron
@@ -254,3 +206,88 @@ def ConvexPolyhedron_ConvexPolygen_intersection(cph,cpg):
     # sort the point in __init__ in ConvexPolygen class
     return ConvexPolygen(tuple(point_set))
 
+def inter_point_point(p1,p2):
+    """intersection function for Point and Point
+    input:
+    p1: Point
+    p2: Point
+
+    output:
+    intersection
+    """
+    if p1==p2:
+        return p1
+    else:
+        return None
+
+def inter_point_line(p,l):
+    """intersection function for Point and Line
+    input:
+    p: Point
+    l: Line
+
+    output:
+    intersection
+    """
+    if p in l:
+        return p
+    else:
+        return None
+
+def inter_point_plane(pnt,pln):
+    """intersection function for Point and Plane
+    input:
+    pnt: Point
+    pln: Plane
+
+    output:
+    intersection
+    """
+    if pnt in pln:
+        return pnt
+    else:
+        return None
+
+def inter_point_segment(p,s):
+    """intersection function for Point and Segment
+    input:
+    p: Point
+    s: Segment
+
+    output:
+    intersection
+    """
+    if p in s:
+        return p
+    else:
+        return None
+
+def inter_point_convexpolygen(p,cpg):
+    """intersection function for Point and ConvexPolygen
+    input:
+    p: Point
+    cpg: ConvexPolygen
+
+    output:
+    intersection
+    """
+    if p in cpg:
+        return p
+    else:
+        return None
+
+def inter_point_convexpolyhedron(p,cph):
+    """intersection function for Point and ConvexPolyhedron
+    input:
+    p: Point
+    cph: ConvexPolyhedron
+
+    output:
+    intersection
+    """
+    if p in cph:
+        return p
+    else:
+        return None
+    
+__all__=('intersection',)

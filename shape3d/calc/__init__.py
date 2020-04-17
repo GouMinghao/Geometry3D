@@ -1,4 +1,5 @@
-from .calc import distance, intersection
+from .distance import distance
+from .intersection import intersection
 from .angle import angle,parallel,orthogonal
 from .volume import volume
 

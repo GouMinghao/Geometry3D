@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 from .arrow import Arrow
         
-
+from ..utils.logger import get_main_logger
 class MatplotlibRenderer():
     """ Renderer module to visualize geometries"""
     def __init__(self):
@@ -28,7 +28,7 @@ class MatplotlibRenderer():
         """
         fig = plt.figure()
         ax = fig.gca(projection='3d')
-
+        get_main_logger().info('Showing geometries with %d points, %d segments, %d arrows using matplotlib' %(len(self.point_set),len(self.segment_set),len(self.arrow_set)))
         for point_tuple in self.point_set:
             point = point_tuple[0]
             color = point_tuple[1]
