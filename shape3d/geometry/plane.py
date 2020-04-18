@@ -11,15 +11,15 @@ class Plane(GeoBody):
     
     @classmethod
     def xy_plane(cls):
-        return cls(origin(),z_unit_vector)
+        return cls(origin(),z_unit_vector())
 
     @classmethod
     def yz_plane(cls):
-        return cls(origin(),x_unit_vector)
+        return cls(origin(),x_unit_vector())
 
     @classmethod
     def xz_plane(cls):
-        return cls(origin(),y_unit_vector)
+        return cls(origin(),y_unit_vector())
     
     def __init__(self, *args):
         """Plane(Point, Point, Point):

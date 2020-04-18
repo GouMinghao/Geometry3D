@@ -7,7 +7,7 @@ logging_config = dict(
     formatters={
         'f':
         {
-            'format': '%(asctime)s %(levelname)-9s%(message)s'
+            'format': '%(asctime)s [shape3d %(levelname)s] %(message)s'
         },
     },
     handlers={

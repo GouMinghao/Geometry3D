@@ -4,18 +4,25 @@ from .point import Point
 from .plane import Plane
 from ..utils.vector import Vector
 from .line import Line
-from ..utils.constant import *
+from ..utils.constant import get_eps
+from ..utils.logger import get_main_logger
 import math
-
+import copy
 class Segment(GeoBody):
     class_level = 3
     """Provides a line segment in 3d space"""
     def __init__(self,a,b):
+        a = copy.deepcopy(a)
+        b = copy.deepcopy(b)
         if isinstance(a,Point) and isinstance(b,Point):
+            if a == b:
+                raise ValueError("Cannot initialize a Segment with two identical Points")
             self.line = Line(a,b)
             self.start_point = a
             self.end_point = b
         elif isinstance(a,Point) and isinstance(b,Vector):
+            if b.length() < get_eps():
+                raise ValueError("Cannot initialize a Segment with the length of Vector is 0")
             self.line = Line(a,b)
             self.start_point = a
             self.end_point = Point(a.pv() + b)
@@ -29,12 +36,25 @@ class Segment(GeoBody):
     def __repr__(self):
         return "Segment({}, {})".format(self.start_point, self.end_point)
 
-    def __contains__(self, point):
+    def __contains__(self, other):
         """Checks if a point lies on a segment"""
-        r1 = point in self.line
-        r2 = point.x >= (min(self.start_point.x,self.end_point.x) - get_eps())
-        r3 = point.x <= (max(self.start_point.x,self.end_point.x) + get_eps())
-        return r1 and r2 and r3
+        if isinstance(other,Point):
+            r1 = other in self.line
+            v = Vector(self.start_point,self.end_point)
+            v1 = Vector(self.start_point,other)
+            if v1.length() < get_eps():
+                return True
+            else:
+                reletive_length = v1 * v / (v.length()) / (v.length())
+                return r1 and (reletive_length > -get_eps()) and (reletive_length < 1 + get_eps())
+            # r1 = point in self.line
+            # r2 = point.x >= (min(self.start_point.x,self.end_point.x) - get_eps())
+            # r3 = point.x <= (max(self.start_point.x,self.end_point.x) + get_eps())
+        elif isinstance(other,Segment):
+            return (other.start_point in self) and (other.end_point in self)
+        else:
+            get_main_logger().warning("Calling type {} in type {} which is always False".format(type(other),type(self)))
+            return False
 
     def in_(self,other):
         """other can be plane or line"""

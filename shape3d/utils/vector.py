@@ -135,7 +135,7 @@ class Vector(object):
         return float(1 / self.length()) * self
     unit = normalized
 
-x_unit_vector = Vector.x_unit_vector()
-y_unit_vector = Vector.y_unit_vector()
-z_unit_vector = Vector.z_unit_vector()
+x_unit_vector = Vector.x_unit_vector
+y_unit_vector = Vector.y_unit_vector
+z_unit_vector = Vector.z_unit_vector
 __all__ = ("Vector","x_unit_vector","y_unit_vector","z_unit_vector")

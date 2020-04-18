@@ -3,17 +3,32 @@ import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
 from ..geometry.point import Point
-from ..utils.solver import solve, null
-from ..utils.vector import Vector
 from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
+
+from ..utils.solver import solve, null
+from ..utils.vector import Vector
+from ..utils.logger import get_main_logger
+
 from .acute import acute
 from .angle import angle, parallel, orthogonal
 
 def intersection(a, b):
-    """Return the intersection between two objects."""
+    """Return the intersection between two objects.
+    Input:
+    a: GeoBody
+    b: GeoBody
+    
+    Output:
+    intersection
+    maybe None or GeoBody
+    The intersection operation is closed.
+    """
+    get_main_logger().debug('Calling intersection with {} and {}'.format(a,b))
+    # There are totally 6 * 6 = 36 situations
+    # Point
     if isinstance(a,Point) and isinstance(b,Point):
         return inter_point_point(a,b)
     elif isinstance(a,Point) and isinstance(b,Line):
@@ -36,53 +51,21 @@ def intersection(a, b):
         return inter_point_convexpolyhedron(a,b)
     elif isinstance(a,ConvexPolyhedron) and isinstance(b,Point):
         return inter_point_convexpolyhedron(b,a)
-    if isinstance(a, Line) and isinstance(b, Line):
-        if a == b:
-            return a
-        else:
-            # For the line-line intersection, we have to solve
-            # s1 + λ u1 = t1 + μ v1
-            # s2 + λ u2 = t2 + μ v2
-            # s3 + λ u3 = t3 + μ v3
-            # rearrange a bit, and you get
-            solution = solve([
-                [a.dv[0], -b.dv[0], b.sv[0] - a.sv[0]],
-                [a.dv[1], -b.dv[1], b.sv[1] - a.sv[1]],
-                [a.dv[2], -b.dv[2], b.sv[2] - a.sv[2]],
-            ])
-            # No intersection
-            if not solution:
-                return None
-            # We get λ and μ, we need to pick one and plug it into the
-            # right equation
-            lmb, mu = solution()
-            lmb = float(lmb)
-            # could've chosen b.sv + mu * b.dv instead, it doesn't matter
-            # as they will point (pun intended) to the same point.
-            return Point(a.sv + lmb * a.dv)
-
+    # Line
+    elif isinstance(a, Line) and isinstance(b, Line):
+        return inter_line_line(a,b)
     elif isinstance(a, Line) and isinstance(b, Plane):
-        # the line can be contained in the plane, in this case the whole
-        # line is the intersection
-        if a in b:
-            return a
-        # if they are parallel, there is no intersection
-        elif parallel(a, b):
-            return None
-        # Given the plane in general form, if we insert the line
-        # coordinate by coordinate we get
-        # a (s1 + μ u1) + b (s2 + μ u2) + c (s3 + μ u3) = d
-        # where s is the support vector of the line
-        #       u is the direction vector of the line
-        #       μ is the parameter
-        # rearrange and solve for the parameter:
-        mu = (b.n * b.p.pv() - b.n * a.sv) / (b.n * a.dv)
-        mu = float(mu)
-        return Point(a.sv + mu * a.dv)
-
+        return inter_line_plane(a,b)
     elif isinstance(a, Plane) and isinstance(b, Line):
-        return intersection(b, a)
-
+        return inter_line_plane(b,a)
+    elif isinstance(a, Line) and isinstance(b, Segment):
+        return inter_line_segment(a,b)
+    elif isinstance(a, Segment) and isinstance(b, Line):
+        return inter_line_segment(b,a)
+    elif isinstance(a, Line) and isinstance(b,ConvexPolygen):
+        return inter_line_convexpolygen(a,b)
+    elif isinstance(a, ConvexPolygen) and isinstance(b, Line):
+        return inter_line_convexpolygen(b,a)
     elif isinstance(a, Plane) and isinstance(b, Plane):
         # if you solve
         # a x1 + b x2 + c x3 = d
@@ -290,4 +273,121 @@ def inter_point_convexpolyhedron(p,cph):
     else:
         return None
     
+def inter_line_line(l1,l2):
+    """intersection function for Line and Line
+    input:
+    l1: Line
+    l2: Line
+
+    output:
+    intersection
+    """
+    if l1 == l2:
+        return l1
+    else:
+        # For the line-line intersection, we have to solve
+        # s1 + λ u1 = t1 + μ v1
+        # s2 + λ u2 = t2 + μ v2
+        # s3 + λ u3 = t3 + μ v3
+        # rearrange a bit, and you get
+        solution = solve([
+            [l1.dv[0], -l2.dv[0], l2.sv[0] - l1.sv[0]],
+            [l1.dv[1], -l2.dv[1], l2.sv[1] - l1.sv[1]],
+            [l1.dv[2], -l2.dv[2], l2.sv[2] - l1.sv[2]],
+        ])
+        # No intersection
+        if not solution:
+            return None
+        # We get λ and μ, we need to pick one and plug it into the
+        # right equation
+        lmb, mu = solution()
+        lmb = float(lmb)
+        # could've chosen b.sv + mu * b.dv instead, it doesn't matter
+        # as they will point (pun intended) to the same point.
+        return Point(l1.sv + lmb * l1.dv)
+
+def inter_line_plane(l,p):
+    """intersection function for Line and Plane 
+    input:
+    l: Line
+    p: Plane
+
+    output:
+    intersection
+    """
+    # the line can be contained in the plane, in this case the whole
+    # line is the intersection
+    if l in p:
+        return l
+    # if they are parallel, there is no intersection
+    elif parallel(l, p):
+        return None
+    # Given the plane in general form, if we insert the line
+    # coordinate by coordinate we get
+    # a (s1 + μ u1) + b (s2 + μ u2) + c (s3 + μ u3) = d
+    # where s is the support vector of the line
+    #       u is the direction vector of the line
+    #       μ is the parameter
+    # rearrange and solve for the parameter:
+    mu = (p.n * p.p.pv() - p.n * l.sv) / (p.n * l.dv)
+    mu = float(mu)
+    return Point(l.sv + mu * l.dv)
+
+def inter_line_segment(l,s):
+    """intersection function for Line and Segment 
+    input:
+    l: Line
+    s: Segment
+
+    output:
+    intersection
+    """
+    inter = intersection(l,s.line)
+    if inter is None:
+        return None
+    elif isinstance(inter,Line):
+        return s
+    elif isinstance(inter,Point):
+        return intersection(inter,s)
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
+def inter_line_convexpolygen(l,cpg):
+    """intersection function for Line and ConvexPolygen 
+    input:
+    l: Line
+    cpg: ConvexPolygen
+
+    output:
+    intersection
+    """
+    inter = intersection(l,cpg.plane)
+    if inter is None:
+        return None
+    elif isinstance(inter,Line):
+        point_set = set()
+        for segment in cpg.segments():
+            inter_l_s = intersection(segment,l)
+            if inter_l_s is None:
+                continue
+            elif isinstance(inter_l_s,Point):
+                point_set.add(inter_l_s)
+            elif isinstance(inter_l_s,Segment):
+                return inter_l_s
+            else:
+                raise TypeError("Bug detected! please contact the author")
+        if len(point_set) == 1:
+            point_list = list(point_set)
+            return point_list[0]
+        if len(point_set) == 2:
+            point_list = list(point_set)
+            return Segment(point_list[0],point_list[1])
+        else:
+            get_main_logger().error("len: %d" %(len(point_set,)))
+            raise TypeError("Bug detected! please contact the author")
+    elif isinstance(inter,Point):
+        return intersection(inter,cpg)
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
 __all__=('intersection',)
