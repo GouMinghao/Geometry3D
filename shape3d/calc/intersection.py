@@ -27,6 +27,7 @@ def intersection(a, b):
     maybe None or GeoBody
     The intersection operation is closed.
     """
+    # This is a wrapper function
     get_main_logger().debug('Calling intersection with {} and {}'.format(a,b))
     # There are totally 6 * 6 = 36 situations
     # Point
@@ -71,63 +72,28 @@ def intersection(a, b):
         return inter_line_convexpolyhedron(a,b)
     elif isinstance(a, ConvexPolyhedron) and isinstance(b, Line):
         return inter_line_convexpolyhedron(b,a)
+    # plane
     elif isinstance(a, Plane) and isinstance(b, Plane):
-        # if you solve
-        # a x1 + b x2 + c x3 = d
-        # e x1 + f x2 + g x3 = h
-        # you will get infinitely many solutions (if the planes are
-        # intersecting). All those solutions are points on the 
-        # intersection line. So we just chose two solutions, i.e.
-        # two points, and lay a line through both of these.
-        solution = solve([
-            list(a.n) + [a.n * a.p.pv()],
-            list(b.n) + [b.n * b.p.pv()],
-        ])
-        if not solution:
-            return None
-        # Choose two arbitrary points/solutions
-        p1, p2 = Point(solution(1)), Point(solution(2))
-        return Line(p1.pv(), p2.pv() - p1.pv())
-
+        return inter_plane_plane(a,b)
+    elif isinstance(a, Plane) and isinstance(b,Segment):
+        return inter_plane_segment(a,b)
+    elif isinstance(a,Segment) and isinstance(b,Plane):
+        return inter_plane_segment(b,a)
+    elif isinstance(a, Plane) and isinstance(b, ConvexPolygen):
+        return inter_plane_convexpolygen(a,b)
+    elif isinstance(a, ConvexPolygen) and isinstance(a, Plane):
+        return inter_plane_convexpolygen(b,a)
+    elif isinstance(a, Plane) and isinstance(b, ConvexPolyhedron):
+        return inter_plane_convexpolyhedron(a,b)
+    elif isinstance(a,ConvexPolyhedron) and isinstance(b, Plane):
+        return inter_plane_convexpolyhedron(b,a)
+    # segment
     elif isinstance(a,Segment) and isinstance(b,Segment):
-        inter = intersection(a,b)
-        if inter is None:
-            # parallel
-            return None
-        elif isinstance(inter,Line):
-            pass
-            # on the same line:
-            # it seems that there are so many cases
-        else:
-            # point
-            if (inter in a) and (inter in b):
-                return inter
+        return inter_segment_segment(a,b)
     elif isinstance(a,Segment) and isinstance(b,ConvexPolygen):
-        # two situations. The segment on the plane and the segment not on the plane.
-        p = intersection(a.line,b.plane)
-        if isinstance(p,Point):
-            if p is None:
-                return None
-            elif (not p in a) or (not p in b):
-                return None
-            else:
-                return p
-        
-        elif isinstance(p,Line):
-            if (a.start_point in b) and (a.end_point in b):
-                return a
-            else:
-                intersection_point_set = set()
-                #######################
-                # not implemented now #
-                #######################
-        elif p is None:
-            return None
-    
+        return inter_segment_convexpolygen(a,b)
     elif isinstance(a,ConvexPolygen) and isinstance(b,Segment):
-        # Segment in ConvexPolygen needs to be handled
-        return intersection(b,a)
-    
+        return inter_segment_convexpolygen(b,a)
     elif isinstance(a,ConvexPolyhedron) and isinstance(b,ConvexPolyhedron):
         return ConvexPolyhedron_intersection(a,b)
     
@@ -422,5 +388,174 @@ def inter_line_convexpolyhedron(l,cph):
     elif len(set_point) >= 2:
         list_point = list(set_point)
         return get_segment_from_point_list(list_point)
-        
+
+def inter_plane_plane(a,b):
+    '''Input:
+    a: Plane
+    b: Plane
+
+    Output:
+    either None, Line or Plane which cannot be Point
+    '''
+    # if you solve
+    # a x1 + b x2 + c x3 = d
+    # e x1 + f x2 + g x3 = h
+    # you will get infinitely many solutions (if the planes are
+    # intersecting). All those solutions are points on the 
+    # intersection line. So we just chose two solutions, i.e.
+    # two points, and lay a line through both of these.
+    if a== b:
+        # Plane
+        return a
+    elif a.n.parallel(b.n):
+        # None
+        return None
+    else:
+        # Line
+        solution = solve([
+            list(a.n) + [a.n * a.p.pv()],
+            list(b.n) + [b.n * b.p.pv()],
+        ])
+        if not solution:
+            raise TypeError("Bug detected! please contact the author")
+        # get_main_logger().debug('solution:{}'.format(solution()))
+        # Choose two arbitrary points/solutions
+        p1, p2 = Point(solution(1)), Point(solution(2))
+        return Line(p1.pv(), p2.pv() - p1.pv())
+
+def inter_plane_segment(a,b):
+    '''Input:
+    a: Plane
+    b: Segment
+    either None, Point or Segment
+    '''
+    inter_p_l = intersection(a,b.line)
+    if inter_p_l is None:
+        return None
+    elif isinstance(inter_p_l,Point):
+        return intersection(inter_p_l,b)
+    elif isinstance(inter_p_l,Line):
+        return b
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
+def inter_plane_convexpolygen(a,b):
+    '''Input:
+    a: Plane
+    b: ConvexPolygen
+
+    Output:
+    The intersection
+    '''
+    inter_p_cpg = intersection(a,b.plane)
+    if inter_p_cpg is None:
+        return None
+    elif isinstance(inter_p_cpg,Plane):
+        return b
+    elif isinstance(inter_p_cpg,Line):
+        return intersection(inter_p_cpg,b)
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
+def inter_plane_convexpolyhedron(a,b):
+    '''Input:
+    a: Plane
+    b: ConvexPolyhedron
+
+    Output:
+    The intersection
+    '''
+    # check cpgs first, if no cpg on the face next or the intersection is the cpg
+    # check segments, if any intersection is segment, then return segment.
+    # if no intersection is segment and cpg, then calculate the point_set and calculate the intersection cpg
+    for cpg in b.convex_polygens:
+        if cpg in a:
+            return cpg
+    point_set = set()
+    for s in b.segment_set:
+        inter_s_p = intersection(s,a)
+        if inter_s_p is None:
+            continue
+        elif isinstance(inter_s_p,Segment):
+            return inter_s_p
+        elif isinstance(inter_s_p,Point):
+            point_set.add(inter_s_p)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    point_tuple = tuple(point_set)
+    if len(point_tuple) == 0:
+        return None
+    elif len(point_tuple) == 1:
+        return point_tuple[0]
+    elif len(point_tuple) == 2:
+        raise TypeError("Bug detected! please contact the author")
+    else:
+        return ConvexPolygen(point_tuple)
+
+def inter_segment_segment(a,b):
+    '''Input:
+    a: Segment
+    b: Segment
+
+    Output:
+    The intersection
+    '''
+    if a.line == b.line:
+        point_set = set()
+        if a.start_point in b:
+            point_set.add(a.start_point)
+        if a.end_point in b:
+            point_set.add(a.end_point)
+        if b.start_point in a:
+            point_set.add(b.start_point)
+        if b.end_point in a:
+            point_set.add(b.end_point)
+        if len(point_set) == 0:
+            return None
+        point_list = list(point_set)
+        if len(point_set) == 1:
+            return point_list[0]
+        elif len(point_set) == 2:
+            return Segment(point_list[0],point_list[1])
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    else: 
+        inter_l_l = intersection(a.line,b.line)
+        if inter_l_l is None:
+            return None
+        elif isinstance(inter_l_l,Point):
+            if inter_l_l in a and inter_l_l in b:
+                return inter_l_l
+            else:
+                return None
+        else:
+            raise TypeError("Bug detected! please contact the author")
+
+def inter_segment_convexpolygen(a,b):
+    '''Input:
+    a: Segment
+    b: ConvexPolygen
+
+    Output:
+    The intersection
+    '''
+    inter_l_p = intersection(a.line,b.plane)
+    if inter_l_p is None:
+        return None
+    elif isinstance(inter_l_p,Point):
+        if (not inter_l_p in a) or (not inter_l_p in b):
+            return None
+        else:
+            return inter_l_p
+    elif isinstance(inter_l_p,Line):
+        inter_l_cpg = intersection(a.line,b)
+        if inter_l_cpg is None:
+            return None
+        elif isinstance(inter_l_cpg,Point) or isinstance(inter_l_cpg,Segment):
+            return intersection(inter_l_cpg,a)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
 __all__=('intersection',)

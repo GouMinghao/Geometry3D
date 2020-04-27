@@ -14,6 +14,12 @@ import copy
 
 # import numpy as np
 def get_segment_from_point_list(point_list):
+    '''Input:
+    point_list: a list of Points
+
+    Output:
+    The longest segment between the points
+    '''
     if len(point_list) < 2:
         raise ValueError('The length of point list mush be no less than 2')
     p0 = point_list[0]

@@ -46,13 +46,13 @@ Line        - Segment          -> None, Point, Segment        OK
 Line        - ConvexPolygen    -> None, Point, Segment        OK
 Line        - ConvexPolyhedron -> None, Point, Segment        OK
 
-Plane       - Plane            -> None, Point, Line, Plane
-Plane       - Segment          -> None, Point, Segment
-Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen
-Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen
+Plane       - Plane            -> None, Line, Plane                     OK
+Plane       - Segment          -> None, Point, Segment                  OK
+Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen   OK
+Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen   OK
 
-Segment     - Segment          -> None, Point, Segment
-Segment     - ConvexPolygen    -> None, Point, Segment
+Segment     - Segment          -> None, Point, Segment          OK
+Segment     - ConvexPolygen    -> None, Point, Segment          OK
 Segment     - ConvexPolyhedron -> None, Point, Segment
 
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen
