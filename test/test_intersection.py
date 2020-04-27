@@ -5,29 +5,29 @@ from shape3d import *
 import shape3d
 
 class PointIntersectionTest(unittest.TestCase):
-    def test_point_point(self):
+    def test_intersection_point_point(self):
         self.assertEqual(intersection(origin(),Point(0,0,0)),origin())
         self.assertEqual(intersection(Point(0,0,0),origin()),origin())
         self.assertTrue(intersection(origin(),Point(1,1,0)) is None)
     
-    def test_point_line(self):
+    def test_intersection_point_line(self):
         self.assertTrue(intersection(x_axis(),origin()) == origin())
         self.assertTrue(intersection(origin(),x_axis()) == origin())
         self.assertTrue(intersection(Point(1,0,3),y_axis()) is None)
     
-    def test_point_plane(self):
+    def test_intersection_point_plane(self):
         self.assertEqual(intersection(Point(1,2,0),xy_plane()),Point(1,2,0))
         self.assertEqual(intersection(xy_plane(),Point(1,2,0)),Point(1,2,0))
         self.assertTrue(intersection(xy_plane(),Point(0,0,0.1)) is None)
 
-    def test_point_segment(self):
+    def test_intersection_point_segment(self):
         self.assertEqual(intersection(origin(),Segment(Point(-1,0,0),Point(1,0,0))),origin())
         self.assertEqual(intersection(Segment(Point(-1,0,0),Point(1,0,0)),origin()),origin())
         self.assertEqual(intersection(Segment(Point(0,0,0),Point(1,0,0)),origin()),origin())
         self.assertEqual(intersection(Segment(Point(-1,-1,-1),Point(1,1,1)),origin()),origin())
         self.assertTrue(intersection(Segment(Point(-1,-1,-1),Point(1,1,1)),Point(0,0,0.1)) is None)
 
-    def test_point_convexpolygen(self):
+    def test_intersection_point_convexpolygen(self):
         cpg = Parallelogram(origin(),Vector(1,0,1),Vector(0,1,1))
         self.assertEqual(intersection(origin(),cpg),origin())
         self.assertEqual(intersection(Point(1,0,1),cpg),Point(1,0,1))
@@ -35,7 +35,7 @@ class PointIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(cpg,Point(0.5,0.5,1)),Point(0.5,0.5,1))
         self.assertTrue(intersection(cpg,Point(0.5,0.5,1.02)) is None)
 
-    def test_point_convexpolyhedron(self):
+    def test_intersection_point_convexpolyhedron(self):
         cph = Parallelepiped(origin(),Vector(1,0,0),Vector(0,1,0),Vector(0,0,2))
         self.assertEqual(intersection(cph,origin()),origin())
         self.assertEqual(intersection(Point(0.5,0,0),cph),Point(0.5,0,0))
@@ -44,7 +44,7 @@ class PointIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cph,Point(-0.1,0.5,0.5)) is None)
 
 class LineIntersectionTest(unittest.TestCase):
-    def test_line_line(self):
+    def test_intersection_line_line(self):
         l1 = x_axis()
         l2 = Line(Point(1,0,0),Point(2,0,0))
         l3 = z_axis()
@@ -53,7 +53,7 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(l1,l3),origin())
         self.assertTrue(intersection(l3,l4) is None)
     
-    def test_line_plane(self):
+    def test_intersection_line_plane(self):
         l1 = x_axis()
         p1 = xy_plane()
         l2 = z_axis()
@@ -62,7 +62,7 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(p1,l2),origin())
         self.assertTrue(intersection(p1,l3) is None)
     
-    def test_line_segment(self):
+    def test_intersection_line_segment(self):
         l1 = x_axis()
         s1 = Segment(origin(),Point(1,0,0))
         l2 = z_axis()
@@ -75,7 +75,7 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(s3,l2) is None)
         self.assertTrue(intersection(s4,l2) is None)
 
-    def test_line_convexpolygen(self):
+    def test_intersection_line_convexpolygen(self):
         cpg = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         l1 = x_axis()
         l2 = Line(Point(1,1,0),Point(0,0,0))
@@ -96,3 +96,33 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cpg,l8) is None)
         self.assertTrue(intersection(cpg,l9) is None)
         
+    def test_intersection_line_convexpolyhedron(self):
+        cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
+        l1 = x_axis()
+        l2 = Line(Point(1,1,0),Point(0,0,0))
+        l3 = Line(Point(1,1,0),Point(0.5,0,0))
+        l4 = Line(Point(0.5,0,0),Point(1,0.5,0))
+        l5 = Line(Point(1,0,0),Point(2,1,0))
+        l6 = Line(Point(0.5,0.5,0),Point(0.6,0.6,1))
+        l7 = Line(origin(),Point(1,1,1))
+        l8 = Line(Point(0,0,1), Point(1,1,1))
+        l9 = Line(Point(0,0,0.5),Point(1,1,1))
+        l10 = Line(Point(-1,-1,-1),Point(-2,-2,0))
+        l11 = Line(Point(-1,0,0),Point(1,0,1))
+        l12 = Line(Point(0,0,2),Point(2,2,0))
+        l13 = Line(Point(1,-1,0),Point(0,1,2))
+        l14 = Line(Point(0.5,0,0),Point(1,1,1))
+        self.assertEqual(intersection(cph,l1),Segment(origin(),Point(1,0,0)))
+        self.assertEqual(intersection(cph,l2),Segment(origin(),Point(1,1,0)))
+        self.assertEqual(intersection(cph,l3),Segment(Point(0.5,0,0),Point(1,1,0)))
+        self.assertEqual(intersection(cph,l4),Segment(Point(0.5,0,0),Point(1,0.5,0)))
+        self.assertEqual(intersection(cph,l5),Point(1,0,0))
+        self.assertEqual(intersection(cph,l6),Segment(Point(0.5,0.5,0),Point(0.6,0.6,1)))
+        self.assertEqual(intersection(cph,l7),Segment(Point(0,0,0),Point(1,1,1)))
+        self.assertEqual(intersection(cph,l8),Segment(Point(0,0,1),Point(1,1,1)))
+        self.assertEqual(intersection(cph,l9),Segment(Point(0,0,0.5),Point(1,1,1)))
+        self.assertTrue(intersection(cph,l10) is None)
+        self.assertEqual(intersection(cph,l11),Segment(Point(0,0,0.5),Point(1,0,1)))
+        self.assertEqual(intersection(cph,l12),Point(1,1,1))
+        self.assertEqual(intersection(cph,l13),Point(0.5,0,1))
+        self.assertEqual(intersection(cph,l14),Segment(Point(0.5,0,0),Point(1,1,1)))

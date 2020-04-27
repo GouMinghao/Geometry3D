@@ -14,6 +14,7 @@ from ..utils.logger import get_main_logger
 
 from .acute import acute
 from .angle import angle, parallel, orthogonal
+from .aux_calc import get_segment_from_point_list
 
 def intersection(a, b):
     """Return the intersection between two objects.
@@ -66,6 +67,10 @@ def intersection(a, b):
         return inter_line_convexpolygen(a,b)
     elif isinstance(a, ConvexPolygen) and isinstance(b, Line):
         return inter_line_convexpolygen(b,a)
+    elif isinstance(a, Line) and isinstance(b, ConvexPolyhedron):
+        return inter_line_convexpolyhedron(a,b)
+    elif isinstance(a, ConvexPolyhedron) and isinstance(b, Line):
+        return inter_line_convexpolyhedron(b,a)
     elif isinstance(a, Plane) and isinstance(b, Plane):
         # if you solve
         # a x1 + b x2 + c x3 = d
@@ -390,4 +395,32 @@ def inter_line_convexpolygen(l,cpg):
     else:
         raise TypeError("Bug detected! please contact the author")
 
+def inter_line_convexpolyhedron(l,cph):
+    """intersection function for Line and ConvexPolygen 
+    input:
+    l: Line
+    cpg: ConvexPolygen
+
+    output:
+    intersection
+    """
+    set_point = set()
+    for cpg in cph.convex_polygens:
+        inter_cpg_l = intersection(l,cpg)
+        if isinstance(inter_cpg_l,Segment):
+            return inter_cpg_l
+        elif isinstance(inter_cpg_l,Point):
+            set_point.add(inter_cpg_l)
+        elif inter_cpg_l is None:
+            pass
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    if len(set_point) == 0:
+        return None
+    elif len(set_point) == 1:
+        return list(set_point)[0]
+    elif len(set_point) >= 2:
+        list_point = list(set_point)
+        return get_segment_from_point_list(list_point)
+        
 __all__=('intersection',)

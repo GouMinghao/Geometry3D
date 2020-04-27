@@ -37,5 +37,8 @@ __all__ = (
     "get_sig_figures",
     "set_sig_figures",
     "get_main_logger",
-    'set_log_level'
+    "set_log_level",
+    "get_projection_length",
+    "get_relative_projection_length",
+    "get_segment_from_point_list"
 )

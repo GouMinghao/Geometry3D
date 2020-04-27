@@ -33,18 +33,18 @@ intersection:
 -----------------------------------------------
 obj1          obj2                output obj
 -----------------------------------------------
-Point       - Point            -> None, Point
-Point       - Line             -> None, Point
-Point       - Plane            -> None, Point
-Point       - Segment          -> None, Point
-Point       - ConvexPolygen    -> None, Point
-Point       - ConvexPolyhedron -> None, Point
+Point       - Point            -> None, Point                 OK
+Point       - Line             -> None, Point                 OK
+Point       - Plane            -> None, Point                 OK
+Point       - Segment          -> None, Point                 OK  
+Point       - ConvexPolygen    -> None, Point                 OK
+Point       - ConvexPolyhedron -> None, Point                 OK
 
-Line        - Line             -> None, Point, Line
-Line        - Plane            -> None, Point, Line
-Line        - Segment          -> None, Point, Segment
-Line        - ConvexPolygen    -> None, Point, Segment
-Line        - polygedron       -> None, Point, Segment
+Line        - Line             -> None, Point, Line           OK
+Line        - Plane            -> None, Point, Line           OK
+Line        - Segment          -> None, Point, Segment        OK
+Line        - ConvexPolygen    -> None, Point, Segment        OK
+Line        - ConvexPolyhedron -> None, Point, Segment        OK
 
 Plane       - Plane            -> None, Point, Line, Plane
 Plane       - Segment          -> None, Point, Segment
