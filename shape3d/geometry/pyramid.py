@@ -24,16 +24,18 @@ class Pyramid(GeoBody):
             if self.point in self.convex_polygen.plane:
                 raise ValueError('Cannot create Pyramid with point on the polygen plane')
         else:
-            raise ValueError('Cannot create Pyramid with type:%s and %s' % (type(a),type(b)))
+            raise ValueError('Cannot create Pyramid with type:%s and %s' % (type(cp),type(p)))
     
     def __repr__(self):
         return "Pyramid({}, {})".format(self.convex_polygen, self.point)
     
     def height(self):
+        """ return the height of the pyramid"""
         p0 = self.convex_polygen.points[0]
         return abs(Vector(p0,self.point)*self.convex_polygen.plane.n.normalized())
     
     def volume(self):
+        """ return the volume of the pryamid"""
         h = self.height()
         return 1 / 3 * h * self.convex_polygen.area()
 

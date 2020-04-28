@@ -95,4 +95,47 @@ def get_segment_convexpolyhedron_intersection_point_set(s,cph):
             raise TypeError("Bug detected! please contact the author")
     return point_set
 
-__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set')
+def get_segment_convexpolygen_intersection_point_set(s,cpg):
+    '''
+    Input:
+    s: Segment
+    cpg: ConvexPolygen
+
+    Output:
+    a set of intersection points
+    '''
+    point_set = set()
+        # inter_cpg_s = cpg.intersection(s)
+        # if inter_cpg_s is None:
+        #     continue
+        # elif isinstance(inter_cpg_s,Segment):
+        #     continue
+        # elif isinstance(inter_cpg_s,Point):
+        #     point_set.add(inter_cpg_s)
+        # else:
+        #     raise TypeError("Bug detected! please contact the author")
+    for seg in cpg.segments():
+        inter_s_s = seg.intersection(s)
+        if inter_s_s is None:
+            continue
+        elif isinstance(inter_s_s,Segment):
+            continue
+        elif isinstance(inter_s_s,Point):
+            point_set.add(inter_s_s)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    return point_set
+
+def points_in_a_line(points):
+    if len(points) < 3:
+        return True
+    else:
+        p0 = points[0]
+        p1 = points[1]
+        l = Line(p0,p1)
+        for i in range(2,len(points)):
+            if not points[i] in l:
+                return False
+        return True
+
+__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygen_intersection_point_set','points_in_a_line')

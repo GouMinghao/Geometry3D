@@ -14,7 +14,7 @@ from ..utils.logger import get_main_logger
 
 from .acute import acute
 from .angle import angle, parallel, orthogonal
-from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set
+from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set,get_segment_convexpolygen_intersection_point_set,points_in_a_line
 
 def intersection(a, b):
     """Return the intersection between two objects.
@@ -30,8 +30,11 @@ def intersection(a, b):
     # This is a wrapper function
     get_main_logger().debug('Calling intersection with {} and {}'.format(a,b))
     # There are totally 6 * 6 = 36 situations
+    if a is None or b is None:
+        get_main_logger().warning('Intersecting something with None, which is always None')
+        return None
     # Point
-    if isinstance(a,Point) and isinstance(b,Point):
+    elif isinstance(a,Point) and isinstance(b,Point):
         return inter_point_point(a,b)
     elif isinstance(a,Point) and isinstance(b,Line):
         return inter_point_line(a,b)
@@ -99,71 +102,17 @@ def intersection(a, b):
     elif isinstance(a, ConvexPolyhedron) and isinstance(b,Segment):
         return inter_segment_convexpolyhedron(b,a)
     # convex polygen
-    elif isinstance(a,ConvexPolyhedron) and isinstance(b,ConvexPolyhedron):
-        return ConvexPolyhedron_intersection(a,b)
-    
+    elif isinstance(a, ConvexPolygen) and isinstance(b,ConvexPolygen):
+        return inter_convexpolygen_convexpolygen(a,b)
     elif isinstance(a,ConvexPolyhedron) and isinstance(b,ConvexPolygen):
-        return ConvexPolyhedron_ConvexPolygen_intersection(a,b)
-
+        return inter_convexpolygen_convexPolyhedron(a,b)
     elif isinstance(a,ConvexPolygen) and isinstance(b,ConvexPolyhedron):
-        return ConvexPolyhedron_ConvexPolygen_intersection(b,a)
-    
-    raise NotImplementedError("not implement intersecting %s with %s"%(type(a),type(b)))
-
-def ConvexPolyhedron_intersection(cph1,cph2):
-    """Input:
-    cph1: a ConvexPolyhedron
-    cph2: a ConvexPolyhefron
-
-    Output:
-    a Point, Segment, ConvexPolygen or ConvexPolyhedron
-    the intersection part of cph1 and cph2
-    """
-    if not (isinstance(cph1,ConvexPolyhedron) and isinstance(cph2,ConvexPolyhedron)):
-        raise ValueError('convex polyhedron intersection should be called with two ConvexPolyhedron')
-    cpg_set = set()
-    for cpg in cph1.convex_polygens:
-        inter_cpg = ConvexPolyhedron_ConvexPolygen_intersection(cph2,cpg)
-        if inter_cpg is not None:
-            cpg_set.add(inter_cpg)
-    for cpg in cph2.convex_polygens:
-        inter_cpg = ConvexPolyhedron_ConvexPolygen_intersection(cph1,cpg)
-        if inter_cpg is not None:
-            cpg_set.add(inter_cpg)
-    return ConvexPolyhedron(tuple(cpg_set))
-
-def ConvexPolyhedron_ConvexPolygen_intersection(cph,cpg):
-    """Input:
-    cph: a ConvexPolyhedron
-    cpg: a ConvexPolygen
-     
-    Output:
-    a Point, Segment or ConvexPolygen
-    the intersection part of cph and cpg
-    """
-    point_set = set()
-    # points in ConvexPolygen
-    for point in cpg.points:
-        if point in cph:
-            point_set.add(point)
-    # intersection points of polygen segment and convexpolyhedron convexpolygen
-    for segment in cpg.segments():
-        for polygen in cph.convex_polygens:
-            point = intersection(polygen,segment)
-            if point is not None:
-                if point in cpg:
-                    point_set.add(point)
-    # intersection points of convexpolyhedron segmetn and polygen
-    for polygen in cph.convex_polygens:
-        for segment in polygen.segments():
-            point = intersection(segment,cpg)
-            if point is not None:
-                if point in cpg:
-                    point_set.add(point)
-    if len(point_set) < 3:
-        return None
-    # sort the point in __init__ in ConvexPolygen class
-    return ConvexPolygen(tuple(point_set))
+        return inter_convexpolygen_convexPolyhedron(b,a)
+    # convex polyhedron
+    elif isinstance(a,ConvexPolyhedron) and isinstance(b,ConvexPolyhedron):
+        return inter_convexpolyhedron_convexpolyhedron(a,b)
+    else:
+        raise NotImplementedError("not implement intersecting %s with %s"%(type(a),type(b)))
 
 def inter_point_point(p1,p2):
     """intersection function for Point and Point
@@ -484,7 +433,7 @@ def inter_plane_convexpolyhedron(a,b):
         if inter_s_p is None:
             continue
         elif isinstance(inter_s_p,Segment):
-            return inter_s_p
+            continue
         elif isinstance(inter_s_p,Point):
             point_set.add(inter_s_p)
         else:
@@ -495,7 +444,7 @@ def inter_plane_convexpolyhedron(a,b):
     elif len(point_tuple) == 1:
         return point_tuple[0]
     elif len(point_tuple) == 2:
-        raise TypeError("Bug detected! please contact the author")
+        return Segment(point_tuple[0],point_tuple[1])
     else:
         return ConvexPolygen(point_tuple)
 
@@ -594,5 +543,121 @@ def inter_segment_convexpolyhedron(a,b):
     else:
         get_main_logger().error('length of inter_point_list is {}, list is {}'.format(len(inter_point_list),inter_point_list))
         raise TypeError("Bug detected! please contact the author")
+
+def inter_convexpolygen_convexpolygen(a,b):
+    '''Input:
+    a: ConvexPolyhedron
+    b: ConvexPolyhedron
+
+    Output:
+    The intersection
+    '''
+    inter_p_p = intersection(a.plane,b.plane)
+    if inter_p_p is None:
+        return None
+    elif isinstance(inter_p_p,Line):
+        inter_p_cph1 = intersection(inter_p_p,a)
+        inter_p_cph2 = intersection(inter_p_p,b)
+        if inter_p_cph1 is None or inter_p_cph2 is None:
+            return None
+        else:
+            return intersection(inter_p_cph1,inter_p_cph2)
+    else:
+        if not a.plane == b.plane:
+            raise TypeError("Bug detected! please contact the author")
+        point_set = set()
+        for pa in a.points:
+            if pa in b:
+                point_set.add(pa)
+        for pb in b.points:
+            if pb in a:
+                point_set.add(pb)
+        for seg in a.segments():
+            point_set = point_set.union(get_segment_convexpolygen_intersection_point_set(seg,b))
+        point_tuple = tuple(point_set)
+        if len(point_tuple) == 0:
+            return None
+        elif len(point_tuple) == 1:
+            return point_tuple[0]
+        elif len(point_tuple) == 2:
+            return Segment(point_tuple[0],point_tuple[1])
+        else:
+            if points_in_a_line(point_tuple):
+                raise TypeError("Bug detected! please contact the author")
+            return ConvexPolygen(point_tuple,check_convex=True)
+
+
+def inter_convexpolygen_convexPolyhedron_old(cph,cpg):
+    """Input:
+    cph: a ConvexPolyhedron
+    cpg: a ConvexPolygen
+     
+    Output:
+    a Point, Segment or ConvexPolygen
+    the intersection part of cph and cpg
+    """
+    point_set = set()
+    # points in ConvexPolygen
+    for point in cpg.points:
+        if point in cph:
+            point_set.add(point)
+    # intersection points of polygen segment and convexpolyhedron convexpolygen
+    for segment in cpg.segments():
+        for polygen in cph.convex_polygens:
+            point = intersection(polygen,segment)
+            if point is not None:
+                if point in cpg:
+                    point_set.add(point)
+    # intersection points of convexpolyhedron segmetn and polygen
+    for polygen in cph.convex_polygens:
+        for segment in polygen.segments():
+            point = intersection(segment,cpg)
+            if point is not None:
+                if point in cpg:
+                    point_set.add(point)
+    if len(point_set) < 3:
+        return None
+    # sort the point in __init__ in ConvexPolygen class
+    return ConvexPolygen(tuple(point_set))
+
+def inter_convexpolygen_convexPolyhedron(cph,cpg):
+    """Input:
+    cph: a ConvexPolyhedron
+    cpg: a ConvexPolygen
+     
+    Output:
+    a Point, Segment or ConvexPolygen
+    the intersection part of cph and cpg
+    """
+    inter_p_cph = intersection(cph,cpg.plane)
+    if inter_p_cph is None:
+        return None
+    elif isinstance(inter_p_cph,Point) or isinstance(inter_p_cph,Segment) or isinstance(inter_p_cph,ConvexPolygen):
+        return intersection(inter_p_cph,cpg)
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
+
+def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
+    """Input:
+    cph1: a ConvexPolyhedron
+    cph2: a ConvexPolyhefron
+
+    Output:
+    a Point, Segment, ConvexPolygen or ConvexPolyhedron
+    the intersection part of cph1 and cph2
+    """
+    if not (isinstance(cph1,ConvexPolyhedron) and isinstance(cph2,ConvexPolyhedron)):
+        raise ValueError('convex polyhedron intersection should be called with two ConvexPolyhedron')
+    cpg_set = set()
+    for cpg in cph1.convex_polygens:
+        inter_cpg = inter_convexpolygen_convexPolyhedron(cph2,cpg)
+        if inter_cpg is not None:
+            cpg_set.add(inter_cpg)
+    for cpg in cph2.convex_polygens:
+        inter_cpg = inter_convexpolygen_convexPolyhedron(cph1,cpg)
+        if inter_cpg is not None:
+            cpg_set.add(inter_cpg)
+    return ConvexPolyhedron(tuple(cpg_set))
 
 __all__=('intersection',)

@@ -202,8 +202,7 @@ class ConvexPolygen(GeoBody):
             hash(self.plane)
             ))
 
-
-    def eq_without_narmal(self,other):
+    def eq_without_normal(self,other):
         if isinstance(other,ConvexPolygen):
             return (self.hash_without_normal() == other.hash_without_normal())
         else:
