@@ -319,4 +319,18 @@ class ConvexPolygenIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cph,cpg13) is None)
         cpg14 = Parallelogram(Point(0,0,2),x_unit_vector(),y_unit_vector())
         self.assertTrue(intersection(cph,cpg14) is None)
-    
+
+class ConvexPolyhedronIntersectionTest(unittest.TestCase):
+    def test_intersection_convexpolyhedron_convexpolyhedron(self):
+        cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
+        cph1 = copy.deepcopy(cph0).move(Vector(1,1,1))
+        cph2 = copy.deepcopy(cph0).move(x_unit_vector())
+        cph3 = copy.deepcopy(cph0).move(Vector(1,1,0))
+        cph4 = copy.deepcopy(cph0).move(Vector(0.5,0.5,0.5))
+        cph5 = copy.deepcopy(cph0).move(Vector(1.5,1.5,1.5))
+        self.assertEqual(intersection(cph0,cph1),Point(1,1,1))
+        self.assertTrue(intersection(cph0,cph2).eq_without_normal(Parallelogram(Point(1,0,0),y_unit_vector(),z_unit_vector())))
+        self.assertEqual(intersection(cph0,cph3),Segment(Point(1,1,0),Point(1,1,1)))
+        self.assertEqual(intersection(cph4,cph0),Parallelepiped(Point(0.5,0.5,0.5),0.5*x_unit_vector(),0.5*y_unit_vector(),0.5*z_unit_vector()))
+        #################### !!!!!!!!!!!!!!!!!!!!!#####################
+        self.assertTrue(intersection(cph5,cph0) is None)    

@@ -650,14 +650,41 @@ def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
     if not (isinstance(cph1,ConvexPolyhedron) and isinstance(cph2,ConvexPolyhedron)):
         raise ValueError('convex polyhedron intersection should be called with two ConvexPolyhedron')
     cpg_set = set()
+    segment_set = set()
+    point_set = set()
     for cpg in cph1.convex_polygens:
-        inter_cpg = inter_convexpolygen_convexPolyhedron(cph2,cpg)
-        if inter_cpg is not None:
-            cpg_set.add(inter_cpg)
+        inter = inter_convexpolygen_convexPolyhedron(cph2,cpg)
+        if inter is None:
+            continue
+        if isinstance(inter,Point):
+            point_set.add(inter)
+        elif isinstance(inter,Segment):
+            segment_set.add(inter)
+        elif isinstance(inter,ConvexPolygen):
+            cpg_set.add(inter)
     for cpg in cph2.convex_polygens:
-        inter_cpg = inter_convexpolygen_convexPolyhedron(cph1,cpg)
-        if inter_cpg is not None:
-            cpg_set.add(inter_cpg)
-    return ConvexPolyhedron(tuple(cpg_set))
+        inter = inter_convexpolygen_convexPolyhedron(cph1,cpg)
+        if inter is None:
+            continue
+        if isinstance(inter,Point):
+            point_set.add(inter)
+        elif isinstance(inter,Segment):
+            segment_set.add(inter)
+        elif isinstance(inter,ConvexPolygen):
+            cpg_set.add(inter)
+    if len(cpg_set) > 1:
+        return ConvexPolyhedron(tuple(cpg_set))
+    elif len(cpg_set) == 1:
+        return list(cpg_set)[0]
+    elif len(segment_set) > 1:
+        raise TypeError("Bug detected! please contact the author")
+    elif len(segment_set) == 1:
+        return list(segment_set)[0]
+    elif len(point_set) > 1:
+        raise TypeError("Bug detected! please contact the author")
+    elif len(point_set) == 1:
+        return list(point_set)[0]
+    else:
+        return None
 
 __all__=('intersection',)

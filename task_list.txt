@@ -58,7 +58,7 @@ Segment     - ConvexPolyhedron -> None, Point, Segment          OK
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen     OK
 ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen     OK
 
-ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron
+ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron   Untested
 -----------------------------------------------
 
 intersection 补全
