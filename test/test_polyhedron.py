@@ -48,14 +48,14 @@ cpg11 = ConvexPolygen((e1,h1,g1,f1))
 cph2 = ConvexPolyhedron((cpg6,cpg7,cpg8,cpg9,cpg10,cpg11))
 
 class ConvexPolyhedronTest(unittest.TestCase):
-    def test_length(self):
+    def test_polyhedron_length(self):
         self.assertAlmostEqual(cph0.length(),24)
 
-    def test_area(self):
+    def test_polyhedron_area(self):
         self.assertAlmostEqual(cph0.area(),24)
         self.assertAlmostEqual(cph1.area(),8 + 4*math.sqrt(2))
 
-    def test_volume(self):
+    def test_polyhedron_volume(self):
         self.assertAlmostEqual(cph0.volume(),8)
         self.assertAlmostEqual(volume(cph0),8)
         self.assertAlmostEqual(cph00.volume(),8)
@@ -63,19 +63,19 @@ class ConvexPolyhedronTest(unittest.TestCase):
         self.assertAlmostEqual(cph1.volume(),8/3)
         self.assertAlmostEqual(volume(cph1),8/3)
 
-    def test_hash(self):
+    def test_polyhedron_hash(self):
         self.assertEqual(hash(cph0),hash(cph00))
         self.assertNotEqual(hash(cph0),hash(cph1))
         
-    def test_move(self):
+    def test_polyhedron_move(self):
         self.assertEqual(copy.deepcopy(cph0).move(Vector(0.5,0.5,0.5)),cph2)
         self.assertNotEqual(copy.deepcopy(cph0).move(Vector(0.1,0.2,0)),cph00)
 
-    def test_contains(self):
+    def test_polyhedron_contains(self):
         self.assertTrue(origin() in cph00)
         self.assertTrue(a in cph00)
         self.assertFalse(g in cph2)
     
-    def test_(self):
+    def test_polyhedron_parallelpiped(self):
         cph = Parallelepiped(Point(-1,-1,-1),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
         self.assertAlmostEqual(cph.volume(),8)

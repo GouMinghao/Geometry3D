@@ -25,3 +25,25 @@ class aux_calc_Test(unittest.TestCase):
         e = Point(1.1,1.1,1.1)
         self.assertEqual(get_segment_from_point_list([a,b,c,d,e]),Segment(d,e))
         self.assertEqual(get_segment_from_point_list([a,b]),Segment(b,a))
+
+    def test_aux_calc_get_segment_convexpolyhedron_intersection_point_set(self):
+        cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
+        s1 = Segment(origin(),Point(-1,-1,-1))
+        inter_set1 = get_segment_convexpolyhedron_intersection_point_set(s1,cph)
+        self.assertEqual(len(inter_set1),1)
+        self.assertTrue(origin() in inter_set1)
+        s2 = Segment(Point(0.5,0.5,-0.5),Point(0.5,0.5,1.5))
+        inter_set2 = get_segment_convexpolyhedron_intersection_point_set(s2,cph)
+        self.assertEqual(len(inter_set2),2)
+        self.assertTrue(Point(0.5,0.5,0) in inter_set2)
+        self.assertTrue(Point(0.5,0.5,1) in inter_set2)
+        s3 = Segment(Point(0,-1,0),Point(1,1,0))
+        inter_set3 = get_segment_convexpolyhedron_intersection_point_set(s3,cph)
+        self.assertEqual(len(inter_set3),2)
+        self.assertTrue(Point(0.5,0,0) in inter_set3)
+        self.assertTrue(Point(1,1,0) in inter_set3)
+        s4 = Segment(Point(0,-1,0),Point(1,-1,0))
+        inter_set4 = get_segment_convexpolyhedron_intersection_point_set(s4,cph)
+        self.assertEqual(len(inter_set4),0)
+        
+        

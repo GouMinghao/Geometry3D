@@ -59,7 +59,7 @@ class ConvexPolyhedron(GeoBody):
             convex_polygen = self.convex_polygens[i]
             if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
                 self.convex_polygens[i] = - convex_polygen
-            self.pyramid_set.add(Pyramid(convex_polygen,self.center_point))
+            self.pyramid_set.add(Pyramid(convex_polygen,self.center_point,direct_call=False))
         if not self._check_normal():
             raise ValueError('Check Normal Fails For The Convex Polyhedron')
         if not self._euler_check():
@@ -148,7 +148,7 @@ class ConvexPolyhedron(GeoBody):
                 convex_polygen = self.convex_polygens[i]
                 if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
                     self.convex_polygens[i] = - convex_polygen
-                self.pyramid_set.add(Pyramid(convex_polygen,self.center_point))
+                self.pyramid_set.add(Pyramid(convex_polygen,self.center_point,direct_call=False))
             if not self._check_normal():
                 raise ValueError('Check Normal Fails For The Convex Polyhedron')
             if not self._euler_check():

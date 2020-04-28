@@ -14,7 +14,7 @@ from ..utils.logger import get_main_logger
 
 from .acute import acute
 from .angle import angle, parallel, orthogonal
-from .aux_calc import get_segment_from_point_list
+from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set
 
 def intersection(a, b):
     """Return the intersection between two objects.
@@ -94,6 +94,11 @@ def intersection(a, b):
         return inter_segment_convexpolygen(a,b)
     elif isinstance(a,ConvexPolygen) and isinstance(b,Segment):
         return inter_segment_convexpolygen(b,a)
+    elif isinstance(a,Segment) and isinstance(b, ConvexPolyhedron):
+        return inter_segment_convexpolyhedron(a,b)
+    elif isinstance(a, ConvexPolyhedron) and isinstance(b,Segment):
+        return inter_segment_convexpolyhedron(b,a)
+    # convex polygen
     elif isinstance(a,ConvexPolyhedron) and isinstance(b,ConvexPolyhedron):
         return ConvexPolyhedron_intersection(a,b)
     
@@ -347,10 +352,12 @@ def inter_line_convexpolygen(l,cpg):
                 return inter_l_s
             else:
                 raise TypeError("Bug detected! please contact the author")
-        if len(point_set) == 1:
+        if len(point_set) == 0:
+            return None
+        elif len(point_set) == 1:
             point_list = list(point_set)
             return point_list[0]
-        if len(point_set) == 2:
+        elif len(point_set) == 2:
             point_list = list(point_set)
             return Segment(point_list[0],point_list[1])
         else:
@@ -556,6 +563,36 @@ def inter_segment_convexpolygen(a,b):
         else:
             raise TypeError("Bug detected! please contact the author")
     else:
+        raise TypeError("Bug detected! please contact the author")
+
+def inter_segment_convexpolyhedron(a,b):
+    '''Input:
+    a: Segment
+    b: ConvexPolyhedron
+
+    Output:
+    The intersection
+    '''
+    if (a.start_point in b) and (a.end_point in b):
+        return a
+    inter_point_set = get_segment_convexpolyhedron_intersection_point_set(a,b)
+    if (a.start_point in b) and (not a.end_point in b):
+        inter_point_set.add(a.start_point)
+    elif (not a.start_point in b) and (a.end_point in b):
+        inter_point_set.add(a.end_point)
+    elif (not a.start_point in b) and (not a.end_point in b):
+        pass
+    else:
+        raise TypeError("Bug detected! please contact the author")
+    inter_point_list = list(inter_point_set)
+    if len(inter_point_list) == 0:
+        return None
+    elif len(inter_point_list) == 1:
+        return inter_point_list[0]
+    elif len(inter_point_list) == 2:
+        return Segment(inter_point_list[0],inter_point_list[1])
+    else:
+        get_main_logger().error('length of inter_point_list is {}, list is {}'.format(len(inter_point_list),inter_point_list))
         raise TypeError("Bug detected! please contact the author")
 
 __all__=('intersection',)

@@ -40,5 +40,6 @@ __all__ = (
     "set_log_level",
     "get_projection_length",
     "get_relative_projection_length",
-    "get_segment_from_point_list"
+    "get_segment_from_point_list",
+    "get_segment_convexpolyhedron_intersection_point_set"
 )

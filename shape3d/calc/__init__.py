@@ -2,7 +2,7 @@ from .distance import distance
 from .intersection import intersection
 from .angle import angle,parallel,orthogonal
 from .volume import volume
-from .aux_calc import get_projection_length,get_relative_projection_length,get_segment_from_point_list
+from .aux_calc import get_projection_length,get_relative_projection_length,get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set
 
 __all__=(
     "distance",
@@ -13,5 +13,6 @@ __all__=(
     "volume",
     "get_projection_length",
     "get_relative_projection_length",
-    "get_segment_from_point_list"
+    "get_segment_from_point_list",
+    "get_segment_convexpolyhedron_intersection_point_set"
 )

@@ -71,7 +71,6 @@ def change_main_logger():
     dictConfig(logging_config)
     main_logger = logging.getLogger()
 
-
 def get_main_logger():
     global main_logger
     return main_logger

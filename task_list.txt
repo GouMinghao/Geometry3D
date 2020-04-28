@@ -53,7 +53,7 @@ Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen   OK
 
 Segment     - Segment          -> None, Point, Segment          OK
 Segment     - ConvexPolygen    -> None, Point, Segment          OK
-Segment     - ConvexPolyhedron -> None, Point, Segment
+Segment     - ConvexPolyhedron -> None, Point, Segment          OK
 
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen
 ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen
@@ -62,6 +62,7 @@ ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, Con
 -----------------------------------------------
 
 intersection 补全
+numerical circle, sphere
 # 作平行线，平行面和垂线 #
 # 方程 #
 测试文件

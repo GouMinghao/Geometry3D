@@ -4,18 +4,20 @@ from .point import Point
 from ..utils.vector import Vector
 from .line import Line
 from .polygen import ConvexPolygen
-
+from ..utils.logger import get_main_logger
 # Pyramid is an auxilary geometry
 # Direct use is not suggested
 # Calculation of pyramids should be applied using ConvexPolygen
 
 class Pyramid(GeoBody):
     """Provides a pyramid in 3d space"""
-    def __init__(self,cp,p):
+    def __init__(self,cp,p,direct_call=True):
         """Input:
         cp: a ConvexPolygen
         p: a Point
         """
+        if direct_call:
+            get_main_logger().warning('Pyramid is an auxilary geometry. Direct use is not suggested. Consider using ConvexPolyhedron instead.')
         if isinstance(cp,ConvexPolygen) and isinstance(p,Point):
             self.convex_polygen = cp
             self.point = p

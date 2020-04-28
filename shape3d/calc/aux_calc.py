@@ -63,4 +63,36 @@ def get_relative_projection_length(v1,v2):
         raise TypeError('The type of v1 and v2 must be Vector to get relative the projection length')
     return get_projection_length(v1,v2) / v2.length()
 
-__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list')
+def get_segment_convexpolyhedron_intersection_point_set(s,cph):
+    '''
+    Input:
+    s: Segment
+    cph: ConvexPolyhedron
+
+    Output:
+    a set of intersection points
+    '''
+    point_set = set()
+    for cpg in cph.convex_polygens:
+        inter_cpg_s = cpg.intersection(s)
+        if inter_cpg_s is None:
+            continue
+        elif isinstance(inter_cpg_s,Segment):
+            continue
+        elif isinstance(inter_cpg_s,Point):
+            point_set.add(inter_cpg_s)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    for seg in cph.segment_set:
+        inter_s_s = seg.intersection(s)
+        if inter_s_s is None:
+            continue
+        elif isinstance(inter_s_s,Segment):
+            continue
+        elif isinstance(inter_s_s,Point):
+            point_set.add(inter_s_s)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    return point_set
+
+__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set')
