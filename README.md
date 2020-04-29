@@ -17,7 +17,6 @@ This library focuses on the functions and lacks efficiency which might be improv
 
 Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
-
 ## Requirements
 
 * [Python](http://www.python.org) 3 (python2 is not tested)

@@ -62,4 +62,4 @@ ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, Con
 -----------------------------------------------
 
 numerical circle, sphere, cylinder, ellipse.
-arxiv论文
+arxiv paper

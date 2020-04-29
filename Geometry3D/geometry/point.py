@@ -18,7 +18,7 @@ class Point(object):
     
     The point that you get when you move the origin by the given
     vector. If the vector has coordinates (a | b | c), the point
-    will have the coordinates (a | b | c) (as easy as π).
+    will have the coordinates (a | b | c) (as easy as pi).
     """
     class_level = 0 # the class level of Point
     @classmethod
