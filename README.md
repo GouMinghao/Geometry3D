@@ -13,7 +13,7 @@ This library focuses on the functions and lacks efficiency which might be improv
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
 - A Naive Renderer Using `matplotlib`.
 
-![Screenshot](Screenshot.png)
+![pic](pic.png)
 
 Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
@@ -23,7 +23,7 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 * [Python](http://www.python.org) 3 (python2 is not tested)
 * No additional third-party library is required, it's written in pure python and standard library. 
 * Matplotlib is needed if you want to use the renderer.
-* optional for a better experience: [ipython](http://ipython.org)
+* Optional for a better experience: [ipython](http://ipython.org)
 
 ## Documentation
 
