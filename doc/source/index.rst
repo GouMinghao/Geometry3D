@@ -20,9 +20,11 @@ Tutorials
    :caption: Tutorials
 
    example_create
-
-
-
+   example_render
+   example_get_attribute
+   example_operation
+   example_build_in
+   example_float
 
 Python API
 ==========

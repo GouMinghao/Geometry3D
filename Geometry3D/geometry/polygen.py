@@ -11,13 +11,19 @@ import copy
 import math
 
 def get_triangle_area(pa,pb,pc):
-    """Input:
-    pa: a Point
-    pb: a Point
-    pc: a Point
+    """
+    **Input:**
+    
+    - pa: a Point
+    
+    - pb: a Point
+    
+    - pc: a Point
 
-    Output:
-    The area of the triangle composed by pa, pb and pc
+    **Output:**
+    
+    The area of the triangle composed by pa, pb and pc.
+
     Heron's formula is used
     """
     a = pa.distance(pb)
@@ -27,11 +33,31 @@ def get_triangle_area(pa,pb,pc):
     return math.sqrt(p * (p - a) * (p - b) * (p - c))
 
 class ConvexPolygen(GeoBody):
-    """Convex Polygen"""
-    class_level = 4
+    """
+    - ConvexPolygens(points)
+    points: a tuple of points.
+
+    The points needn't to be in order.
+
+    The convexity should be guaranteed. This function **will not** check the convexity.
+    If the Polygen is not convex, there might be errors.
+    """
+    class_level = 4 # the class level of ConvexPolygen
     @classmethod
     def Parallelogram(cls,base_point,v1,v2):
-        """The four points are base_point, base_point + v1, base_point + v2 and base_point + v1 + v2"""
+        """
+        A special function for creating Parallelogram
+
+        **Input:**
+
+        - base_point: a Point
+
+        - v1, v2: two Vectors
+
+        **Output:**
+
+        - A parallelogram which is a ConvexPolygen instance.
+        """
         if isinstance(base_point,Point) and isinstance(v1,Vector) and isinstance(v2,Vector):
             if v1.length() == 0 or v2.length == 0:
                 raise ValueError("The length for the two vector shouldn't be zero")
@@ -47,11 +73,7 @@ class ConvexPolygen(GeoBody):
         else:
             raise TypeError("Parallelogram should be initialized with Point, Vector and Vector, but the given types are %s, %s and %s" %(type(base_point),type(v1),type(v2)))
     
-    """Provides a convex polygen in 3d space"""
     def __init__(self,pts,reverse = False, check_convex=False):
-        """points: a tuple of points
-        The points given shold be in order
-        """
         # merge same points
         points = copy.deepcopy(pts)
         self.points = sorted(set(points),key=points.index)
@@ -67,11 +89,14 @@ class ConvexPolygen(GeoBody):
         self._check_and_sort_points()
 
     def segments(self):
-        """Input:
-        self
+        """
+        **Input:**
+        
+        - self
 
-        Output:
-        a list of segments
+        **Output:**
+
+        - iterator of segments
         """
         for i in range(len(self.points)):
             index_0 = i
@@ -82,11 +107,15 @@ class ConvexPolygen(GeoBody):
             yield Segment(self.points[index_0],self.points[index_1])
     
     def _get_center_point(self):
-        """Input:
-        points: tuple of points
+        """
+        **Input:**
+        
+        - points: tuple of points
 
-        Output:
-        The center point of given points"""
+        **Output:**
+
+        - The center point of given points
+        """
         x,y,z =(0,0,0)
         num_points = len(self.points)
         for point in self.points:
@@ -97,11 +126,13 @@ class ConvexPolygen(GeoBody):
     
     def area(self):
         """
-        Input:
-        self
+        **Input:**
+        
+        - self
 
-        Output:
-        The area of the convex polygen
+        **Output:**
+        
+        - The area of the convex polygen
         """
         area = 0
         for i in range(len(self.points)):
@@ -114,14 +145,18 @@ class ConvexPolygen(GeoBody):
         return area
 
     def _check_and_sort_points(self):
-        """input:
-        self
+        """
+        **Input:**
+        
+        -self
 
-        Output:
-        True for check passed
-        False for check not passed
+        **Output:**
 
-        This is only a weak check, passing the check doesn't guarantee it is a convex polygen
+        - True for check passed
+        
+        - False for check not passed
+
+        This is only a **weak** check, passing the check doesn't guarantee it is a convex polygen
         """
         the_normal = (self.plane.n).normalized()
         v0 = Vector(self.center_point,self.points[0]).normalized()
@@ -175,12 +210,16 @@ class ConvexPolygen(GeoBody):
             return NotImplementedError("")
     
     def in_(self,other):
-        """Input:
-        self: ConvexPolygen
-        other: Plane
+        """
+        **Input:**
+        
+        - self: ConvexPolygen
+        
+        - other: Plane
 
-        Output:
-        whether self in other
+        **Output:**
+
+        - whether self in other
         """
         if isinstance(other,Plane):
             return self.plane == other

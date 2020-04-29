@@ -13,18 +13,18 @@ from ..utils.logger import get_main_logger
 class MatplotlibRenderer():
     """ Renderer module to visualize geometries"""
     def __init__(self):
-        """Input:
-        None
+        """
+        **Input:**
+        - No Input
 
-        initialize matplotlib
+        Initialize matplotlib
         """
         self.point_set = set()
         self.segment_set = set()
         self.arrow_set = set()
     def show(self):
-        """Input:
-
-        legend: boolean, if True legend will be drawn
+        """
+        Draw the image
         """
         fig = plt.figure()
         ax = fig.gca(projection='3d')
@@ -53,9 +53,15 @@ class MatplotlibRenderer():
         plt.show()
         
     def add(self,obj,normal_length = 0):
-        """Input:
+        """
+        **Input:**
         
-        obj: a tuple (object,color,size)
+        - obj: a tuple (object,color,size)
+        
+        - normal_length: the length of normal arrows for ConvexPolyhedron.
+        For other objects, normal_length should be zero.
+        If you don't want to show the normal arrows for a ConvexPolyhedron, you can set normal_length to 0.
+
         object can be Point, Segment, ConvexPolygen or ConvexPolyhedron
         """
         if isinstance(obj[0],Point):

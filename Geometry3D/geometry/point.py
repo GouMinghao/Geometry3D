@@ -7,23 +7,26 @@ from ..utils.constant import *
 from ..utils.vector import Vector
 
 class Point(object):
-    """Provides a basic Point in the 3D space"""
-    class_level = 0
+    """
+    - Point(a, b, c)
+    
+    - Point([a, b, c]):
+    
+    The point with coordinates (a | b | c)
+
+    - Point(Vector):
+    
+    The point that you get when you move the origin by the given
+    vector. If the vector has coordinates (a | b | c), the point
+    will have the coordinates (a | b | c) (as easy as π).
+    """
+    class_level = 0 # the class level of Point
     @classmethod
     def origin(cls):
         """Returns the Point (0 | 0 | 0)"""
         return cls(0, 0, 0)
     
     def __init__(self, *args):
-        """Point(a, b, c)
-        Point([a, b, c]):
-        The point with coordinates (a | b | c)
-
-        Point(Vector):
-        The point that you get when you move the origin by the given
-        vector. If the vector has coordinates (a | b | c), the point
-        will have the coordinates (a | b | c) (as easy as π).
-        """
         if len(args) == 1:
             # Initialisation by Vector is also handled by this
             coords = args[0]
@@ -71,8 +74,6 @@ class Point(object):
         """set the i element of a Point"""
         setattr(self, "xyz"[item], value)
     
-    # def tonumpy(self):
-    #     return np.array((self.x,self.y,self.z))
 
     def pv(self):
         """Return the position vector of the point."""

@@ -11,11 +11,35 @@ from ..utils.constant import *
 from ..utils.logger import get_main_logger
 import copy
 class ConvexPolyhedron(GeoBody):
-    class_level = 5
+    class_level = 5 # the class level of ConvexPolyhedron
+    """
+    **Input:**
     
-    """a special method for Parallelepiped"""
+    - convex_polygens: tuple of ConvexPolygens
+
+    **Output:**
+
+    - ConvexPolyhedron
+    
+    - The correctness of convex_polygens are checked According to Euler's formula.
+
+    - The normal of the convex polygens are checked and corrected which should be toward the outer direction
+    """
     @classmethod
     def Parallelepiped(cls,base_point,v1,v2,v3):
+        """
+        A special function for creating Parallelepiped
+
+        **Input:**
+
+        - base_point: a Point
+
+        - v1, v2, v3: three Vectors
+
+        **Output:**
+
+        - A parallelepiped which is a ConvexPolyhedron instance.
+        """
         if isinstance(base_point,Point) and isinstance(v1,Vector) and isinstance(v2,Vector) and isinstance(v3,Vector):
             if v1.length() == 0 or v2.length == 0 or v3.length == 0:
                 raise ValueError("The length for the three vector shouldn't be zero")
@@ -34,15 +58,7 @@ class ConvexPolyhedron(GeoBody):
         else:
             raise TypeError("Parallelepiped should be initialized with Point, Vector, Vector and Vector, but the given types are %s, %s, %s and %s" %(type(base_point),type(v1),type(v2),type(v3)))
 
-    """Provides a convex polyhedron in 3d space"""
     def __init__(self,convex_polygens):
-        """Input:
-        convex_polygens: tuple of ConvexPolygens
-
-        The correctness of convex_polygens are not checked by this function
-
-        The normal of the convex polygens are not checked not which should be in the outer direction
-        """
         self.convex_polygens = list(copy.deepcopy(convex_polygens))
         # self.convex_polygens = list(convex_polygens)
         self.point_set = set()
@@ -82,11 +98,14 @@ class ConvexPolyhedron(GeoBody):
         return True
     
     def _get_center_point(self):
-        """Input:
-        self
+        """
+        **Input:**
+        
+        - self
 
-        Output:
-        The center point of this point set
+        **Output:**
+
+        - The center point of this point set
         """
         x,y,z = 0,0,0
         num_points = len(self.point_set)
@@ -100,11 +119,14 @@ class ConvexPolyhedron(GeoBody):
         return "ConvexPolyhedron\npyramid set:{}\npoint set:{}".format(self.pyramid_set,self.point_set)
 
     def __contains__(self,other):
-        """Input:
-        point: a Object
+        """
+        **Input:**
 
-        Output:
-        Whether the polyhedron contains the point
+        - point: a Object
+
+        **Output:**
+
+        - Whether the polyhedron contains the point
         """
         if isinstance(other,Point):
             for polygen in self.convex_polygens:

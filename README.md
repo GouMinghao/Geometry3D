@@ -1,14 +1,19 @@
 # Geometry3D
 
+## About Geometry3D
 
-![Screenshot](/Screenshot.png?raw=true)
+Geometry3D is a simple python computational geographics library written in python.
+This library focuses on the functions and lacks efficiency which might be improved in future version.
 
-Geometry3D is a small Python library that's useful for 3D analytic geometry.
-It has representations for Points, Vectors, Lines, Planes, Segments, Convex Polygens and Convex Polyhedrons and can do some calculations such as the distance, length, area and volume.
 
-All the geometries are convex so intersection of objects is supported.
+## Core Features
+- Basic 3D Geometries: Point, Line, Plane, Segment, Convex Polygen and Convex Polyhedron.
+- Basic Attributes Of Geometries: length, area, volume.
+- Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
+- Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
+- A Naive Renderer Using `matplotlib`.
 
-The library also implements a naive renderer based on matplotlib.
+![Screenshot](Screenshot.png)
 
 Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
@@ -16,12 +21,15 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 ## Requirements
 
 * [Python](http://www.python.org) 3 (python2 is not tested)
-* no requirements, it's written in pure python and standard library. 
+* No additional third-party library is required, it's written in pure python and standard library. 
 * Matplotlib is needed if you want to use the renderer.
 * optional for a better experience: [ipython](http://ipython.org)
 
 ## Documentation
-No documentation yet.
+
+- [pdf](https://github.com/GouMinghao/Geometry3D/Geometry3D_doc.pdf)
+
+- [html](about:blank)
 
 ## Installation
 ```bash
@@ -30,30 +38,7 @@ pip install Geometry3D
 
 ## Usage
 
-The library has no GUI (yet) so the preferred way to work with it is the
-interactive Python interpreter (REPL). Just use `from sgl import *` and
-you can work with the library:
-
-    $ python2 -ic "from sgl import *" # Replace with ipython if you want to
-    >>> Point(0, 1, 1) in Plane(Point(0, 0, 0), Vector(1, 0, 0))
-    True
-    >>> Plane(Point(0, 0, 0), Vector(1, 0, 0)).parametric()
-    (Vector(0, 0, 0), Vector(0.0, 1.0, 1.0), Vector(0.0, -1.0, 1.0))
-
-use `help(...)` to get some help on how to use the objects (documentation
-is not yet available).
-
-If you have vtk installed, you can use the `draw()` function to get a nice[2]
-interactive representation of your objects
-
-    >>> plane = Plane(Point(0, 0, 0), Vector(1, 0, 0))
-    >>> line = Line(Point(0, 0, 5), Vector(1, 0, 0))
-
-
-## Todo
-
-Examples  
-More objects like Full intersection support
+See Documentations
 
 ## License
 

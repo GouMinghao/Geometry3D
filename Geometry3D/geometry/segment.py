@@ -10,16 +10,15 @@ from ..utils.logger import get_main_logger
 import math
 import copy
 class Segment(GeoBody):
-    """Provides a line segment in 3d space"""
-    class_level = 3
-    def __init__(self,a,b):
-        """Input:
-        a: Point
-        b: Point
+    """
+    **Input:**
+    
+    - Segment(Point,Point)
 
-        a: Point
-        b: Vector
-        """
+    - Segment(Point,Vector)
+    """
+    class_level = 3 # the class level of Segment
+    def __init__(self,a,b):
         a = copy.deepcopy(a)
         b = copy.deepcopy(b)
         if isinstance(a,Point) and isinstance(b,Point):

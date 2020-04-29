@@ -7,8 +7,27 @@ from ..utils.solver import solve
 from ..utils.vector import Vector,x_unit_vector,y_unit_vector,z_unit_vector
 from ..utils.constant import *
 class Plane(GeoBody):
-    """A Plane"""
-    class_level = 2
+    """
+    - Plane(Point, Point, Point):
+    
+    Initialise a plane going through the three given points.
+
+    - Plane(Point, Vector, Vector):
+    
+    Initialise a plane given by a point and two vectors lying on
+    the plane.
+
+    - Plane(Point, Vector):
+    
+    Initialise a plane given by a point and a normal vector (point
+    normal form)
+
+    - Plane(a, b, c, d):
+    
+    Initialise a plane given by the equation
+    ax1 + bx2 + cx3 = d (general form).
+    """
+    class_level = 2 # the class level of Plane
     
     @classmethod
     def xy_plane(cls):
@@ -26,21 +45,6 @@ class Plane(GeoBody):
         return cls(origin(),y_unit_vector())
     
     def __init__(self, *args):
-        """Plane(Point, Point, Point):
-        Initialise a plane going through the three given points.
-
-        Plane(Point, Vector, Vector):
-        Initialise a plane given by a point and two vectors lying on
-        the plane.
-
-        Plane(Point, Vector):
-        Initialise a plane given by a point and a normal vector (point
-        normal form)
-
-        Plane(a, b, c, d):
-        Initialise a plane given by the equation
-        ax1 + bx2 + cx3 = d (general form).
-        """
         if len(args) == 3:
             a, b, c = args
             if (isinstance(a, Point) and

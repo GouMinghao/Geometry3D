@@ -5,8 +5,22 @@ from .point import Point,origin
 from ..utils.vector import Vector
 from ..utils.constant import *
 class Line(GeoBody):
-    """Provides a line in 3d space"""
-    class_level = 1
+    """
+    - Line(Point, Point):
+    
+    A Line going through both given points.
+
+    - Line(Point, Vector):
+    
+    A Line going through the given point, in the direction pointed
+    by the given Vector.
+
+    - Line(Vector, Vector):
+    
+    The same as Line(Point, Vector), but with instead of the point
+    only the position vector of the point is given.
+    """
+    class_level = 1 # the class level of Line
     @classmethod
     def x_axis(cls):
         """return x axis which is a Line"""
@@ -23,17 +37,6 @@ class Line(GeoBody):
         return cls(origin(),Point(0,0,1))
     
     def __init__(self, a, b):
-        """Line(Point, Point):
-        A Line going through both given points.
-
-        Line(Point, Vector):
-        A Line going through the given point, in the direction pointed
-        by the given Vector.
-
-        Line(Vector, Vector):
-        The same as Line(Point, Vector), but with instead of the point
-        only the position vector of the point is given.
-        """
         # We're storing the position vector, so if a point is given we
         # need to convert it first
         if isinstance(a, Point):

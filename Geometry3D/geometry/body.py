@@ -29,6 +29,7 @@ class GeoBody(object):
         return angle(self, other)
 
     def orthogonal(self, other):
+        """return if self and other are orthogonal to each other"""
         from ..calc.angle import orthogonal
         return orthogonal(self, other)
 

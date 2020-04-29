@@ -11,12 +11,14 @@ from ..utils.logger import get_main_logger
 # Calculation of pyramids should be applied using ConvexPolygen
 
 class Pyramid(GeoBody):
-    """Provides a pyramid in 3d space"""
+    """
+    **Input:**
+    
+    - cp: a ConvexPolygen
+    
+    - p: a Point
+    """
     def __init__(self,cp,p,direct_call=True):
-        """Input:
-        cp: a ConvexPolygen
-        p: a Point
-        """
         if direct_call:
             get_main_logger().warning('Pyramid is an auxilary geometry. Direct use is not suggested. Consider using ConvexPolyhedron instead.')
         if isinstance(cp,ConvexPolygen) and isinstance(p,Point):
