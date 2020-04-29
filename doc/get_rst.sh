@@ -6,3 +6,4 @@ rm source/Geometry3D.*
 rm source/modules.rst
 sphinx-apidoc -o ./source ../Geometry3D
 make html
+make latex
