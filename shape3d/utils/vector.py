@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import math
-import numpy as np
+# import numpy as np
 from .util import unify_types
 from .constant import get_eps
 
@@ -85,8 +85,8 @@ class Vector(object):
     def __setitem__(self, item, value):
         self._v[item] = value
     
-    def tonumpy(self):
-        return np.array(self._v)
+    # def tonumpy(self):
+    #     return np.array(self._v)
     
     def cross(self, other):
         r"""Calculates the cross product of two vectors, defined as

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Plane module"""
 from .body import GeoBody
 from .point import Point,origin
 from .line import Line
@@ -6,19 +7,22 @@ from ..utils.solver import solve
 from ..utils.vector import Vector,x_unit_vector,y_unit_vector,z_unit_vector
 from ..utils.constant import *
 class Plane(GeoBody):
-    """A Plane (not the flying one)"""
+    """A Plane"""
     class_level = 2
     
     @classmethod
     def xy_plane(cls):
+        """return xy plane which is a Plane"""
         return cls(origin(),z_unit_vector())
 
     @classmethod
     def yz_plane(cls):
+        """return yz plane which is a Plane"""
         return cls(origin(),x_unit_vector())
 
     @classmethod
     def xz_plane(cls):
+        """return xz plane which is a Plane"""
         return cls(origin(),y_unit_vector())
     
     def __init__(self, *args):
@@ -129,9 +133,11 @@ class Plane(GeoBody):
         )
 
     def __hash__(self):
+        """return the hash of a Plane"""
         return hash(("Plane",round(self.n[0],SIG_FIGURES),round(self.n[1],SIG_FIGURES),round(self.n[2],SIG_FIGURES),round(self.n * self.p.pv(),SIG_FIGURES)))
     
     def move(self,v):
+        """Return the plane that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
             self.p.move(v)
             return Plane(self.p,self.n)
@@ -162,6 +168,7 @@ class Plane(GeoBody):
         return (self.p.pv(), v, w)
     
     def __neg__(self):
+        """Return the negative plane, the normal is the negative normal"""
         return Plane(self.p,-self.n)
 
 xy_plane = Plane.xy_plane

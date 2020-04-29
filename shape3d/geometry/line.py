@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Line Module"""
 from .body import GeoBody
 from .point import Point,origin
 from ..utils.vector import Vector
@@ -8,14 +9,17 @@ class Line(GeoBody):
     class_level = 1
     @classmethod
     def x_axis(cls):
+        """return x axis which is a Line"""
         return cls(origin(),Point(1,0,0))
     
     @classmethod
     def y_axis(cls):
+        """return y axis which is a Line"""
         return cls(origin(),Point(0,1,0))
 
     @classmethod
     def z_axis(cls):
+        """return z axis which is a Line"""
         return cls(origin(),Point(0,0,1))
     
     def __init__(self, a, b):
@@ -68,6 +72,7 @@ class Line(GeoBody):
             return False
 
     def __hash__(self):
+        """Return hash of a Line"""
         return hash(("Line",
         round(self.dv[0],SIG_FIGURES),
         round(self.dv[1],SIG_FIGURES),

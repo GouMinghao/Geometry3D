@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""distance module"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -75,4 +76,4 @@ def distance(a, b):
     elif isinstance(a, Plane) and isinstance(b, Line):
         return distance(b, a)
     else:
-        raise NotImplementedError("")
+        raise NotImplementedError("Not implemented distance between {} and {}".format(type(a),type(b)))

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+"""Point Module"""
 from ..utils.util import unify_types
 import math
 from ..utils.logger import get_main_logger
-import numpy as np
 from ..utils.constant import *
 from ..utils.vector import Vector
 
@@ -11,7 +11,7 @@ class Point(object):
     class_level = 0
     @classmethod
     def origin(cls):
-        """Returns the origin (0 | 0 | 0)"""
+        """Returns the Point (0 | 0 | 0)"""
         return cls(0, 0, 0)
     
     def __init__(self, *args):
@@ -44,7 +44,15 @@ class Point(object):
                 )
 
     def __hash__(self):
-        return hash(("Point", round(self.x,SIG_FIGURES), round(self.y,SIG_FIGURES), round(self.z,SIG_FIGURES)))
+        """return the hash of a point"""
+        return hash(("Point",
+        round(self.x,SIG_FIGURES),
+        round(self.y,SIG_FIGURES),
+        round(self.z,SIG_FIGURES),
+        round(self.x,SIG_FIGURES) * round(self.y,SIG_FIGURES),
+        round(self.x,SIG_FIGURES) * round(self.z,SIG_FIGURES),
+        round(self.y,SIG_FIGURES) * round(self.z,SIG_FIGURES),
+        ))
 
     def __eq__(self, other):
         """Checks if two Points are equal. Always use == and not 'is'!"""
@@ -56,13 +64,15 @@ class Point(object):
             return False
 
     def __getitem__(self, item):
+        """return the i element of a Point"""
         return (self.x, self.y, self.z)[item]
 
     def __setitem__(self, item, value):
+        """set the i element of a Point"""
         setattr(self, "xyz"[item], value)
     
-    def tonumpy(self):
-        return np.array((self.x,self.y,self.z))
+    # def tonumpy(self):
+    #     return np.array((self.x,self.y,self.z))
 
     def pv(self):
         """Return the position vector of the point."""

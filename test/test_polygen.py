@@ -54,17 +54,17 @@ class ConvexPolygenTest(unittest.TestCase):
             ConvexPolygen((a,b,d,c)),
             ConvexPolygen((c,a,b,d))
         )
-        self.assertNotEqual(
-            ConvexPolygen((a,b,d,c)),
-            -ConvexPolygen((c,a,b,d))
-        )
+        # self.assertNotEqual(
+        #     ConvexPolygen((a,b,d,c)),
+        #     -ConvexPolygen((c,a,b,d))
+        # )
 
     def test_polygen_eq_without_normal(self):
         self.assertTrue(
-            ConvexPolygen((a,b,d,c)).eq_without_normal(ConvexPolygen((c,a,b,d)))
+            ConvexPolygen((a,b,d,c)) == (ConvexPolygen((c,a,b,d)))
         )
         self.assertTrue(
-            ConvexPolygen((a,b,d,c)).eq_without_normal(-ConvexPolygen((c,a,b,d)))
+            ConvexPolygen((a,b,d,c)) == (-ConvexPolygen((c,a,b,d)))
         )
     
     def test_polygen_hash(self):
@@ -72,8 +72,6 @@ class ConvexPolygenTest(unittest.TestCase):
         s.add(ConvexPolygen((a,b,d,c)))
         s.add(ConvexPolygen((c,a,b,d)))
         self.assertEqual(len(s),1)
-        s.add(-ConvexPolygen((a,b,d,c)))
-        self.assertEqual(len(s),2)
 
     def test_polygen_move(self):
         v = Vector(1,2,3)
@@ -82,5 +80,5 @@ class ConvexPolygenTest(unittest.TestCase):
         self.assertEqual(cpg0.move(v),cpg1)
 
     def test_polygen_Parallelogram(self):
-        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)).eq_without_normal(ConvexPolygen((origin(),Point(3,0,1),Point(1,0,0),Point(2,0,1)))))
-        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)).eq_without_normal(ConvexPolygen((origin(),Point(2,0,1),Point(1,0,0),Point(3,0,1)))))
+        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)) == (ConvexPolygen((origin(),Point(3,0,1),Point(1,0,0),Point(2,0,1)))))
+        self.assertTrue(Parallelogram(origin(),Vector(1,0,0),Vector(2,0,1)) == (ConvexPolygen((origin(),Point(2,0,1),Point(1,0,0),Point(3,0,1)))))

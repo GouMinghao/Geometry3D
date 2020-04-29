@@ -7,6 +7,7 @@ from .plane import Plane
 from .pyramid import Pyramid
 from ..utils.vector import Vector
 from ..utils.constant import *
+from ..utils.logger import get_main_logger
 import copy
 class ConvexPolyhedron(GeoBody):
     class_level = 5
@@ -63,6 +64,7 @@ class ConvexPolyhedron(GeoBody):
         if not self._check_normal():
             raise ValueError('Check Normal Fails For The Convex Polyhedron')
         if not self._euler_check():
+            get_main_logger().critical('V:{} E:{} F:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygens)))
             raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
 
     def _euler_check(self):
@@ -94,7 +96,7 @@ class ConvexPolyhedron(GeoBody):
         return Point(x / num_points,y / num_points, z / num_points)
     
     def __repr__(self):
-        return "ConvecPolyhedron\npyramid set:{}\npoint set:{}".format(self.pyramid_set,self.point_set)
+        return "ConvexPolyhedron\npyramid set:{}\npoint set:{}".format(self.pyramid_set,self.point_set)
 
     def __contains__(self,other):
         """Input:
@@ -152,6 +154,7 @@ class ConvexPolyhedron(GeoBody):
             if not self._check_normal():
                 raise ValueError('Check Normal Fails For The Convex Polyhedron')
             if not self._euler_check():
+                get_main_logger().critical('V:{} F:{} E:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygens)))
                 raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
             return ConvexPolyhedron(self.convex_polygens)
         else:

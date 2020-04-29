@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Volume module"""
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
 from .distance import distance

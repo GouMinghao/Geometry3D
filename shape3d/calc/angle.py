@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""angle module, contains angle parallel and orthogonal"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane

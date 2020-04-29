@@ -12,6 +12,14 @@ shape3d.utils.constant module
    :undoc-members:
    :show-inheritance:
 
+shape3d.utils.logger module
+---------------------------
+
+.. automodule:: shape3d.utils.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 shape3d.utils.solver module
 ---------------------------
 

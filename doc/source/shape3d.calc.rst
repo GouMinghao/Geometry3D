@@ -20,10 +20,26 @@ shape3d.calc.angle module
    :undoc-members:
    :show-inheritance:
 
-shape3d.calc.calc module
-------------------------
+shape3d.calc.aux\_calc module
+-----------------------------
 
-.. automodule:: shape3d.calc.calc
+.. automodule:: shape3d.calc.aux_calc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+shape3d.calc.distance module
+----------------------------
+
+.. automodule:: shape3d.calc.distance
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+shape3d.calc.intersection module
+--------------------------------
+
+.. automodule:: shape3d.calc.intersection
    :members:
    :undoc-members:
    :show-inheritance:

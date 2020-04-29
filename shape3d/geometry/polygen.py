@@ -197,22 +197,25 @@ class ConvexPolygen(GeoBody):
     # in some extreme case, this function may fail
     # which means it's vulnerable to attacks.
     def __hash__(self):
-            return hash(("ConvexPolygen",
-            round(self._get_point_hash_sum(),SIG_FIGURES),
-            hash(self.plane)
-            ))
+        return hash(("ConvexPolygen",
+        round(self._get_point_hash_sum(),SIG_FIGURES),
+        hash(self.plane) + hash(-self.plane),
+        hash(self.plane) * hash(-self.plane)
+        ))
 
-    def eq_without_normal(self,other):
+
+    def eq_with_normal(self,other):
         if isinstance(other,ConvexPolygen):
-            return (self.hash_without_normal() == other.hash_without_normal())
+            return (self.hash_with_normal() == other.hash_with_normal())
         else:
             return False
 
-    def hash_without_normal(self):
+    def hash_with_normal(self):
         return hash(("ConvexPolygen",
-        round(self._get_point_hash_sum(),SIG_FIGURES),
-        hash(self.plane) + hash(-self.plane)
-        ))
+            round(self._get_point_hash_sum(),SIG_FIGURES-5),
+            hash(self.plane)
+            ))
+
     def __neg__(self):
         return ConvexPolygen(self.points,reverse=True)
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""intersection module"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -19,8 +20,8 @@ from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_i
 def intersection(a, b):
     """Return the intersection between two objects.
     Input:
-    a: GeoBody
-    b: GeoBody
+    a: GeoBody or None
+    b: GeoBody or None
     
     Output:
     intersection
@@ -225,7 +226,7 @@ def inter_line_line(l1,l2):
             return None
         # We get λ and μ, we need to pick one and plug it into the
         # right equation
-        lmb, mu = solution()
+        lmb, _ = solution()
         lmb = float(lmb)
         # could've chosen b.sv + mu * b.dv instead, it doesn't matter
         # as they will point (pun intended) to the same point.
@@ -648,7 +649,7 @@ def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
     the intersection part of cph1 and cph2
     """
     if not (isinstance(cph1,ConvexPolyhedron) and isinstance(cph2,ConvexPolyhedron)):
-        raise ValueError('convex polyhedron intersection should be called with two ConvexPolyhedron')
+        raise ValueError('convex polyhedron intersection should be called with two ConvexPolyhedre')
     cpg_set = set()
     segment_set = set()
     point_set = set()
@@ -661,6 +662,7 @@ def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
         elif isinstance(inter,Segment):
             segment_set.add(inter)
         elif isinstance(inter,ConvexPolygen):
+            # print('CPG !!!!!!\nhash:{}\ncpg:{},cpg_set_len:{}'.format(hash(inter),inter,len(cpg_set)))
             cpg_set.add(inter)
     for cpg in cph2.convex_polygens:
         inter = inter_convexpolygen_convexPolyhedron(cph1,cpg)
@@ -671,8 +673,10 @@ def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
         elif isinstance(inter,Segment):
             segment_set.add(inter)
         elif isinstance(inter,ConvexPolygen):
+            # print('CPG !!!!!!\nhash:{}\ncpg:{},cpg_set_len:{}'.format(hash(inter),inter,len(cpg_set)))
             cpg_set.add(inter)
     if len(cpg_set) > 1:
+        get_main_logger().debug('cpg_set:{},length:{}'.format(cpg_set,len(cpg_set)))
         return ConvexPolyhedron(tuple(cpg_set))
     elif len(cpg_set) == 1:
         return list(cpg_set)[0]

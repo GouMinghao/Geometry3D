@@ -15,8 +15,9 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 
 ## Requirements
 
-* [Python](http://www.python.org) 3 (python2 is not supported now)
-* matplotlib and numpy.
+* [Python](http://www.python.org) 3 (python2 is not tested)
+* no requirements, it's written in pure python and standard library. 
+* Matplotlib is needed if you want to use the renderer.
 * optional for a better experience: [ipython](http://ipython.org)
 
 ## Documentation

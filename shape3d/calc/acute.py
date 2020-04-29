@@ -1,3 +1,4 @@
+"""Acute Module"""
 # -*- coding: utf-8 -*-
 import math
 def acute(rad):

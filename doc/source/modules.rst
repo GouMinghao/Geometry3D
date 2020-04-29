@@ -2,7 +2,13 @@ shape3d
 =======
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 4
 
+   run_tests
+   setup
    shape3d
-   shape3d.calc
+   test
+   test2
+   test3
+   test4
+   test5

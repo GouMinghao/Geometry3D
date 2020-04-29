@@ -58,13 +58,12 @@ Segment     - ConvexPolyhedron -> None, Point, Segment          OK
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen     OK
 ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen     OK
 
-ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron   Untested
+ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron   OK
 -----------------------------------------------
 
-intersection 补全
 numerical circle, sphere, cylinder, ellipse.
 # 作平行线，平行面和垂线 #
 # 方程 #
-测试文件
+# 测试文件 #
 doc
 arxiv论文

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""aux_calc module, contains auxilary calculation functions for calculating intersection"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
