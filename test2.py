@@ -1,4 +1,4 @@
-from shape3d import *
+from Geometry3D import *
 cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
 p = Plane(Point(0.5,0.5,0.5),Vector(1,1,1))
 cpg = intersection(cph0,p)

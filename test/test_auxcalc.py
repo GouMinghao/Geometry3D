@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
 import unittest
-from shape3d import *
+from Geometry3D import *
 v0 = Vector(1,1,2)
 v1 = Vector(2,2,4)
 v1_ = Vector(2,2,5)

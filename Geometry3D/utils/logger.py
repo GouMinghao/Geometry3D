@@ -8,7 +8,7 @@ logging_config = dict(
     formatters={
         'f':
         {
-            'format': '%(asctime)s [shape3d %(levelname)s] %(message)s'
+            'format': '%(asctime)s [Geometry3D %(levelname)s] %(message)s'
         },
     },
     handlers={
@@ -29,7 +29,18 @@ main_logger = logging.getLogger()
 
 
 def set_log_level(level='WARNING'):
-    """setup the log level for the logger"""
+    """
+    **Input:**
+
+    - level: a string of log level among 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'.
+
+        'WARNING' is the default.
+
+    **Output:**
+
+    No output but setup the log level for the logger
+    """
+    level=level.upper()
     global log_level, main_logger
     if level == 'DEBUG':
         log_level = logging.DEBUG
@@ -53,7 +64,7 @@ def change_main_logger():
         formatters={
             'f':
             {
-                'format': '%(asctime)s [shape3d %(levelname)s] %(message)s'
+                'format': '%(asctime)s [Geometry3D %(levelname)s] %(message)s'
             },
         },
         handlers={
@@ -74,5 +85,14 @@ def change_main_logger():
 
 
 def get_main_logger():
+    '''
+    **Input:**
+
+    No Input
+
+    **Output:**
+
+    main_logger: The logger instance
+    '''
     global main_logger
     return main_logger

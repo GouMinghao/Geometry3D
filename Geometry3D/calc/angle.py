@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""angle module, contains angle parallel and orthogonal"""
+"""Angle Module"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -10,10 +9,24 @@ from ..geometry.segment import Segment
 from .acute import acute
 
 def angle(a, b):
-    """Returns the angle (in radians) between
+    """
+    **Input:**
+    
+    - a: Line/Plane/Plane/Vector
+
+    - b: Line/Line/Plane/Vector
+
+
+    **Output:**
+    
+    The angle (in radians) between
+    
     - Line/Line
+    
     - Plane/Line
+    
     - Plane/Plane
+    
     - Vector/Vector
     """
     if isinstance(a, Line) and isinstance(b, Line):
@@ -40,10 +53,23 @@ def angle(a, b):
         raise NotImplementedError("Not implement angle function between %s and %s" % (type(a),type(b)))
 
 def parallel(a, b):
-    """Checks if two objects are parallel. This can check
+    """
+    **Input:**
+
+    - a:Line/Plane/Plane/Vector
+
+    - b:Line/Line/Plane/Vector
+
+    **Output:**
+    
+    A boolean of whether the two objects are parallel. This can check
+    
     - Line/Line
+    
     - Plane/Line
+    
     - Plane/Plane
+    
     - Vector/Vector
     """
     if isinstance(a, Line) and isinstance(b, Line):
@@ -64,10 +90,23 @@ def parallel(a, b):
         raise NotImplementedError("Not implement parallel function between %s and %s" % (type(a),type(b)))
 
 def orthogonal(a, b):
-    """Checks if two objects are orthogonal. This can check
+    """
+    **Input:**
+
+    - a:Line/Plane/Plane/Vector
+
+    - b:Line/Line/Plane/Vector
+
+    **Output:**
+    
+    A boolean of whether the two objects are orthogonal. This can check
+    
     - Line/Line
+    
     - Plane/Line
+    
     - Plane/Plane
+    
     - Vector/Vector
     """
     if isinstance(a, Line) and isinstance(b, Line):
@@ -84,3 +123,5 @@ def orthogonal(a, b):
         return a.orthogonal(b)
     else:
         raise NotImplementedError("Not implement orthogonal function between %s and %s" % (type(a),type(b)))
+
+__all__=('angle','parallel','orthogonal')

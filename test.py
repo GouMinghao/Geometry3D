@@ -9,7 +9,7 @@
 
 
 
-from shape3d import *
+from Geometry3D import *
 import time
 
 set_log_level('INFO')

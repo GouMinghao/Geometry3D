@@ -7,10 +7,15 @@ def unify_types(items):
     """Promote all items to the same type. The resulting type is the
     "most valueable" that an item already has as defined by the list
     (top = least valueable):
+    
     - int
+    
     - float
+    
     - decimal.Decimal
+    
     - fractions.Fraction
+    
     - user defined
     """
     type_values = {

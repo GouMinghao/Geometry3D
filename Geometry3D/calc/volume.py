@@ -5,8 +5,17 @@ from ..geometry.polyhedron import ConvexPolyhedron
 from .distance import distance
 
 def volume(arg):
-    """Returns the object. This includes
+    """
+    **Input:**
+
+    - arg: Pyramid or ConvexPolyhedron
+
+    **Output:**
+
+    Returns the object volume. This includes
+    
     - Pyramid
+    
     - ConvexPolyhedron
     """
     if isinstance(arg,Pyramid):
@@ -20,4 +29,4 @@ def volume(arg):
     else:
         raise ValueError("No attribut volume for this object")
 
-__all__=('Volume',)
+__all__=('volume',)

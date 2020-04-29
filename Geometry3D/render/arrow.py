@@ -32,4 +32,5 @@ class Arrow():
         ))
     
     def get_tuple(self):
+        """return the tuple expression of the arrow"""
         return (self.x,self.y,self.z,self.u,self.v,self.w,self.length)

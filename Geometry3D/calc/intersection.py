@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""intersection module"""
+"""Intersection Module"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -18,15 +18,18 @@ from .angle import angle, parallel, orthogonal
 from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set,get_segment_convexpolygen_intersection_point_set,points_in_a_line
 
 def intersection(a, b):
-    """Return the intersection between two objects.
-    Input:
-    a: GeoBody or None
-    b: GeoBody or None
-    
-    Output:
-    intersection
-    maybe None or GeoBody
-    The intersection operation is closed.
+    """
+    **Input:**
+
+    - a: GeoBody or None
+
+    - b: GeoBody or None
+
+    **Output:**
+
+    The Intersection.
+
+    Maybe None or GeoBody
     """
     # This is a wrapper function
     get_main_logger().debug('Calling intersection with {} and {}'.format(a,b))

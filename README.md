@@ -1,9 +1,9 @@
-# shape3d
+# Geometry3D
 
 
 ![Screenshot](/Screenshot.png?raw=true)
 
-shape3d is a small Python library that's useful for 3D analytic geometry.
+Geometry3D is a small Python library that's useful for 3D analytic geometry.
 It has representations for Points, Vectors, Lines, Planes, Segments, Convex Polygens and Convex Polyhedrons and can do some calculations such as the distance, length, area and volume.
 
 All the geometries are convex so intersection of objects is supported.
@@ -25,7 +25,7 @@ No documentation yet.
 
 ## Installation
 ```bash
-pip install shape3d
+pip install Geometry3D
 ```
 
 ## Usage

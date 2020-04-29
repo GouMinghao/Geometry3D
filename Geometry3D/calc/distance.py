@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""distance module"""
+"""Distance Module"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -15,11 +15,25 @@ from .angle import angle, parallel, orthogonal
 from .intersection import intersection
 
 def distance(a, b):
-    """Returns the distance between two objects. This includes
+    """
+    **Input:**
+
+    - a: Point/Line/Line/Plane/Plane
+
+    - b: Point/Point/Line/Point/Line
+
+    **Output:**
+
+    Returns the distance between two objects. This includes
+    
     - Point/Point
+    
     - Line/Point
+    
     - Line/Line
+    
     - Plane/Point
+    
     - Plane/Line
     """
     if isinstance(a, Point) and isinstance(b, Point):
@@ -77,3 +91,5 @@ def distance(a, b):
         return distance(b, a)
     else:
         raise NotImplementedError("Not implemented distance between {} and {}".format(type(a),type(b)))
+
+__all__ = ('distance',)

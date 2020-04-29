@@ -23,8 +23,8 @@ class MatplotlibRenderer():
         self.arrow_set = set()
     def show(self):
         """Input:
-        legend: boolean, if True legend will be drawn
 
+        legend: boolean, if True legend will be drawn
         """
         fig = plt.figure()
         ax = fig.gca(projection='3d')
@@ -53,7 +53,7 @@ class MatplotlibRenderer():
         plt.show()
         
     def add(self,obj,normal_length = 0):
-        """Input
+        """Input:
         
         obj: a tuple (object,color,size)
         object can be Point, Segment, ConvexPolygen or ConvexPolyhedron

@@ -6,13 +6,13 @@ def read(name):
         return fd.read()
 
 setup(
-        name="shape3d",
+        name="Geometry3D",
         version="0.1.0",
 
         description="a 3d geometry lib",
         long_description=read("README.md"),
 
-        url="https://github.com/GouMinghao/shape3d",
+        url="https://github.com/GouMinghao/Geometry3D",
 
         author="Minghao Gou",
         author_email="gouminghao@gmail.com",

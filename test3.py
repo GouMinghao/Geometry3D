@@ -1,4 +1,4 @@
-from shape3d import *
+from Geometry3D import *
 import copy
 r = Renderer()
 cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())

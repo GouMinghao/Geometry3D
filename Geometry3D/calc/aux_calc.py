@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""aux_calc module, contains auxilary calculation functions for calculating intersection"""
+"""
+Auxilary Calculation Module. 
+
+Auxilary calculation functions for calculating intersection
+"""
 import math
 from ..geometry.line import Line
 from ..geometry.plane import Plane
@@ -15,10 +19,13 @@ import copy
 
 # import numpy as np
 def get_segment_from_point_list(point_list):
-    '''Input:
-    point_list: a list of Points
+    '''
+    **Input:**
 
-    Output:
+    - point_list: a list of Points
+
+    **Output:**
+    
     The longest segment between the points
     '''
     if len(point_list) < 2:
@@ -40,11 +47,14 @@ def get_segment_from_point_list(point_list):
 
 def get_projection_length(v1,v2):
     '''
-    Input:
-    v1: Vector
-    v2: Vector
+    **Input:**
+    
+    - v1: Vector
+    
+    - v2: Vector
 
-    Output:
+    **Output:**
+    
     The length of vector that v1 projected on v2
     '''
     if not (isinstance(v1,Vector) or isinstance(v2,Vector)):
@@ -53,11 +63,14 @@ def get_projection_length(v1,v2):
 
 def get_relative_projection_length(v1,v2):
     '''
-    Input:
-    v1: Vector
-    v2: Vector
+    **Input:**
 
-    Output:
+    - v1: Vector
+    
+    - v2: Vector
+
+    **Output:**
+    
     The ratio of length of vector that v1 projected on v2 and the length of v2
     '''
     if not (isinstance(v1,Vector) or isinstance(v2,Vector)):
@@ -66,12 +79,15 @@ def get_relative_projection_length(v1,v2):
 
 def get_segment_convexpolyhedron_intersection_point_set(s,cph):
     '''
-    Input:
-    s: Segment
-    cph: ConvexPolyhedron
+    **Input:**
+    
+    - s: Segment
+    
+    - cph: ConvexPolyhedron
 
-    Output:
-    a set of intersection points
+    **Output:**
+    
+    A set of intersection points
     '''
     point_set = set()
     for cpg in cph.convex_polygens:
@@ -98,12 +114,15 @@ def get_segment_convexpolyhedron_intersection_point_set(s,cph):
 
 def get_segment_convexpolygen_intersection_point_set(s,cpg):
     '''
-    Input:
-    s: Segment
-    cpg: ConvexPolygen
+    **Input:**
+    
+    - s: Segment
 
-    Output:
-    a set of intersection points
+    - cpg: ConvexPolygen
+
+    **Output:**
+    
+    A set of intersection points
     '''
     point_set = set()
         # inter_cpg_s = cpg.intersection(s)
@@ -128,6 +147,15 @@ def get_segment_convexpolygen_intersection_point_set(s,cpg):
     return point_set
 
 def points_in_a_line(points):
+    '''
+    **Input:**
+    
+    - points: Tuple or list of Points
+
+    **Output:**
+    
+    A set of intersection points
+    '''
     if len(points) < 3:
         return True
     else:

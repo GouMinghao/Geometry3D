@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-import shape3d.utils.util as util
+import Geometry3D.utils.util as util
 
 from decimal import Decimal as D
 from fractions import Fraction as F

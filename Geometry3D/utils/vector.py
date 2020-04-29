@@ -6,7 +6,7 @@ from .util import unify_types
 from .constant import get_eps
 
 class Vector(object):
-    """Provides a basic vector"""
+    """Vector Class"""
     @classmethod
     def zero(cls):
         """Returns the zero vector (0 | 0 | 0)"""

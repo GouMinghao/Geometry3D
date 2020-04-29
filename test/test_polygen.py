@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import math
 import unittest
-from shape3d import *
-import shape3d
+from Geometry3D import *
+import Geometry3D
 a = origin()
 b = Point(1,0,1)
 c = Point(0,1,1)
