@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Util Module"""
 from decimal import Decimal
 from fractions import Fraction
 

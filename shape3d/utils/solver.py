@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Solver Module"""
 from __future__ import division
 from .constant import get_eps
 def shape(m):

@@ -1,4 +1,4 @@
-"""model to visualize some geometries"""
+"""Matplotlib Renderer Module"""
 from ..geometry.point import Point
 from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen

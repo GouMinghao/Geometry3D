@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Pyramid Module"""
 from .body import GeoBody
 from .point import Point
 from ..utils.vector import Vector

@@ -1,3 +1,4 @@
+"""Logger Module"""
 import logging
 from logging.config import dictConfig
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Vector Module""" 
 import math
 # import numpy as np
 from .util import unify_types

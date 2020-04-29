@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Segment Module"""
 from .body import GeoBody
 from .point import Point
 from .plane import Plane
@@ -9,9 +10,16 @@ from ..utils.logger import get_main_logger
 import math
 import copy
 class Segment(GeoBody):
-    class_level = 3
     """Provides a line segment in 3d space"""
+    class_level = 3
     def __init__(self,a,b):
+        """Input:
+        a: Point
+        b: Point
+
+        a: Point
+        b: Vector
+        """
         a = copy.deepcopy(a)
         b = copy.deepcopy(b)
         if isinstance(a,Point) and isinstance(b,Point):
@@ -66,15 +74,18 @@ class Segment(GeoBody):
             return NotImplementedError("")
 
     def __hash__(self):
+        """return the hash value of the segment"""
         return hash(("Segment",
         hash(self.start_point) + hash(self.end_point),
         hash(self.start_point) * hash(self.end_point)
         ))
 
     def __getitem__(self,idx):
+        """return the i point of the segment"""
         return (self.start_point,self.end_point)[idx]
 
     def __setitem__(self,idx,value):
+        """set the i point of the segment"""
         if idx == 0:
             self.start_point = value
         elif idx == 1:
@@ -83,7 +94,7 @@ class Segment(GeoBody):
             raise IndexError("Index out of range")
 
     def move(self, v):
-        """Return the point that you get when you move self by vector v, self is also moved"""
+        """Return the Segment that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
             self.start_point.move(v)
             self.end_point.move(v)
@@ -97,6 +108,7 @@ class Segment(GeoBody):
         return (self.start_point, self.end_point)
 
     def length(self):
+        """retutn the length of the segment"""
         return self.start_point.distance(self.end_point)
 
 __all__ = ("Segment",)

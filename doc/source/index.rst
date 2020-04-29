@@ -9,12 +9,16 @@ This is the index page
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :numbered:
+
+   shape3d.calc
+   shape3d.render
+   shape3d.utils
+   shape3d.geometry
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`modules`
 * :ref:`search`

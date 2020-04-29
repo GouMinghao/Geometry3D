@@ -1,3 +1,4 @@
+"""Polyhedron Module"""
 from .body import GeoBody
 from .polygen import ConvexPolygen,Parallelogram
 from .point import Point
@@ -130,6 +131,7 @@ class ConvexPolyhedron(GeoBody):
             return False
 
     def move(self,v):
+        """Return the ConvexPolyhedron that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
             convexpolygen_list = []
             for convexpolygen in self.convex_polygens:
@@ -161,12 +163,14 @@ class ConvexPolyhedron(GeoBody):
             raise NotImplementedError("The second parameter for move function must be Vector")
 
     def _get_polygen_hash_sum(self):
+        """return the sum of hash value of all the ConvexPolygens"""
         hash_sum = 0
         for polygen in self.convex_polygens:
             hash_sum += hash(polygen)
         return hash_sum
 
     def _get_point_hash_sum(self):
+        """return the sum of hash value of all the points"""
         hash_sum = 0
         for point in self.point_set:
             hash_sum += hash(point)
@@ -176,6 +180,7 @@ class ConvexPolyhedron(GeoBody):
     # in some extreme case, this function may fail
     # which means it's vulnerable to attacks.
     def __hash__(self):
+        """return the hash value of the ConvexPolyhedron"""
         return hash((
             "ConvexPolyhedron",
             round(self._get_polygen_hash_sum(),SIG_FIGURES),

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Polygen Module"""
 from .body import GeoBody
 from .point import Point
 from ..utils.vector import Vector
@@ -26,9 +27,8 @@ def get_triangle_area(pa,pb,pc):
     return math.sqrt(p * (p - a) * (p - b) * (p - c))
 
 class ConvexPolygen(GeoBody):
+    """Convex Polygen"""
     class_level = 4
-
-    """a special method for Parallelogram"""
     @classmethod
     def Parallelogram(cls,base_point,v1,v2):
         """The four points are base_point, base_point + v1, base_point + v2 and base_point + v1 + v2"""
@@ -175,6 +175,13 @@ class ConvexPolygen(GeoBody):
             return NotImplementedError("")
     
     def in_(self,other):
+        """Input:
+        self: ConvexPolygen
+        other: Plane
+
+        Output:
+        whether self in other
+        """
         if isinstance(other,Plane):
             return self.plane == other
         else:
@@ -188,6 +195,7 @@ class ConvexPolygen(GeoBody):
     
     
     def _get_point_hash_sum(self):
+        """return the sum of hash of all points"""
         hash_sum = 0
         for point in self.points:
             hash_sum += hash(point)
@@ -197,6 +205,7 @@ class ConvexPolygen(GeoBody):
     # in some extreme case, this function may fail
     # which means it's vulnerable to attacks.
     def __hash__(self):
+        """return the has of the convexpolygen"""
         return hash(("ConvexPolygen",
         round(self._get_point_hash_sum(),SIG_FIGURES),
         hash(self.plane) + hash(-self.plane),
@@ -205,27 +214,32 @@ class ConvexPolygen(GeoBody):
 
 
     def eq_with_normal(self,other):
+        """return whether self equals with other considering the normal"""
         if isinstance(other,ConvexPolygen):
             return (self.hash_with_normal() == other.hash_with_normal())
         else:
             return False
 
     def hash_with_normal(self):
+        """return the hash value considering the normal"""
         return hash(("ConvexPolygen",
             round(self._get_point_hash_sum(),SIG_FIGURES-5),
             hash(self.plane)
             ))
 
     def __neg__(self):
+        """return the negative ConvexPolygen by reverting the normal"""
         return ConvexPolygen(self.points,reverse=True)
 
     def length(self):
+        """return the total length of ConvexPolygen""" 
         length = 0
         for segment in self.segments():
             length += segment.length()
         return length
 
     def move(self,v):
+        """Return the ConvexPolygen that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
             point_list = []
             for point in self.points:
