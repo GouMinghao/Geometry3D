@@ -3,20 +3,25 @@ Installation
 
 .. note::
     
-    Only tested on Linux at the moment.
+    Tested on Linux and Windows at the moment.
 
 Prerequisites
 -------------
 
 It is assumed that you already have Python 3 installed. If you want graphic
-support, you manually need to install `matplotlib`_.
+support, you need to manually install `matplotlib`_.
 
 .. _matplotlib: https://matplotlib.org/index.html
 
 System wide installation
 ------------------------
 
-You can install Geometry3D system wide, just like any other python package::
+You can install Geometry3D via pip::
+
+    $ pip install Geometry3D
+
+
+Alternatively, you can install Geometry3D from source::
 
     $ git clone http://github.com/GouMinghao/Geometry3D
     $ cd Geometry3D/

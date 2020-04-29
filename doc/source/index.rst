@@ -3,23 +3,29 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Geometry3D: A 3D Computational Geometry Library
+Geometry3D: 3D Computational Geometrics Library
 ===============================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    about
    install
   
+Tutorials
+=========
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+
 
 Python API
 ==========
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Modules
 
    Geometry3D.calc
    Geometry3D.geometry
