@@ -37,5 +37,5 @@ setup(
 
         keywords="analytic geometry intersection 3d",
 
-        install_requires=['matplotlib','numpy'],
+        install_requires=[],
 )
