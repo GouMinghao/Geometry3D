@@ -28,7 +28,7 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 
 - [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)
 
-- [html](about:blank)
+- [html](https://geometry3d.readthedocs.io/en/latest/)
 
 ## Installation
 ```bash

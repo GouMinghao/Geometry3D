@@ -3,14 +3,12 @@ from ..geometry.point import Point
 from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.polyhedron import ConvexPolyhedron
-from matplotlib import pyplot as plt
-import matplotlib as mpl
-from mpl_toolkits.mplot3d import Axes3D
-
 from .arrow import Arrow
-        
 from ..utils.logger import get_main_logger
 class MatplotlibRenderer():
+    from matplotlib import pyplot as plt
+    import matplotlib as mpl
+    from mpl_toolkits.mplot3d import Axes3D
     """ Renderer module to visualize geometries"""
     def __init__(self):
         """
@@ -26,6 +24,7 @@ class MatplotlibRenderer():
         """
         Draw the image
         """
+        from matplotlib import pyplot as plt
         fig = plt.figure()
         ax = fig.gca(projection='3d')
         get_main_logger().info('Showing geometries with %d points, %d segments, %d arrows using matplotlib' %(len(self.point_set),len(self.segment_set),len(self.arrow_set)))

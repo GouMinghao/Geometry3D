@@ -22,10 +22,8 @@ setup(
         packages=find_packages(),
     
         classifiers=[
-            "Developement Status :: Beta",
-
             "Intended Audience :: Developers",
-            "Intended Audience :: Education"
+            "Intended Audience :: Education",
 
             "Topic :: Education",
             "Topic :: Scientific/Engineering :: Mathematics",

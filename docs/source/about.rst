@@ -15,5 +15,5 @@ Core Features
 
 Resources
 ---------
-- Documents: https://github.com/GouMinghao/Geometry3D/Geometry3D_doc.pdf
+- Documents: https://geometry3d.readthedocs.io/en/latest/
 - Code: https://github.com/GouMinghao/Geometry3D
