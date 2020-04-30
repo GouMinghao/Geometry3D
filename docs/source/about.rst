@@ -15,5 +15,10 @@ Core Features
 
 Resources
 ---------
-- Documents: https://geometry3d.readthedocs.io/en/latest/
+- Html_Documents_ (Python api has bugs)
+- PDF_Documents_ (Recommended)
 - Code: https://github.com/GouMinghao/Geometry3D
+
+.. _Html_Documents: https://geometry3d.readthedocs.io/en/latest/
+
+.. _PDF_Documents: https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf

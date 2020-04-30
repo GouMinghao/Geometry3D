@@ -16,7 +16,7 @@ Tutorials
 =========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Tutorials
 
    example_create
@@ -30,7 +30,7 @@ Python API
 ==========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Modules
 
    Geometry3D.calc
