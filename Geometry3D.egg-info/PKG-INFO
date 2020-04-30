@@ -1,7 +1,7 @@
 Metadata-Version: 1.1
 Name: Geometry3D
-Version: 0.1.0
-Summary: a 3d geometry lib
+Version: 0.1.1
+Summary: A 3D Geometry Lib
 Home-page: https://github.com/GouMinghao/Geometry3D
 Author: Minghao Gou
 Author-email: gouminghao@gmail.com
@@ -34,7 +34,7 @@ Description: # Geometry3D
         
         ## Documentation
         
-        - [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)
+        - [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)(recommended)
         
         - [html](https://geometry3d.readthedocs.io/en/latest/)
         

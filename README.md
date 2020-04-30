@@ -26,7 +26,7 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 
 ## Documentation
 
-- [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)
+- [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)(recommended)
 
 - [html](https://geometry3d.readthedocs.io/en/latest/)
 
