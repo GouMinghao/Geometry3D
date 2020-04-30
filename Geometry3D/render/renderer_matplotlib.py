@@ -6,9 +6,6 @@ from ..geometry.polyhedron import ConvexPolyhedron
 from .arrow import Arrow
 from ..utils.logger import get_main_logger
 class MatplotlibRenderer():
-    from matplotlib import pyplot as plt
-    import matplotlib as mpl
-    from mpl_toolkits.mplot3d import Axes3D
     """ Renderer module to visualize geometries"""
     def __init__(self):
         """
