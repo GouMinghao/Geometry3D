@@ -26,9 +26,11 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 
 ## Documentation
 
-- [pdf](https://github.com/GouMinghao/Geometry3D/blob/master/Geometry3D_doc.pdf)(recommended)
+[![Documentation Status](https://readthedocs.org/projects/geometry3d/badge/?version=latest)](https://geometry3d.readthedocs.io/en/latest/?badge=latest)
 
-- [html](https://geometry3d.readthedocs.io/en/latest/)
+- [https://geometry3d.readthedocs.io/en/latest](https://geometry3d.readthedocs.io/en/latest/)
+
+- [pdf](https://geometry3d.readthedocs.io/_/downloads/en/latest/pdf/)
 
 ## Installation
 ```bash

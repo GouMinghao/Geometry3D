@@ -8,3 +8,5 @@ sphinx-apidoc -o ./source ../Geometry3D
 make clean
 make html
 make latex
+cd build/latex
+make
