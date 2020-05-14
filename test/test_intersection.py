@@ -44,6 +44,13 @@ class PointIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(Point(0.5,0.5,1),cph),origin().move(Vector(0.5,0.5,1)))
         self.assertTrue(intersection(cph,Point(-0.1,0.5,0.5)) is None)
 
+    def test_intersection_point_halfline(self):
+        h = HalfLine(origin(),x_unit_vector())
+        self.assertEqual(intersection(h,origin()),origin())
+        self.assertEqual(intersection(Point(5,0,0),h),Point(5,0,0))
+        self.assertTrue(intersection(h,Point(-2,0,0)) is None)
+        self.assertTrue(intersection(Point(0,-1,0),h) is None)
+
 class LineIntersectionTest(unittest.TestCase):
     def test_intersection_line_line(self):
         l1 = x_axis()
@@ -128,6 +135,19 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(cph,l13),Point(0.5,0,1))
         self.assertEqual(intersection(cph,l14),Segment(Point(0.5,0,0),Point(1,1,1)))
 
+    def test_intersection_line_halfline(self):
+        h = HalfLine(origin(),x_unit_vector())
+        l1 = x_axis()
+        l2 = x_axis().move(y_unit_vector())
+        l3 = y_axis().move(x_unit_vector())
+        l4 = y_axis().move(-x_unit_vector())
+        l5 = y_axis()
+        self.assertEqual(intersection(h,l1),h)
+        self.assertTrue(intersection(h,l2) is None)
+        self.assertEqual(intersection(l3,h),Point(1,0,0))
+        self.assertTrue(intersection(h,l4) is None)
+        self.assertEqual(intersection(l5,h),origin())
+
 class PlaneIntersectionTest(unittest.TestCase):
     def test_intersection_plane_plane(self):
         p1 = xy_plane()
@@ -176,6 +196,19 @@ class PlaneIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cph,p5) == (ConvexPolygen((Point(0,0,0.3),Point(0,0.3,0),Point(0.3,0,0)))))
         self.assertTrue(intersection(cph,p6) is None)
         self.assertTrue(intersection(cph,p7) is None)
+
+    def test_intersection_plane_halfline(self):
+        h = HalfLine(origin(),Point(1,0,0))
+        p1 = xy_plane()
+        p2 = xy_plane().move(z_unit_vector())
+        p3 = yz_plane()
+        p4 = yz_plane().move(x_unit_vector())
+        p5 = yz_plane().move(-x_unit_vector())
+        self.assertEqual(intersection(h,p1),h)
+        self.assertEqual(intersection(p3,h),origin())
+        self.assertEqual(intersection(h,p4),Point(1,0,0))
+        self.assertTrue(intersection(h,p2) is None)
+        self.assertTrue(intersection(p5,h) is None)        
 
 class SegmentIntersectionTest(unittest.TestCase):
     def test_intersection_segment_segment(self):
@@ -260,6 +293,29 @@ class SegmentIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(s17,cph),Segment(center_p,Point(0.5,0,0)))
         self.assertEqual(intersection(s18,cph),Segment(center_p,Point(1,1,1)))
 
+    def test_intersection_segment_halfline(self):
+        h = HalfLine(origin(),x_unit_vector())
+        s1 = Segment(Point(-2,0,0),Point(-1,0,0))
+        s2 = copy.deepcopy(s1).move(x_unit_vector())
+        s3 = copy.deepcopy(s2).move(x_unit_vector())
+        s4 = copy.deepcopy(s3).move(x_unit_vector())
+        s5 = Segment(Point(-1,0,0),Point(1,0,0))
+        s6 = Segment(Point(0,0,1),Point(1,0,1))
+        s7 = Segment(Point(1,1,0),Point(1,2,0))
+        s8 = Segment(Point(0,-1,0),Point(0,1,0))
+        s9 = Segment(Point(1,-1,0),Point(1,1,0))
+        s10 = Segment(Point(-1,-1,0),Point(-1,1,0))
+        self.assertEqual(intersection(h,s2),origin())
+        self.assertEqual(intersection(s3,h),s3)
+        self.assertEqual(intersection(h,s4),s4)
+        self.assertEqual(intersection(s5,h),s3)
+        self.assertEqual(intersection(h,s8),origin())
+        self.assertEqual(intersection(s9,h),Point(1,0,0))
+        self.assertTrue(intersection(h,s1) is None)
+        self.assertTrue(intersection(s6,h) is None)
+        self.assertTrue(intersection(h,s7) is None)
+        self.assertTrue(intersection(s10,h) is None)
+
 class ConvexPolygenIntersectionTest(unittest.TestCase):
     def test_intersection_convexpolygen_convexpolygen(self):
         cpg0 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
@@ -284,7 +340,6 @@ class ConvexPolygenIntersectionTest(unittest.TestCase):
         cpg10 = Parallelogram(Point(0.5,0.5,-0.5),Vector(0.2,-0.2,0),z_unit_vector())
         self.assertEqual(intersection(cpg0,cpg10),Segment(Point(0.5,0.5,0),Point(0.7,0.3,0)))
         cpg11 = Parallelogram(Point(0,0,2),Vector(1,0,-1),y_unit_vector())
-        self.assertTrue(intersection(cpg0,cpg11) is None)
         cpg12 = Parallelogram(Point(0.5,0.5,0),Vector(2,-2,0),z_unit_vector())
         self.assertEqual(intersection(cpg0,cpg12),Segment(Point(0.5,0.5,0),Point(1,0,0)))
 
@@ -319,6 +374,27 @@ class ConvexPolygenIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cph,cpg13) is None)
         cpg14 = Parallelogram(Point(0,0,2),x_unit_vector(),y_unit_vector())
         self.assertTrue(intersection(cph,cpg14) is None)
+    
+    def test_intersection_convexpolygen_halfline(self):
+        cpg = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
+        h1 = HalfLine(Point(0.5,0.5,0),x_unit_vector())
+        h2 = HalfLine(origin(),Point(1,1,0))
+        h3 = HalfLine(origin(),z_unit_vector())
+        h4 = HalfLine(Point(2,2,2),Point(3,3,3))
+        h5 = HalfLine(Point(2,2,2),origin())
+        h6 = HalfLine(Point(1,1,2),Point(1,1,0))
+        h7 = HalfLine(Point(2,2,2),Point(1,1,0))
+        h8 = HalfLine(Point(2,2,2),Point(1.1,1.1,0))
+        h9 = HalfLine(Point(1.5,0.5,0),Point(-0.5,0.5,0))
+        self.assertEqual(intersection(cpg,h1),Segment(Point(0.5,0.5,0),Point(1,0.5,0)))
+        self.assertEqual(intersection(h2,cpg),Segment(origin(),Point(1,1,0)))
+        self.assertEqual(intersection(h3,cpg),origin())
+        self.assertEqual(intersection(h5,cpg),origin())
+        self.assertEqual(intersection(cpg,h6),Point(1,1,0))
+        self.assertEqual(intersection(h7,cpg),Point(1,1,0))
+        self.assertEqual(intersection(cpg,h9),Segment(Point(0,0.5,0),Point(1,0.5,0)))
+        self.assertTrue(intersection(cpg,h4) is None)
+        self.assertTrue(intersection(h8,cpg) is None)
 
 class ConvexPolyhedronIntersectionTest(unittest.TestCase):
     def test_intersection_convexpolyhedron_convexpolyhedron(self):
@@ -336,3 +412,46 @@ class ConvexPolyhedronIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(cph4,cph0),Parallelepiped(Point(0.5,0.5,0.5),0.5*x_unit_vector(),0.5*y_unit_vector(),0.5*z_unit_vector()))
         self.assertTrue(intersection(cph5,cph0) is None)
         self.assertEqual(intersection(cph0,cph6),cph0)
+
+    def test_intersection_convexpolyhedron_halfline(self):
+        cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
+        h1 = HalfLine(Point(0.5,0.5,0.5),x_unit_vector())
+        h2 = HalfLine(origin(),Point(1,1,1))
+        h3 = HalfLine(origin(),Point(1,1,0))
+        h4 = HalfLine(origin(),z_unit_vector())
+        h5 = HalfLine(Point(2,2,2),Point(3,3,3))
+        h6 = HalfLine(Point(2,2,2),origin())
+        h7 = HalfLine(Point(1,1,2),Point(1,1,0))
+        h8 = HalfLine(Point(2,2,2),Point(1,1,0))
+        h9 = HalfLine(Point(2,2,2),Point(1.1,1.1,0))
+        h10 = HalfLine(Point(1.5,0.5,0),Point(-0.5,0.5,0))
+        h11 = HalfLine(origin(),-x_unit_vector())
+        h12 = HalfLine(origin(),-x_unit_vector() - y_unit_vector() - z_unit_vector())
+        self.assertEqual(intersection(cph,h1),Segment(Point(0.5,0.5,0.5),Point(1,0.5,0.5)))
+        self.assertEqual(intersection(h2,cph),Segment(origin(),Point(1,1,1)))
+        self.assertEqual(intersection(cph,h3),Segment(origin(),Point(1,1,0)))
+        self.assertEqual(intersection(h4,cph),Segment(origin(),Point(0,0,1)))
+        self.assertEqual(intersection(h6,cph),Segment(origin(),Point(1,1,1)))
+        self.assertEqual(intersection(cph,h7),Segment(Point(1,1,1),Point(1,1,0)))
+        self.assertEqual(intersection(h8,cph),Point(1,1,0))
+        self.assertEqual(intersection(h11,cph),Point(0,0,0))
+        self.assertEqual(intersection(h12,cph),Point(0,0,0))
+        self.assertEqual(intersection(cph,h10),Segment(Point(0,0.5,0),Point(1,0.5,0)))
+        self.assertTrue(intersection(cph,h5) is None)
+        self.assertTrue(intersection(h9,cph) is None)
+
+class HalfLineIntersectionTest(unittest.TestCase):
+    def test_intersection_halfline_halfline(self):
+        h1 = HalfLine(origin(),x_unit_vector())
+        h2 = HalfLine(Point(1,0,0),x_unit_vector())
+        h3 = HalfLine(Point(1,0,0),-x_unit_vector())
+        h4 = HalfLine(origin(),Point(0,1,0))
+        h5 = HalfLine(Point(1,-1,0),y_unit_vector())
+        h6 = HalfLine(Point(1,1,0),y_unit_vector())
+        h7 = HalfLine(origin(),x_unit_vector())
+        self.assertEqual(intersection(h1,h2),h2)
+        self.assertEqual(intersection(h1,h3),Segment(origin(),Point(1,0,0)))
+        self.assertEqual(intersection(h1,h4),origin())
+        self.assertEqual(intersection(h1,h5),Point(1,0,0))
+        self.assertTrue(intersection(h1,h6) is None)
+        self.assertEqual(intersection(h1,h7),h7)

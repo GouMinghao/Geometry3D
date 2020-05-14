@@ -41,34 +41,34 @@ Point       - Plane            -> None, Point                 OK
 Point       - Segment          -> None, Point                 OK  
 Point       - ConvexPolygen    -> None, Point                 OK
 Point       - ConvexPolyhedron -> None, Point                 OK
-Point       - HalfLine         -> None, Point                 Not Tested
+Point       - HalfLine         -> None, Point                 OK
 
 Line        - Line             -> None, Point, Line           OK
 Line        - Plane            -> None, Point, Line           OK
 Line        - Segment          -> None, Point, Segment        OK
 Line        - ConvexPolygen    -> None, Point, Segment        OK
 Line        - ConvexPolyhedron -> None, Point, Segment        OK
-Line        - HalfLine         -> None, Point, HalfLine       Not Tested
+Line        - HalfLine         -> None, Point, HalfLine       OK
 
 Plane       - Plane            -> None, Line, Plane                     OK
 Plane       - Segment          -> None, Point, Segment                  OK
 Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen   OK
 Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen   OK
-Plane       - HalfLine         -> None, Point, HalfLine                 Not Tested
+Plane       - HalfLine         -> None, Point, HalfLine                 OK
 
 Segment     - Segment          -> None, Point, Segment          OK
 Segment     - ConvexPolygen    -> None, Point, Segment          OK
 Segment     - ConvexPolyhedron -> None, Point, Segment          OK
-Segment     - HalfLine         -> None, Point, Segment          Not Tested
+Segment     - HalfLine         -> None, Point, Segment          OK
 
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen     OK
 ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen     OK
-ConvexPolygen     - HalfLine         -> None, Point, Segment
+ConvexPolygen     - HalfLine         -> None, Point, Segment                    OK
 
 ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron   OK
-ConvexPolyhedron  - HalfLine         -> None, Point, Segment
+ConvexPolyhedron  - HalfLine         -> None, Point, Segment                                    OK
 
-HalfLine    - HalfLine         -> None, Point, Segment, HalfLine
+HalfLine    - HalfLine         -> None, Point, Segment, HalfLine     OK
 -----------------------------------------------
 
 numerical circle, sphere, cylinder, ellipse, cone

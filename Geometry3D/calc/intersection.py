@@ -16,7 +16,7 @@ from ..utils.logger import get_main_logger
 
 from .acute import acute
 from .angle import angle, parallel, orthogonal
-from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set,get_segment_convexpolygen_intersection_point_set,points_in_a_line
+from .aux_calc import get_segment_from_point_list,get_segment_convexpolyhedron_intersection_point_set,get_segment_convexpolygen_intersection_point_set,points_in_a_line,get_halfline_convexpolyhedron_intersection_point_set
 
 def intersection(a, b):
     """
@@ -103,10 +103,10 @@ def intersection(a, b):
         return inter_plane_convexpolyhedron(a,b)
     elif isinstance(a,ConvexPolyhedron) and isinstance(b, Plane):
         return inter_plane_convexpolyhedron(b,a)
-    elif istantance(a, Plane) and isinstance(b, HalfLine):
+    elif isinstance(a, Plane) and isinstance(b, HalfLine):
         return inter_plane_halfline(a,b)
-    elif isinstance(a, HalfLine) and isinstance(b, Plane)
-        return inter_plane_haleline(b,a)
+    elif isinstance(a, HalfLine) and isinstance(b, Plane):
+        return inter_plane_halfline(b,a)
     # segment
     elif isinstance(a,Segment) and isinstance(b,Segment):
         return inter_segment_segment(a,b)
@@ -757,6 +757,33 @@ def inter_convexpolygen_convexPolyhedron(cph,cpg):
     else:
         raise TypeError("Bug detected! please contact the author")
 
+def inter_convexpolygen_halfline(cpg,h):
+    '''Input:
+    cpg: ConvexPolygen
+    h: HalfLine
+
+    Output:
+    The intersection
+    '''
+    inter_l_p = intersection(h.line,cpg.plane)
+    if inter_l_p is None:
+        return None
+    elif isinstance(inter_l_p,Point):
+        if (not inter_l_p in cpg) or (not inter_l_p in h):
+            return None
+        else:
+            return inter_l_p
+    elif isinstance(inter_l_p,Line):
+        inter_l_cpg = intersection(h.line,cpg)
+        if inter_l_cpg is None:
+            return None
+        elif isinstance(inter_l_cpg,Point) or isinstance(inter_l_cpg,Segment):
+            return intersection(inter_l_cpg,h)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    else:
+        raise TypeError("Bug detected! please contact the author")
+
 def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
     """Input:
     cph1: a ConvexPolyhedron
@@ -809,10 +836,29 @@ def inter_convexpolyhedron_convexpolyhedron(cph1,cph2):
     else:
         return None
 
+def inter_convexpolyhedron_halfline(cph,h):
+    '''Input:
+    cph: ConvexPolyhedron
+    h: HalfLine
+
+    Output:
+    The intersection
+    '''
+    inter_point_set = get_halfline_convexpolyhedron_intersection_point_set(h,cph)
+    if (h.point in cph):
+        inter_point_set.add(h.point)
+    inter_point_list = list(inter_point_set)
+    if len(inter_point_list) == 0:
+        return None
+    elif len(inter_point_list) == 1:
+        return inter_point_list[0]
+    elif len(inter_point_list) == 2:
+        return Segment(inter_point_list[0],inter_point_list[1])
+    else:
+        get_main_logger().error('length of inter_point_list is {}, list is {}'.format(len(inter_point_list),inter_point_list))
+        raise TypeError("Bug detected! please contact the author")
 
 
-
-############ has bug #############
 def inter_halfline_halfline(a,b):
     '''Input:
     a: HalfLine
@@ -822,6 +868,10 @@ def inter_halfline_halfline(a,b):
     The intersection
     '''
     if a.line == b.line:
+        if a in b:
+            return a
+        if b in a:
+            return b
         point_set = set()
         if a.point in b:
             point_set.add(a.point)

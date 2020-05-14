@@ -55,7 +55,7 @@ class HalfLine(GeoBody):
         if isinstance(other,Segment):
             return other.start_point in self and other.end_point in self
         if isinstance(other, HalfLine):
-            return (self.line == other.line) and (other.point in self)
+            return (self.line == other.line) and (other.point in self) and ((self.vector * other.vector) > -get_eps())
         else:
             get_main_logger().warning("Calling type {} in type {} which is always False".format(type(other),type(self)))
             return False

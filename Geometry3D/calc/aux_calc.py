@@ -12,6 +12,7 @@ from ..geometry.segment import Segment
 from ..geometry.polygen import ConvexPolygen
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
+from ..geometry.halfline import HalfLine
 
 from ..utils.vector import Vector
 from ..utils.logger import get_main_logger
@@ -167,4 +168,39 @@ def points_in_a_line(points):
                 return False
         return True
 
-__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygen_intersection_point_set','points_in_a_line')
+def get_halfline_convexpolyhedron_intersection_point_set(h,cph):
+    '''
+    **Input:**
+    
+    - h: HalfLine
+    
+    - cph: ConvexPolyhedron
+
+    **Output:**
+    
+    A set of intersection points
+    '''
+    point_set = set()
+    for cpg in cph.convex_polygens:
+        inter_cpg_h = cpg.intersection(h)
+        if inter_cpg_h is None:
+            continue
+        elif isinstance(inter_cpg_h,Segment):
+            continue
+        elif isinstance(inter_cpg_h,Point):
+            point_set.add(inter_cpg_h)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    for seg in cph.segment_set:
+        inter_s_h = seg.intersection(h)
+        if inter_s_h is None:
+            continue
+        elif isinstance(inter_s_h,Segment):
+            continue
+        elif isinstance(inter_s_h,Point):
+            point_set.add(inter_s_h)
+        else:
+            raise TypeError("Bug detected! please contact the author")
+    return point_set
+
+__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygen_intersection_point_set','get_halfline_convexpolyhedron_intersection_point_set','points_in_a_line')

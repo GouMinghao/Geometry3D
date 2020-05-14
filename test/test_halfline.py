@@ -54,7 +54,20 @@ class HalfLineTest(unittest.TestCase):
         self.assertTrue(
             Segment(Point(1,0,0),Point(2,0,0)) in HalfLine(origin(),Point(1,0,0))
         )
-    
+
+    def test_halfline_contains_halfline(self):
+        h1 = HalfLine(origin(),Point(1,0,0))
+        h2 = HalfLine(Point(1,0,0),Point(2,0,0))
+        h3 = HalfLine(origin(),Point(1,0,0))
+        h4 = HalfLine(origin(),Point(-1,0,0))
+        h5 = HalfLine(Point(1,0,0),Point(2,1,0))
+        h6 = HalfLine(Point(1,0,0),Vector(-1,0,0))
+        self.assertTrue(h2 in h1)
+        self.assertTrue(h3 in h1)
+        self.assertFalse(h4 in h1)
+        self.assertFalse(h5 in h1)
+        self.assertFalse(h6 in h1)
+
     def test_halfline_segment_hash(self):
         s = set()
         s.add(
@@ -73,3 +86,4 @@ class HalfLineTest(unittest.TestCase):
             HalfLine(origin(),Point(2,3,1)).move(Vector(1,2,3)),
             HalfLine(Point(1,2,3),Vector(2,3,1))
         )
+
