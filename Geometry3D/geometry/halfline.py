@@ -44,7 +44,7 @@ class HalfLine(GeoBody):
         return "HalfLine({}, {})".format(self.point, self.vector)
 
     def __contains__(self, other):
-        """Checks if a point lies on a halfline"""
+        """Checks if a point, segment or halfline lies on a halfline"""
         if isinstance(other,Point):
             r1 = other in self.line
             if r1:
@@ -54,6 +54,8 @@ class HalfLine(GeoBody):
                 return False
         if isinstance(other,Segment):
             return other.start_point in self and other.end_point in self
+        if isinstance(other, HalfLine):
+            return (self.line == other.line) and (other.point in self)
         else:
             get_main_logger().warning("Calling type {} in type {} which is always False".format(type(other),type(self)))
             return False

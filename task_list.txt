@@ -41,25 +41,25 @@ Point       - Plane            -> None, Point                 OK
 Point       - Segment          -> None, Point                 OK  
 Point       - ConvexPolygen    -> None, Point                 OK
 Point       - ConvexPolyhedron -> None, Point                 OK
-Point       - HalfLine         -> None, Point
+Point       - HalfLine         -> None, Point                 Not Tested
 
 Line        - Line             -> None, Point, Line           OK
 Line        - Plane            -> None, Point, Line           OK
 Line        - Segment          -> None, Point, Segment        OK
 Line        - ConvexPolygen    -> None, Point, Segment        OK
 Line        - ConvexPolyhedron -> None, Point, Segment        OK
-Line        - HalfLine         -> None, Point, HalfLine       
+Line        - HalfLine         -> None, Point, HalfLine       Not Tested
 
 Plane       - Plane            -> None, Line, Plane                     OK
 Plane       - Segment          -> None, Point, Segment                  OK
 Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen   OK
 Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen   OK
-Plane       - HalfLine         -> None, Point, HalfLine
+Plane       - HalfLine         -> None, Point, HalfLine                 Not Tested
 
 Segment     - Segment          -> None, Point, Segment          OK
 Segment     - ConvexPolygen    -> None, Point, Segment          OK
 Segment     - ConvexPolyhedron -> None, Point, Segment          OK
-Segment     - HalfLine         -> None, Point, Segment
+Segment     - HalfLine         -> None, Point, Segment          Not Tested
 
 ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen     OK
 ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen     OK
