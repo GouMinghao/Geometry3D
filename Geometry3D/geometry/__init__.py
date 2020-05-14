@@ -6,6 +6,7 @@ from .segment import Segment
 from .polygen import ConvexPolygen,Parallelogram
 from .pyramid import Pyramid
 from .polyhedron import ConvexPolyhedron,Parallelepiped
+from .halfline import HalfLine
 __all__ = (
     "ConvexPolyhedron",
     "Parallelepiped",
@@ -16,6 +17,7 @@ __all__ = (
     "Line",
     "Plane",
     "Point",
+    "HalfLine",
     "origin",
     "x_axis",
     "y_axis",

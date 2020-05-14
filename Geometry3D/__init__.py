@@ -13,6 +13,7 @@ __all__ = (
     "Line",
     "Plane",
     "Point",
+    "HalfLine",
     "Vector",
     "angle",
     "distance",

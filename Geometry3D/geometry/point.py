@@ -3,7 +3,7 @@
 from ..utils.util import unify_types
 import math
 from ..utils.logger import get_main_logger
-from ..utils.constant import *
+from ..utils.constant import get_sig_figures,get_eps
 from ..utils.vector import Vector
 
 class Point(object):
@@ -49,12 +49,12 @@ class Point(object):
     def __hash__(self):
         """return the hash of a point"""
         return hash(("Point",
-        round(self.x,SIG_FIGURES),
-        round(self.y,SIG_FIGURES),
-        round(self.z,SIG_FIGURES),
-        round(self.x,SIG_FIGURES) * round(self.y,SIG_FIGURES),
-        round(self.x,SIG_FIGURES) * round(self.z,SIG_FIGURES),
-        round(self.y,SIG_FIGURES) * round(self.z,SIG_FIGURES),
+        round(self.x,get_sig_figures()),
+        round(self.y,get_sig_figures()),
+        round(self.z,get_sig_figures()),
+        round(self.x,get_sig_figures()) * round(self.y,get_sig_figures()),
+        round(self.x,get_sig_figures()) * round(self.z,get_sig_figures()),
+        round(self.y,get_sig_figures()) * round(self.z,get_sig_figures()),
         ))
 
     def __eq__(self, other):

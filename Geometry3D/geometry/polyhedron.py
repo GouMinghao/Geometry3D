@@ -116,7 +116,7 @@ class ConvexPolyhedron(GeoBody):
         return Point(x / num_points,y / num_points, z / num_points)
     
     def __repr__(self):
-        return "ConvexPolyhedron\npyramid set:{}\npoint set:{}".format(self.pyramid_set,self.point_set)
+        return "ConvexPolyhedron({})".format(self.point_set)
 
     def __contains__(self,other):
         """

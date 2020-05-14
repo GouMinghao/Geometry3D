@@ -12,6 +12,14 @@ Geometry3D.geometry.body module
    :undoc-members:
    :show-inheritance:
 
+Geometry3D.geometry.halfline module
+-----------------------------------
+
+.. automodule:: Geometry3D.geometry.halfline
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Geometry3D.geometry.line module
 -------------------------------
 

@@ -3,7 +3,7 @@
 import math
 # import numpy as np
 from .util import unify_types
-from .constant import get_eps
+from .constant import get_eps,get_sig_figures
 
 class Vector(object):
     """Vector Class"""
@@ -54,8 +54,17 @@ class Vector(object):
                             "not {}".format(len(args)))
         self._v = unify_types(self._v)
 
+
     def __hash__(self):
-        return hash(("Vector",) + tuple(self))
+        """return the hash of a vector"""
+        return hash(("Vector",
+        round(self._v[0],get_sig_figures()),
+        round(self._v[1],get_sig_figures()),
+        round(self._v[2],get_sig_figures()),
+        round(self._v[0],get_sig_figures()) * round(self._v[1],get_sig_figures()),
+        round(self._v[1],get_sig_figures()) * round(self._v[2],get_sig_figures()),
+        round(self._v[2],get_sig_figures()) * round(self._v[0],get_sig_figures()),
+        ))
 
     def __repr__(self):
         return "Vector({}, {}, {})".format(*self._v)
