@@ -6,3 +6,4 @@ dist/
 *.pyc
 *.swp
 /.vscode/
+/Geometry3D.egg-info/
