@@ -1,6 +1,6 @@
 """Polyhedron Module"""
 from .body import GeoBody
-from .polygen import ConvexPolygen,Parallelogram
+from .polygen import ConvexPolygen,Parallelogram,Circle,get_circle_point_list
 from .point import Point
 from .line import Line
 from .segment import Segment
@@ -57,6 +57,90 @@ class ConvexPolyhedron(GeoBody):
 
         else:
             raise TypeError("Parallelepiped should be initialized with Point, Vector, Vector and Vector, but the given types are %s, %s, %s and %s" %(type(base_point),type(v1),type(v2),type(v3)))
+
+    @classmethod
+    def Sphere(cls,center,radius,n=10):
+        """
+        A special function for creating the inscribed polyhedron of a sphere 
+
+        **Input:**
+
+        - center: The center of the sphere
+
+        - radius: The radius of the sphere
+
+        - n=10: The number of Points on a big circle
+
+        **Output:**
+
+        - An inscribed polyhedron of the given sphere.
+        """
+        pass
+
+    @classmethod
+    def Cylinder(cls,circle_center,radius,height_vector,n=10):
+        """
+        A special function for creating the inscribed polyhedron of a sphere 
+
+        **Input:**
+
+        - circle_center: The center of the bottom circle
+
+        - radius: The radius of the bottom circle
+
+        - height_vector: The Vector from the bottom circle center to the top circle center 
+
+        - n=10: The number of Points on the bottom circle
+
+        **Output:**
+
+        - An inscribed polyhedron of the given cylinder.
+        """
+        import copy
+        top_point = copy.deepcopy(circle_center).move(height_vector)
+        # print(top_point)
+        bottom_circle = Circle(center=circle_center,normal=height_vector,radius=radius,n=n)
+        bottom_circle_point_list = get_circle_point_list(center=circle_center,normal=height_vector,radius=radius,n=n)
+
+        top_circle = Circle(center=top_point,normal=height_vector,radius=radius,n=n)
+        top_circle_point_list = get_circle_point_list(center=top_point,normal=height_vector,radius=radius,n=n)
+        cpg_list = [top_circle,bottom_circle]
+        for i in range(len(top_circle_point_list)):
+            start = i
+            end = (i + 1) % len(top_circle_point_list)
+            cpg_list.append(ConvexPolygen((top_circle_point_list[start],top_circle_point_list[end],bottom_circle_point_list[end],bottom_circle_point_list[start])))
+        return cls(tuple(cpg_list))
+
+    @classmethod
+    def Cone(cls,circle_center,radius,height_vector,n=10):
+        """
+        A special function for creating the inscribed polyhedron of a sphere 
+
+        **Input:**
+
+        - circle_center: The center of the bottom circle
+
+        - radius: The radius of the bottom circle
+
+        - height_vector: The Vector from the bottom circle center to the top circle center 
+
+        - n=10: The number of Points on the bottom circle
+
+        **Output:**
+
+        - An inscribed polyhedron of the given cone.
+        """
+        import copy
+        top_point = copy.deepcopy(circle_center).move(height_vector)
+        # print(top_point)
+        circle = Circle(center=circle_center,normal=height_vector,radius=radius,n=n)
+        circle_point_list = get_circle_point_list(center=circle_center,normal=height_vector,radius=radius,n=n)
+        cpg_list = [circle]
+        for i in range(len(circle_point_list)):
+            start = i
+            end = (i + 1) % len(circle_point_list)
+            cpg_list.append(ConvexPolygen((top_point,circle_point_list[start],circle_point_list[end])))
+        return cls(tuple(cpg_list))
 
     def __init__(self,convex_polygens):
         self.convex_polygens = list(copy.deepcopy(convex_polygens))
@@ -233,4 +317,8 @@ class ConvexPolyhedron(GeoBody):
         return v
 
 Parallelepiped = ConvexPolyhedron.Parallelepiped
-__all__=("ConvexPolyhedron","Parallelepiped")
+Cone = ConvexPolyhedron.Cone
+Sphere = ConvexPolyhedron.Sphere
+Cylinder = ConvexPolyhedron.Cylinder
+
+__all__=("ConvexPolyhedron","Parallelepiped","Cone","Sphere","Cylinder")

@@ -72,5 +72,7 @@ def set_sig_figures(sig_figures = 10):
     SIG_FIGURES = sig_figures
     FLOAT_EPS = 1 / (10 ** SIG_FIGURES)
 
-__all__=('SIG_FIGURES','FLOAT_EPS','set_eps','get_eps','get_sig_figures','set_sig_figures')
+SMALL_ANGLE = 0.1 # used in ..calc.aux_calc
+
+__all__=('SIG_FIGURES','FLOAT_EPS','SMALL_ANGLE','set_eps','get_eps','get_sig_figures','set_sig_figures')
     

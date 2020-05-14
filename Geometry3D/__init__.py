@@ -6,8 +6,12 @@ from .render import *
 __all__ = (
     "ConvexPolyhedron",
     "Parallelepiped",
+    "Sphere",
+    "Cone",
+    "Cylinder",
     "ConvexPolygen",
     "Parallelogram",
+    "Circle",
     "Pyramid",
     "Segment",
     "Line",
@@ -44,5 +48,6 @@ __all__ = (
     "get_segment_from_point_list",
     "get_segment_convexpolyhedron_intersection_point_set",
     "get_segment_convexpolygen_intersection_point_set",
-    "points_in_a_line"
+    "points_in_a_line",
+    "get_circle_point_list"
 )

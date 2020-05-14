@@ -71,6 +71,8 @@ ConvexPolyhedron  - HalfLine         -> None, Point, Segment                    
 HalfLine    - HalfLine         -> None, Point, Segment, HalfLine     OK
 -----------------------------------------------
 
-numerical circle, sphere, cylinder, ellipse, cone
+numerical sphere, cylinder, cone
+
+numerical circle, ellipse
 
 arxiv paper

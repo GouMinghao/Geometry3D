@@ -14,8 +14,12 @@ from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
 from ..geometry.halfline import HalfLine
 
-from ..utils.vector import Vector
+from ..utils.vector import Vector,x_unit_vector,y_unit_vector
 from ..utils.logger import get_main_logger
+from ..utils.constant import SMALL_ANGLE
+
+from ..calc.angle import angle
+
 import copy
 
 # import numpy as np
@@ -202,5 +206,8 @@ def get_halfline_convexpolyhedron_intersection_point_set(h,cph):
         else:
             raise TypeError("Bug detected! please contact the author")
     return point_set
+
+
+
 
 __all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygen_intersection_point_set','get_halfline_convexpolyhedron_intersection_point_set','points_in_a_line')

@@ -7,8 +7,30 @@ from .line import Line
 from .segment import Segment
 from .plane import Plane
 from ..utils.constant import *
+from ..utils.vector import x_unit_vector,y_unit_vector
+
 import copy
 import math
+
+def get_circle_point_list(center,normal,radius,n=10):
+    if n <= 2:
+        raise ValueError("n must be at least 3 to construct an inscribed polygen for a circle")
+    import math,copy
+    if normal.angle(x_unit_vector()) < SMALL_ANGLE:
+        base_vector = y_unit_vector()
+        if normal.angle(y_unit_vector()) < SMALL_ANGLE:
+            raise ValueError("Bug detected! please contact the author")
+    else:
+        base_vector = x_unit_vector()
+    v1 = normal.normalized().cross(base_vector).normalized() 
+    v2 = normal.normalized().cross(v1)
+    v1 = v1 * radius
+    v2 = v2 * radius
+    point_list = []
+    for i in range(n):
+        angle_i = math.pi * 2 / n * i
+        point_list.append(copy.deepcopy(center).move(v1 * math.cos(angle_i) + v2 * math.sin(angle_i)))
+    return point_list
 
 def get_triangle_area(pa,pb,pc):
     """
@@ -43,6 +65,28 @@ class ConvexPolygen(GeoBody):
     If the Polygen is not convex, there might be errors.
     """
     class_level = 4 # the class level of ConvexPolygen
+
+    @classmethod
+    def Circle(cls,center,normal,radius,n=10):
+        """
+        A special function for creating an inscribed convex polygen of a circle
+
+        **Input:**
+
+        - Center: The center point of the circle
+
+        - normal: The normal vector of the circle
+
+        - radius: The radius of the circle
+
+        - n=10: The number of Points of the ConvexPolygen
+
+        **Output:**
+
+        - An inscribed convex polygen of a circle.
+        """
+        return cls(get_circle_point_list(center,normal,radius,n))
+
     @classmethod
     def Parallelogram(cls,base_point,v1,v2):
         """
@@ -291,5 +335,6 @@ class ConvexPolygen(GeoBody):
             raise NotImplementedError("The second parameter for move function must be Vector")
 
 Parallelogram = ConvexPolygen.Parallelogram
+Circle = ConvexPolygen.Circle
 
-__all__ = ("ConvexPolygen","Parallelogram")
+__all__ = ("ConvexPolygen","Parallelogram","get_circle_point_list","Circle")
