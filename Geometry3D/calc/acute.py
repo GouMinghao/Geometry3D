@@ -9,7 +9,7 @@ def acute(rad):
 
     **Output:**
 
-    If the given angle is >90° (pi/2), return the opposite angle.
+    If the given angle is >90 (pi/2), return the opposite angle.
     
     Return the angle else.
     """

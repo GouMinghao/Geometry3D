@@ -6,11 +6,14 @@
 Geometry3D: 3D Computational Geometrics Library
 ===============================================
 
+
+
 .. toctree::
    :maxdepth: 2
 
    about
    install
+   first_example
   
 Tutorials
 =========
@@ -25,6 +28,7 @@ Tutorials
    example_operation
    example_build_in
    example_float
+   example_logger
 
 Python API
 ==========
@@ -46,3 +50,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

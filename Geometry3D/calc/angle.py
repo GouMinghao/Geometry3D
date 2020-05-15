@@ -36,8 +36,8 @@ def angle(a, b):
         rad = acute(a.dv.angle(b.n))
         # What we are actually calculating is the angle between
         # the normal of the plane and the line, but the normal
-        # is 90° from the plane. So the actual angle between a plane
-        # a line is 90° - that angle
+        # is 90 from the plane. So the actual angle between a plane
+        # a line is 90 - that angle
         return 0.5 * math.pi - rad
     
     elif isinstance(a, Plane) and isinstance(b, Line):

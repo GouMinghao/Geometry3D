@@ -8,6 +8,7 @@ This library focuses on the functions and lacks efficiency which might be improv
 Core Features
 -------------
 - Basic 3D Geometries: Point, Line, Plane, Segment, Convex Polygen and Convex Polyhedron.
+- Simple Object like Cubic, Sphere, Cylinder, Cone, Rectangle, Parallepiped, Parallogram and Circle.  
 - Basic Attributes Of Geometries: length, area, volume.
 - Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.

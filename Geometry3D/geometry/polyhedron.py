@@ -6,7 +6,7 @@ from .line import Line
 from .segment import Segment
 from .plane import Plane
 from .pyramid import Pyramid
-from ..utils.vector import Vector
+from ..utils.vector import Vector,x_unit_vector,y_unit_vector,z_unit_vector
 from ..utils.constant import *
 from ..utils.logger import get_main_logger
 import copy
@@ -59,7 +59,7 @@ class ConvexPolyhedron(GeoBody):
             raise TypeError("Parallelepiped should be initialized with Point, Vector, Vector and Vector, but the given types are %s, %s, %s and %s" %(type(base_point),type(v1),type(v2),type(v3)))
 
     @classmethod
-    def Sphere(cls,center,radius,n=10):
+    def Sphere(cls,center,radius,n1=10,n2=3):
         """
         A special function for creating the inscribed polyhedron of a sphere 
 
@@ -69,13 +69,52 @@ class ConvexPolyhedron(GeoBody):
 
         - radius: The radius of the sphere
 
-        - n=10: The number of Points on a big circle
+        - n1=10: The number of Points on a longitude circle
+
+        - n2=3: The number sections of a quater latitude circle 
 
         **Output:**
 
         - An inscribed polyhedron of the given sphere.
         """
-        pass
+        import copy
+        import math
+        cpg_list = []
+        mc = get_circle_point_list(center = center,normal = z_unit_vector(),radius = radius,n=n1) # medium circle
+        top_point = copy.deepcopy(center).move(radius * z_unit_vector())
+        bottom_point = copy.deepcopy(center).move(-radius * z_unit_vector())
+        # heights=[]
+        # radii = []
+        tc = [] # top circles
+        bc = [] # bottom circles
+        for i in range(n2-1):
+            angle_i = math.pi / 2 / n2 *(i+1) 
+            height_i=radius * math.sin(angle_i)
+            r_i=radius * math.cos(angle_i)
+            tc.append(get_circle_point_list(
+                center = copy.deepcopy(center).move(height_i * z_unit_vector()),
+                normal = z_unit_vector(),
+                radius = r_i,
+                n=n1
+            ))
+            bc.append(get_circle_point_list(
+                center = copy.deepcopy(center).move(-height_i * z_unit_vector()),
+                normal = z_unit_vector(),
+                radius = r_i,
+                n=n1
+            ))
+        for i in range(n1):
+            start = i
+            end = (i + 1) % n1 
+            cpg_list.append(ConvexPolygen((mc[start],mc[end],tc[0][end],tc[0][start])))
+            cpg_list.append(ConvexPolygen((mc[start],mc[end],bc[0][end],bc[0][start])))
+            for j in range(1,n2-1):
+                cpg_list.append(ConvexPolygen((tc[j-1][start],tc[j-1][end],tc[j][end],tc[j][start])))
+                cpg_list.append(ConvexPolygen((bc[j-1][start],bc[j-1][end],bc[j][end],bc[j][start])))
+            cpg_list.append(ConvexPolygen((top_point,tc[n2-2][end],tc[n2-2][start])))
+            cpg_list.append(ConvexPolygen((bottom_point,bc[n2-2][end],bc[n2-2][start])))
+        return cls(tuple(cpg_list))
+        # return cpg_list
 
     @classmethod
     def Cylinder(cls,circle_center,radius,height_vector,n=10):

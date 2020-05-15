@@ -8,21 +8,30 @@ This library focuses on the functions and lacks efficiency which might be improv
 
 ## Core Features
 - Basic 3D Geometries: Point, Line, Plane, Segment, Convex Polygen and Convex Polyhedron.
+- Simple Object like Cubic, Sphere, Cylinder, Cone, Rectangle, Parallepiped, Parallogram and Circle.  
 - Basic Attributes Of Geometries: length, area, volume.
 - Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
 - A Naive Renderer Using `matplotlib`.
 
-![pic](pic.png)
+<div align=center>
+
+![pic1](pic1.png)
+
+![pic2](pic2.png)
+
+![pic3](pic3.png)
+
+![pic4](pic4.png)
+</div>
 
 Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
 ## Requirements
 
-* [Python](http://www.python.org) 3 (python2 is not tested)
+* [Python](http://www.python.org) 3 
 * No additional third-party library is required, it's written in pure python and standard library. 
 * Matplotlib is needed if you want to use the renderer.
-* Optional for a better experience: [ipython](http://ipython.org)
 
 ## Documentation
 
@@ -41,6 +50,8 @@ pip install Geometry3D
 
 See Documentations
 
+## Change Log
+ [changelog.md](changelog.md)
 ## License
 
     This program is free software: you can redistribute it and/or modify

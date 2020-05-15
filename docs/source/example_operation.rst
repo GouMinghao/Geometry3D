@@ -58,6 +58,8 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Point            |ConvexPolyhedron | None, Point                          |
 +-----------------+-----------------+--------------------------------------+
+|Point            |HalfLine         | None, Point                          |
++-----------------+-----------------+--------------------------------------+
 |Line             |Line             | None, Point, Line                    |
 +-----------------+-----------------+--------------------------------------+
 |Line             |Plane            | None, Point, Line                    |
@@ -68,6 +70,8 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Line             |ConvexPolyhedron | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
+|Line             |HalfLine         | None, Point, HalfLine                |
++-----------------+-----------------+--------------------------------------+
 |Plane            |Plane            | None, Line, Plane                    |
 +-----------------+-----------------+--------------------------------------+
 |Plane            |Segment          | None, Point, Segment                 |
@@ -76,19 +80,30 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Plane            |ConvexPolyhedron | None, Point, Segment, ConvexPolygen  |
 +-----------------+-----------------+--------------------------------------+
+|Plane            |HalfLine         | None, Point, HalfLine                |
++-----------------+-----------------+--------------------------------------+
 |Segment          |Segment          | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
 |Segment          |ConvexPolygen    | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
 |Segment          |ConvexPolyhedron | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
+|Segment          |HalfLine         | None, Point, Segment                 |
++-----------------+-----------------+--------------------------------------+
 |ConvexPolygen    |ConvexPolygen    | None, Point, Segment, ConvexPolygen  |
 +-----------------+-----------------+--------------------------------------+
 |ConvexPolygen    |ConvexPolyhedron | None, Point, Segment, ConvexPolygen  |
 +-----------------+-----------------+--------------------------------------+
+|ConvexPolygen    |HalfLine         | None, Point, Segment                 |
++-----------------+-----------------+--------------------------------------+
 |ConvexPolyhedron |ConvexPolyhedron | None, Point, Segment, ConvexPolygen, |
 |                 |                 | ConvexPolyhedron                     |
 +-----------------+-----------------+--------------------------------------+
+|ConvexPolyhedron |HalfLine         | None, Point, Segment                 |
++-----------------+-----------------+--------------------------------------+
+|HalfLine         |HalfLine         | None, Point, Segment, HalfLine       |
++-----------------+-----------------+--------------------------------------+
+
 
 All of the situations above are implemented. The documentation shows some examples. 
 
