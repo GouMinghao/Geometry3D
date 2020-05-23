@@ -72,7 +72,7 @@ class Plane(GeoBody):
     def _init_pn(self, p, normale):
         """Initialise a plane given in the point normal form."""
         self.p = p
-        self.n = normale
+        self.n = normale.normalized()
 
     def _init_gf(self, a, b, c, d):
         """Initialise a plane given in the general form."""
@@ -81,7 +81,7 @@ class Plane(GeoBody):
         # 2) a point on the plane -> solve the equation and chose a
         #    "random" point
         solution = solve([[a, b, c, d]])
-        self.n = Vector(a, b, c)
+        self.n = Vector(a, b, c).normalized()
         self.p = Point(*solution(1, 1))
 
     def __eq__(self, other):

@@ -14,8 +14,6 @@ This library focuses on the functions and lacks efficiency which might be improv
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
 - A Naive Renderer Using `matplotlib`.
 
-<div align=center>
-
 ![pic1](pic1.png)
 
 ![pic2](pic2.png)
@@ -23,7 +21,7 @@ This library focuses on the functions and lacks efficiency which might be improv
 ![pic3](pic3.png)
 
 ![pic4](pic4.png)
-</div>
+
 
 Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
 
@@ -51,7 +49,9 @@ pip install Geometry3D
 See Documentations
 
 ## Change Log
- [changelog.md](changelog.md)
+
+[changelog.md](changelog.md)
+
 ## License
 
     This program is free software: you can redistribute it and/or modify
