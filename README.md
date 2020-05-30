@@ -45,13 +45,15 @@ pip install Geometry3D
 ```
 
 ## Test
+### Unit Tests
 ```bash
-# unit tests
 python run_tests.py
+```
 
-# tests
-# run .py files under g3d_tests folder
-# for example:
+### Tests
+Run .py files under g3d_tests folder.
+For example:
+```bash
 python g3d_tests/test1.py
 ```
 
