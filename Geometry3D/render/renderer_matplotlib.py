@@ -1,7 +1,7 @@
 """Matplotlib Renderer Module"""
 from ..geometry.point import Point
 from ..geometry.segment import Segment
-from ..geometry.polygen import ConvexPolygen
+from ..geometry.polygon import ConvexPolygon
 from ..geometry.polyhedron import ConvexPolyhedron
 from .arrow import Arrow
 from ..utils.logger import get_main_logger
@@ -59,7 +59,7 @@ class MatplotlibRenderer():
         For other objects, normal_length should be zero.
         If you don't want to show the normal arrows for a ConvexPolyhedron, you can set normal_length to 0.
 
-        object can be Point, Segment, ConvexPolygen or ConvexPolyhedron
+        object can be Point, Segment, ConvexPolygon or ConvexPolyhedron
         """
         if isinstance(obj[0],Point):
             self.point_set.add(obj)
@@ -67,7 +67,7 @@ class MatplotlibRenderer():
             self.segment_set.add(obj)
         elif isinstance(obj[0],Arrow):
             self.arrow_set.add(obj)
-        elif isinstance(obj[0],ConvexPolygen):
+        elif isinstance(obj[0],ConvexPolygon):
             for point in obj[0].points:
                 self.add((point,obj[1],obj[2]))
             for segment in obj[0].segments():
@@ -80,7 +80,7 @@ class MatplotlibRenderer():
                 self.add((array,obj[1],obj[2]))
     
         elif isinstance(obj[0],ConvexPolyhedron):
-            for cpg in obj[0].convex_polygens:
+            for cpg in obj[0].convex_polygons:
                 self.add((cpg,obj[1],obj[2]),normal_length = normal_length)
         else:
             raise ValueError('Cannot add object with type:{}'.format(type(obj[0])))

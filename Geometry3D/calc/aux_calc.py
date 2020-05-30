@@ -9,7 +9,7 @@ from ..geometry.line import Line
 from ..geometry.plane import Plane
 from ..geometry.point import Point
 from ..geometry.segment import Segment
-from ..geometry.polygen import ConvexPolygen
+from ..geometry.polygon import ConvexPolygon
 from ..geometry.pyramid import Pyramid
 from ..geometry.polyhedron import ConvexPolyhedron
 from ..geometry.halfline import HalfLine
@@ -95,7 +95,7 @@ def get_segment_convexpolyhedron_intersection_point_set(s,cph):
     A set of intersection points
     '''
     point_set = set()
-    for cpg in cph.convex_polygens:
+    for cpg in cph.convex_polygons:
         inter_cpg_s = cpg.intersection(s)
         if inter_cpg_s is None:
             continue
@@ -117,13 +117,13 @@ def get_segment_convexpolyhedron_intersection_point_set(s,cph):
             raise TypeError("Bug detected! please contact the author")
     return point_set
 
-def get_segment_convexpolygen_intersection_point_set(s,cpg):
+def get_segment_convexpolygon_intersection_point_set(s,cpg):
     '''
     **Input:**
     
     - s: Segment
 
-    - cpg: ConvexPolygen
+    - cpg: ConvexPolygon
 
     **Output:**
     
@@ -185,7 +185,7 @@ def get_halfline_convexpolyhedron_intersection_point_set(h,cph):
     A set of intersection points
     '''
     point_set = set()
-    for cpg in cph.convex_polygens:
+    for cpg in cph.convex_polygons:
         inter_cpg_h = cpg.intersection(h)
         if inter_cpg_h is None:
             continue
@@ -210,4 +210,4 @@ def get_halfline_convexpolyhedron_intersection_point_set(h,cph):
 
 
 
-__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygen_intersection_point_set','get_halfline_convexpolyhedron_intersection_point_set','points_in_a_line')
+__all__ = ('get_projection_length','get_relative_projection_length','get_segment_from_point_list','get_segment_convexpolyhedron_intersection_point_set','get_segment_convexpolygon_intersection_point_set','get_halfline_convexpolyhedron_intersection_point_set','points_in_a_line')

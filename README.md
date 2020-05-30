@@ -7,7 +7,7 @@ This library focuses on the functions and lacks efficiency which might be improv
 
 
 ## Core Features
-- Basic 3D Geometries: Point, Line, Plane, Segment, Convex Polygen and Convex Polyhedron.
+- Basic 3D Geometries: Point, Line, Plane, Segment, Convex Polygon and Convex Polyhedron.
 - Simple Object like Cubic, Sphere, Cylinder, Cone, Rectangle, Parallepiped, Parallogram and Circle.  
 - Basic Attributes Of Geometries: length, area, volume.
 - Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
@@ -42,6 +42,17 @@ Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author
 ## Installation
 ```bash
 pip install Geometry3D
+```
+
+## Test
+```bash
+# unit tests
+python run_tests.py
+
+# tests
+# run .py files under g3d_tests folder
+# for example:
+python g3d_tests/test1.py
 ```
 
 ## Usage

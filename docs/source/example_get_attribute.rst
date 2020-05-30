@@ -12,7 +12,7 @@ Creating Geometries
     >>> 
     >>> s = Segment(a,c)
     >>> 
-    >>> cpg = ConvexPolygen((a,d,h,e))
+    >>> cpg = ConvexPolygon((a,d,h,e))
     >>> 
     >>> cph = Parallelepiped(Point(-1,-1,-1),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
 

@@ -26,17 +26,17 @@ Move a Segment::
     >>> s
     Segment(Point(-1, -2, -3), Point(0, 0, 0))
 
-Move a ConvexPolygen **Without** Changing the Original Object::
+Move a ConvexPolygon **Without** Changing the Original Object::
 
     >>> import copy
     >>> cpg0 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
     >>> cpg0
-    ConvexPolygen((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
+    ConvexPolygon((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
     >>> cpg1 = copy.deepcopy(cpg0).move(Vector(0,0,1))
     >>> cpg0
-    ConvexPolygen((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
+    ConvexPolygon((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
     >>> cpg1
-    ConvexPolygen((Point(0, 0, 1), Point(1, 0, 1), Point(1, 1, 1), Point(0, 1, 1)))
+    ConvexPolygon((Point(0, 0, 1), Point(1, 0, 1), Point(1, 1, 1), Point(0, 1, 1)))
 
 Intersection
 ------------
@@ -54,7 +54,7 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Point            |Segment          | None, Point                          |
 +-----------------+-----------------+--------------------------------------+
-|Point            |ConvexPolygen    | None, Point                          |
+|Point            |ConvexPolygon    | None, Point                          |
 +-----------------+-----------------+--------------------------------------+
 |Point            |ConvexPolyhedron | None, Point                          |
 +-----------------+-----------------+--------------------------------------+
@@ -66,7 +66,7 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Line             |Segment          | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
-|Line             |ConvexPolygen    | None, Point, Segment                 |
+|Line             |ConvexPolygon    | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
 |Line             |ConvexPolyhedron | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
@@ -76,27 +76,27 @@ The operation of intersection is very complex. There are a total of 21 situation
 +-----------------+-----------------+--------------------------------------+
 |Plane            |Segment          | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
-|Plane            |ConvexPolygen    | None, Point, Segment, ConvexPolygen  |
+|Plane            |ConvexPolygon    | None, Point, Segment, ConvexPolygon  |
 +-----------------+-----------------+--------------------------------------+
-|Plane            |ConvexPolyhedron | None, Point, Segment, ConvexPolygen  |
+|Plane            |ConvexPolyhedron | None, Point, Segment, ConvexPolygon  |
 +-----------------+-----------------+--------------------------------------+
 |Plane            |HalfLine         | None, Point, HalfLine                |
 +-----------------+-----------------+--------------------------------------+
 |Segment          |Segment          | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
-|Segment          |ConvexPolygen    | None, Point, Segment                 |
+|Segment          |ConvexPolygon    | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
 |Segment          |ConvexPolyhedron | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
 |Segment          |HalfLine         | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
-|ConvexPolygen    |ConvexPolygen    | None, Point, Segment, ConvexPolygen  |
+|ConvexPolygon    |ConvexPolygon    | None, Point, Segment, ConvexPolygon  |
 +-----------------+-----------------+--------------------------------------+
-|ConvexPolygen    |ConvexPolyhedron | None, Point, Segment, ConvexPolygen  |
+|ConvexPolygon    |ConvexPolyhedron | None, Point, Segment, ConvexPolygon  |
 +-----------------+-----------------+--------------------------------------+
-|ConvexPolygen    |HalfLine         | None, Point, Segment                 |
+|ConvexPolygon    |HalfLine         | None, Point, Segment                 |
 +-----------------+-----------------+--------------------------------------+
-|ConvexPolyhedron |ConvexPolyhedron | None, Point, Segment, ConvexPolygen, |
+|ConvexPolyhedron |ConvexPolyhedron | None, Point, Segment, ConvexPolygon, |
 |                 |                 | ConvexPolyhedron                     |
 +-----------------+-----------------+--------------------------------------+
 |ConvexPolyhedron |HalfLine         | None, Point, Segment                 |
@@ -147,7 +147,7 @@ Example 2::
     >>> r.add((intersection(cph6,cph0),'g',2))
     >>> print(intersection(cph0,cph6))
     ConvexPolyhedron
-    pyramid set:{Pyramid(ConvexPolygen((Point(1, 1, 1), Point(0, 1, 1), Point(0.0, 0.0, 1.0), Point(1, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1.0, 0.0, 0.0), Point(1, 0, 1), Point(1, 1, 1), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1, 1, 0), Point(1, 1, 1), Point(0, 1, 1), Point(0.0, 1.0, 0.0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(0, 0, 1), Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1), Point(0, 0, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1, 1, 0), Point(1, 0, 0), Point(0, 0, 0), Point(0, 1, 0))), Point(0.5, 0.5, 0.5))}
+    pyramid set:{Pyramid(ConvexPolygon((Point(1, 1, 1), Point(0, 1, 1), Point(0.0, 0.0, 1.0), Point(1, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1.0, 0.0, 0.0), Point(1, 0, 1), Point(1, 1, 1), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1, 1, 0), Point(1, 1, 1), Point(0, 1, 1), Point(0.0, 1.0, 0.0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(0, 0, 1), Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1), Point(0, 0, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1, 1, 0), Point(1, 0, 0), Point(0, 0, 0), Point(0, 1, 0))), Point(0.5, 0.5, 0.5))}
     point set:{Point(1, 1, 0), Point(1, 1, 1), Point(0, 0, 1), Point(0, 1, 0), Point(0, 1, 1), Point(1.0, 0.0, 0.0), Point(0, 0, 0), Point(1, 0, 1)}
     >>> r.show()
 
@@ -166,11 +166,11 @@ Example 3::
     >>> g = Point(-1,-1,-1)
     >>> h = Point(1,-1,-1)
     >>> cph0 = Parallelepiped(Point(-1,-1,-1),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
-    >>> cpg12 = ConvexPolygen((e,c,h))
-    >>> cpg13 = ConvexPolygen((e,f,c))
-    >>> cpg14 = ConvexPolygen((c,f,g))
-    >>> cpg15 = ConvexPolygen((h,c,g))
-    >>> cpg16 = ConvexPolygen((h,g,f,e))
+    >>> cpg12 = ConvexPolygon((e,c,h))
+    >>> cpg13 = ConvexPolygon((e,f,c))
+    >>> cpg14 = ConvexPolygon((c,f,g))
+    >>> cpg15 = ConvexPolygon((h,c,g))
+    >>> cpg16 = ConvexPolygon((h,g,f,e))
     >>> cph1 = ConvexPolyhedron((cpg12,cpg13,cpg14,cpg15,cpg16))
     >>> a1 = Point(1.5,1.5,1.5)
     >>> b1 = Point(-0.5,1.5,1.5)
@@ -181,12 +181,12 @@ Example 3::
     >>> g1 = Point(-0.2,-0.5,-0.5)
     >>> h1 = Point(1.5,-0.5,-0.5)
     >>> 
-    >>> cpg6 = ConvexPolygen((a1,d1,h1,e1))
-    >>> cpg7 = ConvexPolygen((a1,e1,f1,b1))
-    >>> cpg8 = ConvexPolygen((c1,b1,f1,g1))
-    >>> cpg9 = ConvexPolygen((c1,g1,h1,d1))
-    >>> cpg10 = ConvexPolygen((a1,b1,c1,d1))
-    >>> cpg11 = ConvexPolygen((e1,h1,g1,f1))
+    >>> cpg6 = ConvexPolygon((a1,d1,h1,e1))
+    >>> cpg7 = ConvexPolygon((a1,e1,f1,b1))
+    >>> cpg8 = ConvexPolygon((c1,b1,f1,g1))
+    >>> cpg9 = ConvexPolygon((c1,g1,h1,d1))
+    >>> cpg10 = ConvexPolygon((a1,b1,c1,d1))
+    >>> cpg11 = ConvexPolygon((e1,h1,g1,f1))
     >>> cph2 = ConvexPolyhedron((cpg6,cpg7,cpg8,cpg9,cpg10,cpg11))
     >>> cph3 = intersection(cph0,cph2)
     >>> 

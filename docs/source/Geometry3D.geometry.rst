@@ -44,10 +44,10 @@ Geometry3D.geometry.point module
    :undoc-members:
    :show-inheritance:
 
-Geometry3D.geometry.polygen module
+Geometry3D.geometry.polygon module
 ----------------------------------
 
-.. automodule:: Geometry3D.geometry.polygen
+.. automodule:: Geometry3D.geometry.polygon
    :members:
    :undoc-members:
    :show-inheritance:

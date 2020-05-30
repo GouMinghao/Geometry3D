@@ -101,7 +101,7 @@ Build-In Functions
     >>> s1 == s4
     False
     >>> 
-    >>> cpg0 = ConvexPolygen((origin(),Point(1,0,0),Point(0,1,0),Point(1,1,0)))
+    >>> cpg0 = ConvexPolygon((origin(),Point(1,0,0),Point(0,1,0),Point(1,1,0)))
     >>> cpg1 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
     >>> cpg0 == cpg1
     True

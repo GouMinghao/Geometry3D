@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Polygen Module"""
+"""Polygon Module"""
 from .body import GeoBody
 from .point import Point
 from ..utils.vector import Vector
@@ -14,7 +14,7 @@ import math
 
 def get_circle_point_list(center,normal,radius,n=10):
     if n <= 2:
-        raise ValueError("n must be at least 3 to construct an inscribed polygen for a circle")
+        raise ValueError("n must be at least 3 to construct an inscribed polygon for a circle")
     import math,copy
     if normal.angle(x_unit_vector()) < SMALL_ANGLE:
         base_vector = y_unit_vector()
@@ -54,22 +54,22 @@ def get_triangle_area(pa,pb,pc):
     p = (a + b + c) / 2
     return math.sqrt(p * (p - a) * (p - b) * (p - c))
 
-class ConvexPolygen(GeoBody):
+class ConvexPolygon(GeoBody):
     """
-    - ConvexPolygens(points)
+    - ConvexPolygons(points)
     points: a tuple of points.
 
     The points needn't to be in order.
 
     The convexity should be guaranteed. This function **will not** check the convexity.
-    If the Polygen is not convex, there might be errors.
+    If the Polygon is not convex, there might be errors.
     """
-    class_level = 4 # the class level of ConvexPolygen
+    class_level = 4 # the class level of ConvexPolygon
 
     @classmethod
     def Circle(cls,center,normal,radius,n=10):
         """
-        A special function for creating an inscribed convex polygen of a circle
+        A special function for creating an inscribed convex polygon of a circle
 
         **Input:**
 
@@ -79,11 +79,11 @@ class ConvexPolygen(GeoBody):
 
         - radius: The radius of the circle
 
-        - n=10: The number of Points of the ConvexPolygen
+        - n=10: The number of Points of the ConvexPolygon
 
         **Output:**
 
-        - An inscribed convex polygen of a circle.
+        - An inscribed convex polygon of a circle.
         """
         return cls(get_circle_point_list(center,normal,radius,n))
 
@@ -100,7 +100,7 @@ class ConvexPolygen(GeoBody):
 
         **Output:**
 
-        - A parallelogram which is a ConvexPolygen instance.
+        - A parallelogram which is a ConvexPolygon instance.
         """
         if isinstance(base_point,Point) and isinstance(v1,Vector) and isinstance(v2,Vector):
             if v1.length() == 0 or v2.length == 0:
@@ -122,7 +122,7 @@ class ConvexPolygen(GeoBody):
         points = copy.deepcopy(pts)
         self.points = sorted(set(points),key=points.index)
         if len(points) < 3:
-            raise ValueError('Cannot build a polygen with number of points smaller than 3')
+            raise ValueError('Cannot build a polygon with number of points smaller than 3')
         if reverse:
             self.plane = -Plane(self.points[0],self.points[1],self.points[2])
         else:
@@ -176,7 +176,7 @@ class ConvexPolygen(GeoBody):
 
         **Output:**
         
-        - The area of the convex polygen
+        - The area of the convex polygon
         """
         area = 0
         for i in range(len(self.points)):
@@ -200,7 +200,7 @@ class ConvexPolygen(GeoBody):
         
         - False for check not passed
 
-        This is only a **weak** check, passing the check doesn't guarantee it is a convex polygen
+        This is only a **weak** check, passing the check doesn't guarantee it is a convex polygon
         """
         the_normal = (self.plane.n).normalized()
         v0 = Vector(self.center_point,self.points[0]).normalized()
@@ -222,16 +222,16 @@ class ConvexPolygen(GeoBody):
         return True
     
     def __repr__(self):
-        return "ConvexPolygen({})".format(self.points)
+        return "ConvexPolygon({})".format(self.points)
 
     def __contains__(self, other):
-        """Checks if a point or segment lies in a ConvexPolygen"""
+        """Checks if a point or segment lies in a ConvexPolygon"""
         if isinstance(other,Point):
             r1 = other in self.plane
             # requirement 1: the point is on the plane
             the_normal = self.plane.n.normalized()
             r2 = True
-            # requirement 2: the point is inside the polygen
+            # requirement 2: the point is inside the polygon
             for i in range(len(self.points)):
                 # check if the point lies in the inside direction of every segment
                 index_0 = i
@@ -257,7 +257,7 @@ class ConvexPolygen(GeoBody):
         """
         **Input:**
         
-        - self: ConvexPolygen
+        - self: ConvexPolygon
         
         - other: Plane
 
@@ -271,7 +271,7 @@ class ConvexPolygen(GeoBody):
             raise NotImplementedError("")
 
     def __eq__(self,other):
-        if isinstance(other,ConvexPolygen):
+        if isinstance(other,ConvexPolygon):
             return (hash(self) == hash(other))
         else:
             return False
@@ -288,8 +288,8 @@ class ConvexPolygen(GeoBody):
     # in some extreme case, this function may fail
     # which means it's vulnerable to attacks.
     def __hash__(self):
-        """return the has of the convexpolygen"""
-        return hash(("ConvexPolygen",
+        """return the has of the convexpolygon"""
+        return hash(("ConvexPolygon",
         round(self._get_point_hash_sum(),SIG_FIGURES),
         hash(self.plane) + hash(-self.plane),
         hash(self.plane) * hash(-self.plane)
@@ -298,31 +298,31 @@ class ConvexPolygen(GeoBody):
 
     def eq_with_normal(self,other):
         """return whether self equals with other considering the normal"""
-        if isinstance(other,ConvexPolygen):
+        if isinstance(other,ConvexPolygon):
             return (self.hash_with_normal() == other.hash_with_normal())
         else:
             return False
 
     def hash_with_normal(self):
         """return the hash value considering the normal"""
-        return hash(("ConvexPolygen",
+        return hash(("ConvexPolygon",
             round(self._get_point_hash_sum(),SIG_FIGURES-5),
             hash(self.plane)
             ))
 
     def __neg__(self):
-        """return the negative ConvexPolygen by reverting the normal"""
-        return ConvexPolygen(self.points,reverse=True)
+        """return the negative ConvexPolygon by reverting the normal"""
+        return ConvexPolygon(self.points,reverse=True)
 
     def length(self):
-        """return the total length of ConvexPolygen""" 
+        """return the total length of ConvexPolygon""" 
         length = 0
         for segment in self.segments():
             length += segment.length()
         return length
 
     def move(self,v):
-        """Return the ConvexPolygen that you get when you move self by vector v, self is also moved"""
+        """Return the ConvexPolygon that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
             point_list = []
             for point in self.points:
@@ -330,11 +330,11 @@ class ConvexPolygen(GeoBody):
             self.points = tuple(point_list)
             self.plane = Plane(self.points[0],self.points[1],self.points[2])
             self.center_point = self._get_center_point()
-            return ConvexPolygen(self.points)
+            return ConvexPolygon(self.points)
         else:
             raise NotImplementedError("The second parameter for move function must be Vector")
 
-Parallelogram = ConvexPolygen.Parallelogram
-Circle = ConvexPolygen.Circle
+Parallelogram = ConvexPolygon.Parallelogram
+Circle = ConvexPolygon.Circle
 
-__all__ = ("ConvexPolygen","Parallelogram","get_circle_point_list","Circle")
+__all__ = ("ConvexPolygon","Parallelogram","get_circle_point_list","Circle")

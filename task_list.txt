@@ -6,7 +6,7 @@ Line
 Plane
 
 Segment            length
-ConvexPolygen      length, area
+ConvexPolygon      length, area
 ConvexPolyhedron   length, area, volume
 
 HalfLine           
@@ -39,33 +39,33 @@ Point       - Point            -> None, Point                 OK
 Point       - Line             -> None, Point                 OK
 Point       - Plane            -> None, Point                 OK
 Point       - Segment          -> None, Point                 OK  
-Point       - ConvexPolygen    -> None, Point                 OK
+Point       - ConvexPolygon    -> None, Point                 OK
 Point       - ConvexPolyhedron -> None, Point                 OK
 Point       - HalfLine         -> None, Point                 OK
 
 Line        - Line             -> None, Point, Line           OK
 Line        - Plane            -> None, Point, Line           OK
 Line        - Segment          -> None, Point, Segment        OK
-Line        - ConvexPolygen    -> None, Point, Segment        OK
+Line        - ConvexPolygon    -> None, Point, Segment        OK
 Line        - ConvexPolyhedron -> None, Point, Segment        OK
 Line        - HalfLine         -> None, Point, HalfLine       OK
 
 Plane       - Plane            -> None, Line, Plane                     OK
 Plane       - Segment          -> None, Point, Segment                  OK
-Plane       - ConvexPolygen    -> None, Point, Segment, ConvexPolygen   OK
-Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen   OK
+Plane       - ConvexPolygon    -> None, Point, Segment, ConvexPolygon   OK
+Plane       - ConvexPolyhedron -> None, Point, Segment, ConvexPolygon   OK
 Plane       - HalfLine         -> None, Point, HalfLine                 OK
 
 Segment     - Segment          -> None, Point, Segment          OK
-Segment     - ConvexPolygen    -> None, Point, Segment          OK
+Segment     - ConvexPolygon    -> None, Point, Segment          OK
 Segment     - ConvexPolyhedron -> None, Point, Segment          OK
 Segment     - HalfLine         -> None, Point, Segment          OK
 
-ConvexPolygen     - ConvexPolygen    -> None, Point, Segment, ConvexPolygen     OK
-ConvexPolygen     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen     OK
-ConvexPolygen     - HalfLine         -> None, Point, Segment                    OK
+ConvexPolygon     - ConvexPolygon    -> None, Point, Segment, ConvexPolygon     OK
+ConvexPolygon     - ConvexPolyhedron -> None, Point, Segment, ConvexPolygon     OK
+ConvexPolygon     - HalfLine         -> None, Point, Segment                    OK
 
-ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygen, ConvexPolyhedron   OK
+ConvexPolyhedron  - ConvexPolyhedron -> None, Point, Segment, ConvexPolygon, ConvexPolyhedron   OK
 ConvexPolyhedron  - HalfLine         -> None, Point, Segment                                    OK
 
 HalfLine    - HalfLine         -> None, Point, Segment, HalfLine     OK

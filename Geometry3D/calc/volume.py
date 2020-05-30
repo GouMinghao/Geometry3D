@@ -19,8 +19,8 @@ def volume(arg):
     - ConvexPolyhedron
     """
     if isinstance(arg,Pyramid):
-        height = distance(arg.point,arg.convex_polygen.plane)
-        return 1 / 3 * height * arg.convex_polygen.area()
+        height = distance(arg.point,arg.convex_polygon.plane)
+        return 1 / 3 * height * arg.convex_polygon.area()
     elif isinstance(arg,ConvexPolyhedron):
         total_volume = 0
         for pyramid in arg.pyramid_set:

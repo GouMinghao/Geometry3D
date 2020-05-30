@@ -5,7 +5,7 @@ from ..geometry.line import Line
 from ..geometry.plane import Plane
 from ..geometry.point import Point
 from ..geometry.segment import Segment
-from ..geometry.polygen import ConvexPolygen
+from ..geometry.polygon import ConvexPolygon
 from ..geometry.polyhedron import ConvexPolyhedron
 from ..utils.solver import solve, null
 from ..utils.vector import Vector

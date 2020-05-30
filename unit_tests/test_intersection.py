@@ -28,7 +28,7 @@ class PointIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(Segment(Point(-1,-1,-1),Point(1,1,1)),origin()),origin())
         self.assertTrue(intersection(Segment(Point(-1,-1,-1),Point(1,1,1)),Point(0,0,0.1)) is None)
 
-    def test_intersection_point_convexpolygen(self):
+    def test_intersection_point_convexpolygon(self):
         cpg = Parallelogram(origin(),Vector(1,0,1),Vector(0,1,1))
         self.assertEqual(intersection(origin(),cpg),origin())
         self.assertEqual(intersection(Point(1,0,1),cpg),Point(1,0,1))
@@ -83,7 +83,7 @@ class LineIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(s3,l2) is None)
         self.assertTrue(intersection(s4,l2) is None)
 
-    def test_intersection_line_convexpolygen(self):
+    def test_intersection_line_convexpolygon(self):
         cpg = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         l1 = x_axis()
         l2 = Line(Point(1,1,0),Point(0,0,0))
@@ -167,7 +167,7 @@ class PlaneIntersectionTest(unittest.TestCase):
         self.assertEqual(intersection(s2,p1),s2)
         self.assertTrue(intersection(s3,p1) is None)
 
-    def test_intersection_plane_convexpolygen(self):
+    def test_intersection_plane_convexpolygon(self):
         p1 = xy_plane()
         cpg1 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         cpg2 = Parallelogram(origin(),x_unit_vector(),z_unit_vector())
@@ -193,7 +193,7 @@ class PlaneIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(cph,p2) == (Parallelogram(origin().move(0.5*z_unit_vector()),x_unit_vector(),y_unit_vector())))
         self.assertEqual(intersection(cph,p3),Point(1,1,1))
         self.assertEqual(intersection(cph,p4),Segment(origin(),Point(0,0,1)))
-        self.assertTrue(intersection(cph,p5) == (ConvexPolygen((Point(0,0,0.3),Point(0,0.3,0),Point(0.3,0,0)))))
+        self.assertTrue(intersection(cph,p5) == (ConvexPolygon((Point(0,0,0.3),Point(0,0.3,0),Point(0.3,0,0)))))
         self.assertTrue(intersection(cph,p6) is None)
         self.assertTrue(intersection(cph,p7) is None)
 
@@ -229,7 +229,7 @@ class SegmentIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(Segment(p7,p4),Segment(p2,p3)) is None)
         self.assertEqual(intersection(Segment(p1,p4),Segment(p4,p5)),p4)
 
-    def test_intersection_segment_convexpolygen(self):
+    def test_intersection_segment_convexpolygon(self):
         cpg = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         s1 = Segment(origin(),Point(1,0,0))
         s2 = Segment(Point(-0.5,0.5,0),Point(0.5,0.5,0))
@@ -316,8 +316,8 @@ class SegmentIntersectionTest(unittest.TestCase):
         self.assertTrue(intersection(h,s7) is None)
         self.assertTrue(intersection(s10,h) is None)
 
-class ConvexPolygenIntersectionTest(unittest.TestCase):
-    def test_intersection_convexpolygen_convexpolygen(self):
+class ConvexPolygonIntersectionTest(unittest.TestCase):
+    def test_intersection_convexpolygon_convexpolygon(self):
         cpg0 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         cpg1 = Parallelogram(origin(),2 * x_unit_vector(),2 * y_unit_vector())
         self.assertTrue(intersection(cpg0,cpg1) == (cpg0))
@@ -343,7 +343,7 @@ class ConvexPolygenIntersectionTest(unittest.TestCase):
         cpg12 = Parallelogram(Point(0.5,0.5,0),Vector(2,-2,0),z_unit_vector())
         self.assertEqual(intersection(cpg0,cpg12),Segment(Point(0.5,0.5,0),Point(1,0,0)))
 
-    def test_intersection_convexpolygen_convexpolyhedron(self):
+    def test_intersection_convexpolygon_convexpolyhedron(self):
         cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
         cpg0 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         cpg1 = Parallelogram(origin(),2 * x_unit_vector(),2 * y_unit_vector())
@@ -375,7 +375,7 @@ class ConvexPolygenIntersectionTest(unittest.TestCase):
         cpg14 = Parallelogram(Point(0,0,2),x_unit_vector(),y_unit_vector())
         self.assertTrue(intersection(cph,cpg14) is None)
     
-    def test_intersection_convexpolygen_halfline(self):
+    def test_intersection_convexpolygon_halfline(self):
         cpg = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
         h1 = HalfLine(Point(0.5,0.5,0),x_unit_vector())
         h2 = HalfLine(origin(),Point(1,1,0))

@@ -159,31 +159,31 @@ Creating Segment using a Point and a Vector::
     >>> s
     Segment(Point(0, 0, 0), Point(1, 0, 0))
 
-Creating ConvexPolygen
+Creating ConvexPolygon
 ----------------------
 
-Creating ConvexPolygen using a tuple of points::
+Creating ConvexPolygon using a tuple of points::
 
     >>> from Geometry3D import *
     >>> pa = origin()
     >>> pb = Point(1,1,0)
     >>> pc = Point(1,0,0)
     >>> pd = Point(0,1,0)
-    >>> cpg = ConvexPolygen((pa,pb,pc,pd))
+    >>> cpg = ConvexPolygon((pa,pb,pc,pd))
     >>> cpg
-    ConvexPolygen((Point(0, 0, 0), Point(0, 1, 0), Point(1, 1, 0), Point(1, 0, 0)))
+    ConvexPolygon((Point(0, 0, 0), Point(0, 1, 0), Point(1, 1, 0), Point(1, 0, 0)))
 
 Specifically, Parallelogram can be created using one Point and two Vectors::
 
     >>> pa = origin()
     >>> cpg = Parallelogram(pa,x_unit_vector(),y_unit_vector())
     >>> cpg
-    ConvexPolygen((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
+    ConvexPolygon((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0)))
 
 Creating ConvexPolyhedron
 -------------------------
 
-Creating ConvexPolyhedron using a tuple of ConvexPolygens::
+Creating ConvexPolyhedron using a tuple of ConvexPolygons::
 
     >>> from Geometry3D import *
     >>> a = Point(1,1,1)
@@ -194,16 +194,16 @@ Creating ConvexPolyhedron using a tuple of ConvexPolygens::
     >>> f = Point(-1,1,-1)
     >>> g = Point(-1,-1,-1)
     >>> h = Point(1,-1,-1)
-    >>> cpg0 = ConvexPolygen((a,d,h,e))
-    >>> cpg1 = ConvexPolygen((a,e,f,b))
-    >>> cpg2 = ConvexPolygen((c,b,f,g))
-    >>> cpg3 = ConvexPolygen((c,g,h,d))
-    >>> cpg4 = ConvexPolygen((a,b,c,d))
-    >>> cpg5 = ConvexPolygen((e,h,g,f))
+    >>> cpg0 = ConvexPolygon((a,d,h,e))
+    >>> cpg1 = ConvexPolygon((a,e,f,b))
+    >>> cpg2 = ConvexPolygon((c,b,f,g))
+    >>> cpg3 = ConvexPolygon((c,g,h,d))
+    >>> cpg4 = ConvexPolygon((a,b,c,d))
+    >>> cpg5 = ConvexPolygon((e,h,g,f))
     >>> cph0 = ConvexPolyhedron((cpg0,cpg1,cpg2,cpg3,cpg4,cpg5))
     >>> cph0
     ConvexPolyhedron
-    pyramid set:{Pyramid(ConvexPolygen((Point(1, 1, -1), Point(1, -1, -1), Point(-1, -1, -1), Point(-1, 1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygen((Point(1, 1, 1), Point(1, 1, -1), Point(-1, 1, -1), Point(-1, 1, 1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygen((Point(-1, -1, 1), Point(-1, 1, 1), Point(-1, 1, -1), Point(-1, -1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygen((Point(-1, -1, 1), Point(-1, -1, -1), Point(1, -1, -1), Point(1, -1, 1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygen((Point(1, 1, 1), Point(1, -1, 1), Point(1, -1, -1), Point(1, 1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygen((Point(1, 1, 1), Point(-1, 1, 1), Point(-1, -1, 1), Point(1, -1, 1))), Point(0.0, 0.0, 0.0))}
+    pyramid set:{Pyramid(ConvexPolygon((Point(1, 1, -1), Point(1, -1, -1), Point(-1, -1, -1), Point(-1, 1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygon((Point(1, 1, 1), Point(1, 1, -1), Point(-1, 1, -1), Point(-1, 1, 1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygon((Point(-1, -1, 1), Point(-1, 1, 1), Point(-1, 1, -1), Point(-1, -1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygon((Point(-1, -1, 1), Point(-1, -1, -1), Point(1, -1, -1), Point(1, -1, 1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygon((Point(1, 1, 1), Point(1, -1, 1), Point(1, -1, -1), Point(1, 1, -1))), Point(0.0, 0.0, 0.0)), Pyramid(ConvexPolygon((Point(1, 1, 1), Point(-1, 1, 1), Point(-1, -1, 1), Point(1, -1, 1))), Point(0.0, 0.0, 0.0))}
     point set:{Point(1, 1, -1), Point(-1, -1, -1), Point(1, -1, 1), Point(-1, 1, 1), Point(1, 1, 1), Point(-1, -1, 1), Point(-1, 1, -1), Point(1, -1, -1)}
 
 Specifically, Parallelepiped can be created using a Point and Three Vectors::
@@ -211,7 +211,7 @@ Specifically, Parallelepiped can be created using a Point and Three Vectors::
     >>> cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
     >>> cph
     ConvexPolyhedron
-    pyramid set:{Pyramid(ConvexPolygen((Point(1, 1, 1), Point(0, 1, 1), Point(0, 1, 0), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1), Point(0, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(0, 0, 0), Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1, 1, 1), Point(1, 0, 1), Point(1, 0, 0), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygen((Point(1, 1, 1), Point(0, 1, 1), Point(0, 0, 1), Point(1, 0, 1))), Point(0.5, 0.5, 0.5))}
+    pyramid set:{Pyramid(ConvexPolygon((Point(1, 1, 1), Point(0, 1, 1), Point(0, 1, 0), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(0, 0, 0), Point(0, 1, 0), Point(0, 1, 1), Point(0, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(0, 0, 0), Point(1, 0, 0), Point(1, 0, 1), Point(0, 0, 1))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1, 1, 1), Point(1, 0, 1), Point(1, 0, 0), Point(1, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(0, 0, 0), Point(1, 0, 0), Point(1, 1, 0), Point(0, 1, 0))), Point(0.5, 0.5, 0.5)), Pyramid(ConvexPolygon((Point(1, 1, 1), Point(0, 1, 1), Point(0, 0, 1), Point(1, 0, 1))), Point(0.5, 0.5, 0.5))}
     point set:{Point(0, 0, 1), Point(1, 1, 1), Point(1, 1, 0), Point(0, 1, 1), Point(1, 0, 1), Point(0, 0, 0), Point(1, 0, 0), Point(0, 1, 0)}
 
 Creating HalfLine
@@ -228,7 +228,7 @@ Creating HalfLine using two Points or a Point and a Vector::
 Other Geometries
 ----------------
 
-Inscribed convex polygen and convex polyhedron of circle, cylinder, sphere, cone are also available::
+Inscribed convex polygon and convex polyhedron of circle, cylinder, sphere, cone are also available::
 
     >>> from Geometry3D import *
     >>> import copy

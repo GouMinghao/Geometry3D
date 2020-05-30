@@ -9,7 +9,7 @@ __all__ = (
     "Sphere",
     "Cone",
     "Cylinder",
-    "ConvexPolygen",
+    "ConvexPolygon",
     "Parallelogram",
     "Circle",
     "Pyramid",
@@ -47,7 +47,7 @@ __all__ = (
     "get_relative_projection_length",
     "get_segment_from_point_list",
     "get_segment_convexpolyhedron_intersection_point_set",
-    "get_segment_convexpolygen_intersection_point_set",
+    "get_segment_convexpolygon_intersection_point_set",
     "points_in_a_line",
     "get_circle_point_list"
 )

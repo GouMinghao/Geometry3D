@@ -1,6 +1,6 @@
 """Polyhedron Module"""
 from .body import GeoBody
-from .polygen import ConvexPolygen,Parallelogram,Circle,get_circle_point_list
+from .polygon import ConvexPolygon,Parallelogram,Circle,get_circle_point_list
 from .point import Point
 from .line import Line
 from .segment import Segment
@@ -15,15 +15,15 @@ class ConvexPolyhedron(GeoBody):
     """
     **Input:**
     
-    - convex_polygens: tuple of ConvexPolygens
+    - convex_polygons: tuple of ConvexPolygons
 
     **Output:**
 
     - ConvexPolyhedron
     
-    - The correctness of convex_polygens are checked According to Euler's formula.
+    - The correctness of convex_polygons are checked According to Euler's formula.
 
-    - The normal of the convex polygens are checked and corrected which should be toward the outer direction
+    - The normal of the convex polygons are checked and corrected which should be toward the outer direction
     """
     @classmethod
     def Parallelepiped(cls,base_point,v1,v2,v3):
@@ -106,13 +106,13 @@ class ConvexPolyhedron(GeoBody):
         for i in range(n1):
             start = i
             end = (i + 1) % n1 
-            cpg_list.append(ConvexPolygen((mc[start],mc[end],tc[0][end],tc[0][start])))
-            cpg_list.append(ConvexPolygen((mc[start],mc[end],bc[0][end],bc[0][start])))
+            cpg_list.append(ConvexPolygon((mc[start],mc[end],tc[0][end],tc[0][start])))
+            cpg_list.append(ConvexPolygon((mc[start],mc[end],bc[0][end],bc[0][start])))
             for j in range(1,n2-1):
-                cpg_list.append(ConvexPolygen((tc[j-1][start],tc[j-1][end],tc[j][end],tc[j][start])))
-                cpg_list.append(ConvexPolygen((bc[j-1][start],bc[j-1][end],bc[j][end],bc[j][start])))
-            cpg_list.append(ConvexPolygen((top_point,tc[n2-2][end],tc[n2-2][start])))
-            cpg_list.append(ConvexPolygen((bottom_point,bc[n2-2][end],bc[n2-2][start])))
+                cpg_list.append(ConvexPolygon((tc[j-1][start],tc[j-1][end],tc[j][end],tc[j][start])))
+                cpg_list.append(ConvexPolygon((bc[j-1][start],bc[j-1][end],bc[j][end],bc[j][start])))
+            cpg_list.append(ConvexPolygon((top_point,tc[n2-2][end],tc[n2-2][start])))
+            cpg_list.append(ConvexPolygon((bottom_point,bc[n2-2][end],bc[n2-2][start])))
         return cls(tuple(cpg_list))
         # return cpg_list
 
@@ -147,7 +147,7 @@ class ConvexPolyhedron(GeoBody):
         for i in range(len(top_circle_point_list)):
             start = i
             end = (i + 1) % len(top_circle_point_list)
-            cpg_list.append(ConvexPolygen((top_circle_point_list[start],top_circle_point_list[end],bottom_circle_point_list[end],bottom_circle_point_list[start])))
+            cpg_list.append(ConvexPolygon((top_circle_point_list[start],top_circle_point_list[end],bottom_circle_point_list[end],bottom_circle_point_list[start])))
         return cls(tuple(cpg_list))
 
     @classmethod
@@ -178,45 +178,45 @@ class ConvexPolyhedron(GeoBody):
         for i in range(len(circle_point_list)):
             start = i
             end = (i + 1) % len(circle_point_list)
-            cpg_list.append(ConvexPolygen((top_point,circle_point_list[start],circle_point_list[end])))
+            cpg_list.append(ConvexPolygon((top_point,circle_point_list[start],circle_point_list[end])))
         return cls(tuple(cpg_list))
 
-    def __init__(self,convex_polygens):
-        self.convex_polygens = list(copy.deepcopy(convex_polygens))
-        # self.convex_polygens = list(convex_polygens)
+    def __init__(self,convex_polygons):
+        self.convex_polygons = list(copy.deepcopy(convex_polygons))
+        # self.convex_polygons = list(convex_polygons)
         self.point_set = set()
         self.segment_set = set()
         self.pyramid_set = set()
         
-        for convex_polygen in self.convex_polygens:    
-            for point in convex_polygen.points:
+        for convex_polygon in self.convex_polygons:    
+            for point in convex_polygon.points:
                 self.point_set.add(point)
-            for segment in convex_polygen.segments():
+            for segment in convex_polygon.segments():
                 self.segment_set.add(segment)
         
         self.center_point = self._get_center_point()
 
-        for i in range(len(self.convex_polygens)):
-            convex_polygen = self.convex_polygens[i]
-            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
-                self.convex_polygens[i] = - convex_polygen
-            self.pyramid_set.add(Pyramid(convex_polygen,self.center_point,direct_call=False))
+        for i in range(len(self.convex_polygons)):
+            convex_polygon = self.convex_polygons[i]
+            if Vector(self.center_point,convex_polygon.plane.p) * convex_polygon.plane.n < -get_eps():
+                self.convex_polygons[i] = - convex_polygon
+            self.pyramid_set.add(Pyramid(convex_polygon,self.center_point,direct_call=False))
         if not self._check_normal():
             raise ValueError('Check Normal Fails For The Convex Polyhedron')
         if not self._euler_check():
-            get_main_logger().critical('V:{} E:{} F:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygens)))
+            get_main_logger().critical('V:{} E:{} F:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygons)))
             raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
 
     def _euler_check(self):
         number_points = len(self.point_set)
         number_segments = len(self.segment_set)
-        number_polygens = len(self.convex_polygens)
-        return number_points - number_segments + number_polygens == 2
+        number_polygons = len(self.convex_polygons)
+        return number_points - number_segments + number_polygons == 2
 
     def _check_normal(self):
-        """return True if all the polygens' normals point to the outside"""
-        for convex_polygen in self.convex_polygens:
-            if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
+        """return True if all the polygons' normals point to the outside"""
+        for convex_polygon in self.convex_polygons:
+            if Vector(self.center_point,convex_polygon.plane.p) * convex_polygon.plane.n < -get_eps():
                 return False
         return True
     
@@ -252,16 +252,16 @@ class ConvexPolyhedron(GeoBody):
         - Whether the polyhedron contains the point
         """
         if isinstance(other,Point):
-            for polygen in self.convex_polygens:
-                direction_vector = Vector(polygen.center_point,other)
-                if direction_vector * polygen.plane.n > get_eps():
+            for polygon in self.convex_polygons:
+                direction_vector = Vector(polygon.center_point,other)
+                if direction_vector * polygon.plane.n > get_eps():
                     return False
             return True
 
         elif isinstance(other,Segment):
             return ((other.start_point in self) and (other.end_point in self))
         
-        elif isinstance(other,ConvexPolygen):
+        elif isinstance(other,ConvexPolygon):
             for point in other.points:
                 if not point in self:
                     return False
@@ -278,40 +278,40 @@ class ConvexPolyhedron(GeoBody):
     def move(self,v):
         """Return the ConvexPolyhedron that you get when you move self by vector v, self is also moved"""
         if isinstance(v,Vector):
-            convexpolygen_list = []
-            for convexpolygen in self.convex_polygens:
-                convexpolygen_list.append(convexpolygen.move(v))
-            self.convex_polygens = tuple(convexpolygen_list)   
+            convexpolygon_list = []
+            for convexpolygon in self.convex_polygons:
+                convexpolygon_list.append(convexpolygon.move(v))
+            self.convex_polygons = tuple(convexpolygon_list)   
             self.point_set = set()
             self.segment_set = set()
             self.pyramid_set = set()
-            for convex_polygen in self.convex_polygens: 
-                for point in convex_polygen.points:
+            for convex_polygon in self.convex_polygons: 
+                for point in convex_polygon.points:
                     self.point_set.add(point)
-                for segment in convex_polygen.segments():
+                for segment in convex_polygon.segments():
                     self.segment_set.add(segment)
         
             self.center_point = self._get_center_point()
 
-            for i in range(len(self.convex_polygens)):
-                convex_polygen = self.convex_polygens[i]
-                if Vector(self.center_point,convex_polygen.plane.p) * convex_polygen.plane.n < -get_eps():
-                    self.convex_polygens[i] = - convex_polygen
-                self.pyramid_set.add(Pyramid(convex_polygen,self.center_point,direct_call=False))
+            for i in range(len(self.convex_polygons)):
+                convex_polygon = self.convex_polygons[i]
+                if Vector(self.center_point,convex_polygon.plane.p) * convex_polygon.plane.n < -get_eps():
+                    self.convex_polygons[i] = - convex_polygon
+                self.pyramid_set.add(Pyramid(convex_polygon,self.center_point,direct_call=False))
             if not self._check_normal():
                 raise ValueError('Check Normal Fails For The Convex Polyhedron')
             if not self._euler_check():
-                get_main_logger().critical('V:{} F:{} E:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygens)))
+                get_main_logger().critical('V:{} F:{} E:{}'.format(len(self.point_set),len(self.segment_set),len(self.convex_polygons)))
                 raise ValueError('Check for the number of vertices, faces and edges fails, the polyhedron may not be closed')
-            return ConvexPolyhedron(self.convex_polygens)
+            return ConvexPolyhedron(self.convex_polygons)
         else:
             raise NotImplementedError("The second parameter for move function must be Vector")
 
-    def _get_polygen_hash_sum(self):
-        """return the sum of hash value of all the ConvexPolygens"""
+    def _get_polygon_hash_sum(self):
+        """return the sum of hash value of all the ConvexPolygons"""
         hash_sum = 0
-        for polygen in self.convex_polygens:
-            hash_sum += hash(polygen)
+        for polygon in self.convex_polygons:
+            hash_sum += hash(polygon)
         return hash_sum
 
     def _get_point_hash_sum(self):
@@ -328,7 +328,7 @@ class ConvexPolyhedron(GeoBody):
         """return the hash value of the ConvexPolyhedron"""
         return hash((
             "ConvexPolyhedron",
-            round(self._get_polygen_hash_sum(),SIG_FIGURES),
+            round(self._get_polygon_hash_sum(),SIG_FIGURES),
             round(self._get_point_hash_sum(),SIG_FIGURES)
         ))
 
@@ -344,8 +344,8 @@ class ConvexPolyhedron(GeoBody):
     def area(self):
         """return the total area of the polyhedron"""
         a = 0
-        for polygen in self.convex_polygens:
-            a += polygen.area()
+        for polygon in self.convex_polygons:
+            a += polygon.area()
         return a
 
     def volume(self):
