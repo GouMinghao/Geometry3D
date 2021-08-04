@@ -131,7 +131,7 @@ class Vector(object):
 
     def orthogonal(self, other):
         """Returns true if the two vectors are orthogonal"""
-        return self * other == 0
+        return abs(self * other) < get_eps()
 
     def angle(self, other):
         """Returns the angle (in radians) enclosed by both vectors."""
