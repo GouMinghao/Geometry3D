@@ -342,6 +342,12 @@ class ConvexPolygonIntersectionTest(unittest.TestCase):
         cpg11 = Parallelogram(Point(0,0,2),Vector(1,0,-1),y_unit_vector())
         cpg12 = Parallelogram(Point(0.5,0.5,0),Vector(2,-2,0),z_unit_vector())
         self.assertEqual(intersection(cpg0,cpg12),Segment(Point(0.5,0.5,0),Point(1,0,0)))
+        cpg13 = ConvexPolygon((Point(171.76, 98.39, -36.5), Point(0.0, 0.0, -0.0), Point(171.76, 0.0, -0.0))) 
+        cpg14 = ConvexPolygon((Point(-50.0, 10.0, -86.5), Point(-50.0, 10.0, 50.0), Point(221.76, 10.0, 50.0), Point(221.76, 10.0, -86.5)))
+        self.assertEqual(intersection(cpg13,cpg14),Segment(Point(171.76, 10.0, -3.7097265982315193),Point(17.457058644171155, 10.0, -3.7097265982315193)))
+        cpg15 = ConvexPolygon((Point(61.32, 0.0, 0.58), Point(-0.21, 50.58, -28.91), Point(-0.21, 0.0, -28.91)))
+        cpg16 = ConvexPolygon((Point(-50.21, 20.0, -78.91), Point(-50.21, 20.0, 50.58), Point(111.32, 20.0, 50.58), Point(111.32, 20.0, -78.91)))
+        self.assertEqual(intersection(cpg15,cpg16),Segment(Point(36.99022538552788, 20.0, -11.08073546856465),Point(-0.21, 20.0, -28.91)))
 
     def test_intersection_convexpolygon_convexpolyhedron(self):
         cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())

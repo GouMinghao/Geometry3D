@@ -433,16 +433,29 @@ def inter_plane_plane(a,b):
         return None
     else:
         # Line
-        solution = solve([
-            list(a.n) + [a.n * a.p.pv()],
-            list(b.n) + [b.n * b.p.pv()],
-        ])
-        if not solution:
-            raise TypeError("Bug detected! please contact the author")
-        # get_main_logger().debug('solution:{}'.format(solution()))
-        # Choose two arbitrary points/solutions
-        p1, p2 = Point(solution(1)), Point(solution(2))
-        return Line(p1.pv(), p2.pv() - p1.pv())
+        line_v = a.n.cross(b.n).normalized()
+        aux_line = Line(a.p, line_v.cross(a.n).normalized())
+        line_p = inter_line_plane(aux_line, b)
+        return Line(line_p, line_v)
+        # solution = solve([
+        #     list(a.n) + [a.n * a.p.pv()],
+        #     list(b.n) + [b.n * b.p.pv()],
+        # ])
+        # if not solution:
+        #     raise TypeError("Bug detected! please contact the author")
+        # # get_main_logger().debug('solution:{}'.format(solution()))
+        # # Choose two arbitrary points/solutions
+        # print('solution 1, solution 2', solution(1), solution(2))
+        # p1_c, p2_c = list(solution(1)), list(solution(2))
+        # for i in range(3):
+        #     if p1_c[i] is None and p2_c[i] is None:
+        #         p1_c[i] = 0
+        #         p2_c[i] = 1
+        #     elif p1_c[i] is None or p2_c[i] is None:
+        #         raise ValueError("Bug detected! please contact the author")
+        # p1, p2 = Point(p1_c), Point(p2_c)
+        # print('p1, p2', p1, p2)
+        # return Line(p1.pv(), p2.pv() - p1.pv())
 
 def inter_plane_segment(a,b):
     '''Input:
