@@ -7,7 +7,7 @@ def read(name):
 
 setup(
         name="Geometry3D",
-        version="0.2.3",
+        version="0.2.4",
 
         description="A 3D Geometry Lib",
         long_description=read("README.md"),
