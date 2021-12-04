@@ -70,7 +70,7 @@ class Vector(object):
         return "Vector({}, {}, {})".format(*self._v)
     
     def __eq__(self, other):
-        return (self._v == other._v)
+        return abs(self._v[0] - other._v[0]) < get_eps() and abs(self._v[1] - other._v[1]) < get_eps() and abs(self._v[2] - other._v[2]) < get_eps()
 
     def __add__(self, other):
         return Vector(x+y for x, y in zip(self, other))
@@ -127,7 +127,7 @@ class Vector(object):
         if self == other:
             return True
 
-        return abs(abs(self * other) - self.length() * other.length()) < get_eps() 
+        return abs(abs(self * other) - self.length() * other.length()) < get_eps() * self.length()
 
     def orthogonal(self, other):
         """Returns true if the two vectors are orthogonal"""

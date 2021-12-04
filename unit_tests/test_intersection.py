@@ -348,7 +348,10 @@ class ConvexPolygonIntersectionTest(unittest.TestCase):
         cpg15 = ConvexPolygon((Point(61.32, 0.0, 0.58), Point(-0.21, 50.58, -28.91), Point(-0.21, 0.0, -28.91)))
         cpg16 = ConvexPolygon((Point(-50.21, 20.0, -78.91), Point(-50.21, 20.0, 50.58), Point(111.32, 20.0, 50.58), Point(111.32, 20.0, -78.91)))
         self.assertEqual(intersection(cpg15,cpg16),Segment(Point(36.99022538552788, 20.0, -11.08073546856465),Point(-0.21, 20.0, -28.91)))
-
+        cpg17 = ConvexPolygon((Point(156.05, 0.0, -1189.0), Point(156.05, 1000.0, -122.42), Point(156.05, 0.0, -122.42)))
+        cpg18 = ConvexPolygon((Point(106.05000000000001, 330.0, -1239.0), Point(106.05000000000001, 330.0, -72.42), Point(206.05, 330.0, -72.42), Point(206.05, 330.0, -1239.0)))
+        self.assertEqual(intersection(cpg17,cpg18), Segment(Point(156.05, 330.0, -837.0286), Point(156.05, 330.0, -122.42000000000007)))
+        
     def test_intersection_convexpolygon_convexpolyhedron(self):
         cph = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
         cpg0 = Parallelogram(origin(),x_unit_vector(),y_unit_vector())
