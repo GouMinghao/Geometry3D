@@ -23,7 +23,7 @@ This library focuses on the functions and lacks efficiency which might be improv
 ![pic4](pic4.png)
 
 
-Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
+Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really interesting.
 
 ## Requirements
 

@@ -1,12 +1,13 @@
-"""Matplotlib Renderer Module"""
+"""Matplotlib Visualizer Module"""
 from ..geometry.point import Point
 from ..geometry.segment import Segment
 from ..geometry.polygon import ConvexPolygon
 from ..geometry.polyhedron import ConvexPolyhedron
 from .arrow import Arrow
 from ..utils.logger import get_main_logger
-class MatplotlibRenderer():
-    """ Renderer module to visualize geometries"""
+
+class MatplotlibVisualizer():
+    """ Visualizer module to visualize geometries"""
     def __init__(self):
         """
         **Input:**
@@ -17,6 +18,7 @@ class MatplotlibRenderer():
         self.point_set = set()
         self.segment_set = set()
         self.arrow_set = set()
+        
     def show(self):
         """
         Draw the image

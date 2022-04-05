@@ -2,7 +2,8 @@ from .utils import *
 from .geometry import *
 from .calc import *
 from .render import *
-__version__ = '0.2.4'
+from .visualization import *
+__version__ = '0.3.0'
 __all__ = (
     "ConvexPolyhedron",
     "Parallelepiped",
@@ -27,6 +28,7 @@ __all__ = (
     "solve",
     "volume",
     "Renderer",
+    "Visualizer",
     "origin",
     "x_axis",
     "y_axis",

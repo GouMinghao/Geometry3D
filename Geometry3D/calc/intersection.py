@@ -97,7 +97,7 @@ def intersection(a, b):
         return inter_plane_segment(b,a)
     elif isinstance(a, Plane) and isinstance(b, ConvexPolygon):
         return inter_plane_convexpolygon(a,b)
-    elif isinstance(a, ConvexPolygon) and isinstance(a, Plane):
+    elif isinstance(a, ConvexPolygon) and isinstance(b, Plane):
         return inter_plane_convexpolygon(b,a)
     elif isinstance(a, Plane) and isinstance(b, ConvexPolyhedron):
         return inter_plane_convexpolyhedron(a,b)

@@ -1,0 +1,10 @@
+from Geometry3D import *
+cpg1 = ConvexPolygon((Point(1350.16, 665.0, 2095.33), Point(1350.16, 0.0, 1487.0), Point(1350.16, 665.0, 1487.0)))
+cpg2 = ConvexPolygon((Point(1300.16, 200.0, 1437.0), Point(1300.16, 200.0, 2145.33), Point(1400.16, 200.0, 2145.33), Point(1400.16, 200.0, 1437.0)))
+inter = intersection(cpg1, cpg2)
+print(inter)
+vis = Visualizer()
+vis.add((cpg1,'b',1))
+vis.add((cpg2,'r',1))
+vis.add((inter,'g',2))
+vis.show()

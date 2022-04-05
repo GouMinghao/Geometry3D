@@ -226,7 +226,7 @@ class ConvexPolygon(GeoBody):
 
     def __contains__(self, other):
         """Checks if a point or segment lies in a ConvexPolygon"""
-        if isinstance(other,Point):
+        if isinstance(other, Point):
             r1 = other in self.plane
             # requirement 1: the point is on the plane
             the_normal = self.plane.n.normalized()
@@ -248,7 +248,7 @@ class ConvexPolygon(GeoBody):
                     break
             return r1 and r2
         
-        elif isinstance(other,Segment):
+        elif isinstance(other, Segment):
             return (other.start_point in self) and (other.end_point in self)
         else:
             return NotImplementedError("")
@@ -312,7 +312,7 @@ class ConvexPolygon(GeoBody):
 
     def __neg__(self):
         """return the negative ConvexPolygon by reverting the normal"""
-        return ConvexPolygon(self.points,reverse=True)
+        return ConvexPolygon(self.points, reverse=True)
 
     def length(self):
         """return the total length of ConvexPolygon""" 
