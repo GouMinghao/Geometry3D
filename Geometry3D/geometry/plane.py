@@ -6,6 +6,10 @@ from .line import Line
 from ..utils.solver import solve
 from ..utils.vector import Vector,x_unit_vector,y_unit_vector,z_unit_vector
 from ..utils.constant import *
+
+class InvalidPlane(ValueError):
+    pass
+
 class Plane(GeoBody):
     """
     - Plane(Point, Point, Point):
@@ -63,6 +67,8 @@ class Plane(GeoBody):
             # (the length doesn't matter) so we just use the cross
             # product
             vec = vab.cross(vac)
+            if vec.length() == 0:
+                raise InvalidPlane('%s x %s == 0' % (vab, vac))
             self._init_pn(a, vec)
         elif len(args) == 2:
             self._init_pn(*args)
