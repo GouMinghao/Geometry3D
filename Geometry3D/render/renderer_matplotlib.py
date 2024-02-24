@@ -24,7 +24,7 @@ class MatplotlibRenderer():
         from matplotlib import pyplot as plt
         from mpl_toolkits.mplot3d import Axes3D
         fig = plt.figure()
-        ax = Axes3D(fig)
+        ax = fig.add_subplot(projection='3d') 
         get_main_logger().info('Showing geometries with %d points, %d segments, %d arrows using matplotlib' %(len(self.point_set),len(self.segment_set),len(self.arrow_set)))
         for point_tuple in self.point_set:
             point = point_tuple[0]
