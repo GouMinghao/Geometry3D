@@ -5,12 +5,13 @@ from .point import Point
 from ..utils.vector import Vector
 from .line import Line
 from .segment import Segment
-from .plane import Plane
+from .plane import Plane, InvalidPlane
 from ..utils.constant import *
 from ..utils.vector import x_unit_vector,y_unit_vector
 
 import copy
 import math
+from itertools import combinations
 
 def get_circle_point_list(center,normal,radius,n=10):
     if n <= 2:
@@ -123,10 +124,14 @@ class ConvexPolygon(GeoBody):
         self.points = sorted(set(points),key=points.index)
         if len(points) < 3:
             raise ValueError('Cannot build a polygon with number of points smaller than 3')
+        for triple in combinations(self.points, 3):
+            try:
+                self.plane = Plane(*triple)
+                break
+            except InvalidPlane as ex:
+                pass  # These 3 points lie on the same line; try the next triple.
         if reverse:
-            self.plane = -Plane(self.points[0],self.points[1],self.points[2])
-        else:
-            self.plane = Plane(self.points[0],self.points[1],self.points[2])
+            self.plane = -self.plane
     
         self.center_point = self._get_center_point()
 
