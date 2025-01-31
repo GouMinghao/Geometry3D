@@ -36,7 +36,7 @@ Build-In Functions
     >>> s2 in cpg
     False
     >>> 
-    >>> r=Renderer()
+    >>> r=Visualizer()
     >>> r.add((a,'r',10))
     >>> r.add((b,'r',10))
     >>> r.add((c,'r',10))

@@ -12,7 +12,8 @@ This library focuses on the functions and lacks efficiency which might be improv
 - Basic Attributes Of Geometries: length, area, volume.
 - Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
-- A Naive Renderer Using `matplotlib`.
+- A Naive Visualizer Using `matplotlib`.
+- A Naive Visualizer Using `open3d`.
 
 ![pic1](pic1.png)
 
@@ -23,13 +24,14 @@ This library focuses on the functions and lacks efficiency which might be improv
 ![pic4](pic4.png)
 
 
-Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really humorous.
+Some of the code comes from [sgl](https://github.com/Kingdread/sgl) whose author is really interesting.
 
 ## Requirements
 
 * [Python](http://www.python.org) 3 
 * No additional third-party library is required, it's written in pure python and standard library. 
-* Matplotlib is needed if you want to use the renderer.
+* Matplotlib is needed if you want to use the matplotlib Visualizer.
+* Numpy and Open3d is needed if you want to use the open3d Visualizer.
 
 ## Documentation
 

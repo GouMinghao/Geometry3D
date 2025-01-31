@@ -12,13 +12,13 @@ Simply run the code below after installation::
     >>> s1 = Cylinder(Point(-2 * radius,0,0),radius,4*radius * x_unit_vector(),n=40)
     >>> s2 = Cylinder(Point(0,-2 * radius,0),radius,4*radius * y_unit_vector(),n=40)
     >>> s3 = intersection(s1,s2)
-    >>> r = Renderer()
+    >>> r = Visualizer()
     >>> r.add((s1,'r',1))
     >>> r.add((s2,'b',1))
     >>> r.add((s3,'y',5))
     >>> r.show()
     >>> 
-    >>> r2 = Renderer()
+    >>> r2 = Visualizer()
     >>> r2.add((s3,'y',1))
     >>> r2.show()
     >>> import math

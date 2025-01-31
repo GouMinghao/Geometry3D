@@ -14,6 +14,7 @@ from .acute import acute
 from .angle import angle, parallel, orthogonal
 from .intersection import intersection
 
+
 def distance(a, b):
     """
     **Input:**
@@ -25,15 +26,15 @@ def distance(a, b):
     **Output:**
 
     Returns the distance between two objects. This includes
-    
+
     - Point/Point
-    
+
     - Line/Point
-    
+
     - Line/Line
-    
+
     - Plane/Point
-    
+
     - Plane/Line
     """
     if isinstance(a, Point) and isinstance(b, Point):
@@ -90,6 +91,9 @@ def distance(a, b):
     elif isinstance(a, Plane) and isinstance(b, Line):
         return distance(b, a)
     else:
-        raise NotImplementedError("Not implemented distance between {} and {}".format(type(a),type(b)))
+        raise NotImplementedError(
+            "Not implemented distance between {} and {}".format(type(a), type(b))
+        )
 
-__all__ = ('distance',)
+
+__all__ = ("distance",)

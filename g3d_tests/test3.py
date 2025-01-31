@@ -1,6 +1,6 @@
 from Geometry3D import *
 import copy
-r = Renderer()
+r = Visualizer()
 cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
 cph4 = Parallelepiped(Point(0.5,0.5,0.8),Vector(0,-1,1),Vector(0,1,1),Vector(1,0,1))
 r.add((cph0,'b',1),normal_length = 0.5)

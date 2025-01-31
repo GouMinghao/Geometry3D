@@ -84,7 +84,7 @@ logger.info('calculate volume time:%f' %(t9 - t8,))
 # t2 = time.time()
 
 logger.critical('total time:{}'.format(t9 - t1))
-r = Renderer()
+r = Visualizer(backend="matplotlib")
 r.add((cph0,'r',1),normal_length = 0)
 r.add((cph1,'r',1),normal_length = 0)
 r.add((cph2,'g',1),normal_length = 0)
@@ -93,6 +93,15 @@ r.add((cph4,'y',3),normal_length = 0.5)
 
 
 r.show()
+
+r_o3d = Visualizer(backend="open3d")
+r_o3d.add((cph0, (1, 0, 0), 0.02),normal_length = 0)
+r_o3d.add((cph1, (1, 0, 0), 0.02),normal_length = 0)
+r_o3d.add((cph2, (0, 1, 0), 0.02),normal_length = 0)
+r_o3d.add((cph3, (0, 0, 1), 0.02),normal_length = 0.5)
+r_o3d.add((cph4, (1, 0, 1), 0.02),normal_length = 0.5)
+
+r_o3d.show()
 
 # cp1 = ConvexPolygon((d,c,b))
 # print(cp1.area)
@@ -137,7 +146,7 @@ r.show()
 # s1 in cpg
 # s2 in cpg
 
-# r=Renderer()
+# r=Visualizer()
 # r.add((a,'r',10))
 # r.add((b,'r',10))
 # r.add((c,'r',10))

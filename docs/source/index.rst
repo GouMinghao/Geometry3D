@@ -39,7 +39,7 @@ Python API
 
    Geometry3D.calc
    Geometry3D.geometry
-   Geometry3D.render
+   Geometry3D.visualization
    Geometry3D.utils
 
 

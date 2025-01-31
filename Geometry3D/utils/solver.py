@@ -2,16 +2,21 @@
 """Solver Module, An Auxilary Module"""
 from __future__ import division
 from .constant import get_eps
+
+
 def shape(m):
     if not m:
         return (0, 0)
     return (len(m), len(m[0]))
 
+
 def null(f):
     return abs(f) < get_eps()
 
+
 def nullrow(r):
     return all(map(null, r))
+
 
 def find_pivot_row(m):
     candidates = []
@@ -24,12 +29,13 @@ def find_pivot_row(m):
     # We use the one with the biggest absolute value
     return max(candidates)[1]
 
+
 def gaussian_elimination(m):
     """Return the row echelon form of m by applying the gaussian
     elimination"""
     # Shape of the matrix
     M, N = shape(m)
-    for j in range(N-1):
+    for j in range(N - 1):
         # We ignore everything above the jth row and everything left of
         # the jth column (we assume they are 0 already)
         pivot = find_pivot_row([row[j:] for row in m[j:]])
@@ -53,9 +59,11 @@ def gaussian_elimination(m):
     # m shold now be in row echelon form
     return m
 
+
 def solve(matrix):
     ref = gaussian_elimination(matrix)
     return Solution(ref)
+
 
 def count(f, l):
     c = 0
@@ -64,11 +72,13 @@ def count(f, l):
             c += 1
     return c
 
+
 def index(f, l):
     for i, v in enumerate(l):
         if f(v):
             return i
     raise ValueError("No item satisfies {}".format(f))
+
 
 def first_nonzero(r):
     for i, v in enumerate(r):
@@ -76,30 +86,31 @@ def first_nonzero(r):
             return i
     return len(r)
 
+
 class Solution(object):
     """Holds a solution to a system of equations."""
+
     def __init__(self, s):
         self._s = s
         self.varcount = shape(s)[1] - 1
         # No solution, 0a + 0b + 0c + ... = 1 which can never be true
         self._solvable = not any(
-            all(null(coeff) for coeff in row[:-1]) and not null(row[-1])
-            for row in s
+            all(null(coeff) for coeff in row[:-1]) and not null(row[-1]) for row in s
         )
         unique_equations = sum(1 for row in s if not nullrow(row))
         self.varargs = self.varcount - unique_equations
-        self.exact =  self.varargs == 0
+        self.exact = self.varargs == 0
 
     def __bool__(self):
         return self._solvable
+
     __nonzero__ = __bool__
 
     def __call__(self, *v):
         if not self._solvable:
             raise ValueError("Has no solution")
         if len(v) != self.varargs:
-            raise ValueError("Expected {} values, got {}".format(
-                self.varargs, len(v)))
+            raise ValueError("Expected {} values, got {}".format(self.varargs, len(v)))
         v = list(v)
         vals = [None] * self.varcount
         # Scan for real solutions

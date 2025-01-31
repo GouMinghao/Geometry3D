@@ -128,7 +128,7 @@ Example 1::
     >>> cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
     >>> p = Plane(Point(0.5,0.5,0.5),Vector(1,1,1))
     >>> cpg = intersection(cph0,p)
-    >>> r = Renderer()
+    >>> r = Visualizer()
     >>> r.add((cph0,'r',1),normal_length = 0)
     >>> r.add((cpg,'b',1),normal_length=0)
     >>> r.show()
@@ -139,7 +139,7 @@ Example 2::
 
     >>> from Geometry3D import *
     >>> import copy
-    >>> r = Renderer()
+    >>> r = Visualizer()
     >>> cph0 = Parallelepiped(origin(),x_unit_vector(),y_unit_vector(),z_unit_vector())
     >>> cph6 = Parallelepiped(origin(),2 * x_unit_vector(),2 * y_unit_vector(),2 * z_unit_vector())
     >>> r.add((cph0,'b',1),normal_length = 0.5)
@@ -191,7 +191,7 @@ Example 3::
     >>> cph3 = intersection(cph0,cph2)
     >>> 
     >>> cph4 = intersection(cph1,cph2)
-    >>> r = Renderer()
+    >>> r = Visualizer()
     >>> r.add((cph0,'r',1),normal_length = 0)
     >>> r.add((cph1,'r',1),normal_length = 0)
     >>> r.add((cph2,'g',1),normal_length = 0)

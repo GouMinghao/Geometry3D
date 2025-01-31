@@ -1,10 +1,6 @@
 Installation
 ============
 
-.. note::
-    
-    Tested on Linux and Windows at the moment.
-
 Prerequisites
 -------------
 

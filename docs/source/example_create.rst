@@ -236,7 +236,7 @@ Inscribed convex polygon and convex polyhedron of circle, cylinder, sphere, cone
     >>> b = Circle(origin(),y_unit_vector(),10,20)
     >>> a = Circle(origin(),x_unit_vector(),10,20)
     >>> c = Circle(origin(),z_unit_vector(),10,20)
-    >>> r = Renderer()
+    >>> r = Visualizer()
     >>> r.add((a,'g',3))
     >>> r.add((b,'b',3))
     >>> r.add((c,'r',3))
