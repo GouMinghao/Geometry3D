@@ -275,7 +275,6 @@ class ConvexPolygon(GeoBody):
                     r2 = False
                     break
             return r1 and r2
-
         elif isinstance(other, Segment):
             return (other.start_point in self) and (other.end_point in self)
         else:

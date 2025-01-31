@@ -2,12 +2,12 @@ import open3d as o3d
 import numpy as np
 
 from ..utils.logger import get_main_logger
-from .baserenderer import BaseRenderer
+from .base_visualizer import BaseVisualizer
 
 
-class Open3dRenderer(BaseRenderer):
+class Open3dVisualizer(BaseVisualizer):
     def __init__(self):
-        super(Open3dRenderer, self).__init__()
+        super(Open3dVisualizer, self).__init__()
 
     def show(self):
         """

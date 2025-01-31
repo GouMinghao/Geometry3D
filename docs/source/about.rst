@@ -12,7 +12,7 @@ Core Features
 - Basic Attributes Of Geometries: length, area, volume.
 - Basic Relationships And Operations Between Geometries: move, angle, parallel, orthogonal, intersection.
 - Overload Build-In Functions Such As `__contains__`, `__hash__`, `__eq__`, `__neg__`.
-- A Naive Renderer Using `matplotlib`.
+- A Naive Visualizer Using `matplotlib`.
 
 Resources
 ---------

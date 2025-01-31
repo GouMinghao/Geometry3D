@@ -7,7 +7,7 @@ plane2 = ConvexPolygon((Point(-50.21, 20.0, -78.91), Point(-50.21, 20.0, 50.58),
 inter = intersection(plane1,plane2)
 print(inter)
 
-r = Renderer()
+r = Visualizer()
 r.add((plane1, 'r',2))
 r.add((plane2, 'b',2),normal_length = 0)
 r.add((inter, 'g', 5))

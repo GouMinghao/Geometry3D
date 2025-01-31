@@ -1,16 +1,16 @@
-"""Matplotlib Renderer Module"""
+"""Matplotlib Visualizer Module"""
 
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from ..utils.logger import get_main_logger
-from .baserenderer import BaseRenderer
+from .base_visualizer import BaseVisualizer
 
 
-class MatplotlibRenderer(BaseRenderer):
-    """Renderer module to visualize geometries"""
+class MatplotlibVisualizer(BaseVisualizer):
+    """Visualizer module to visualize geometries"""
 
     def __init__(self):
-        super(MatplotlibRenderer, self).__init__()
+        super(MatplotlibVisualizer, self).__init__()
 
     def show(self):
         """

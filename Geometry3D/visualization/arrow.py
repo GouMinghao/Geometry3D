@@ -1,4 +1,4 @@
-"""Arrow Module for Renderer"""
+"""Arrow Module for Visualizer"""
 
 from ..utils.constant import get_eps, get_sig_figures
 

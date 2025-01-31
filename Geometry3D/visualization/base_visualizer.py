@@ -5,7 +5,7 @@ from ..geometry.polyhedron import ConvexPolyhedron
 from .arrow import Arrow
 
 
-class BaseRenderer(object):
+class BaseVisualizer(object):
     def __init__(self):
         """
         **Input:**

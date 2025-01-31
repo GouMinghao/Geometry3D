@@ -1,4 +1,4 @@
-Renderer Examples
+Visualizer Examples
 =================
 
 Creating Geometries
@@ -16,10 +16,10 @@ Creating Geometries
     >>> 
     >>> cph = Parallelepiped(Point(-1.5,-1.5,-1.5),Vector(2,0,0),Vector(0,2,0),Vector(0,0,2))
 
-Getting a Renderer with matplotlib backend
+Getting a Visualizer with matplotlib backend
 ------------------
 
-    >>> r = Renderer(backend='matplotlib')
+    >>> r = Visualizer(backend='matplotlib')
 
 Adding Geometries
 -----------------
@@ -37,10 +37,10 @@ Displaying Geometries
 
 .. image:: _static/p1.png
 
-Getting a Renderer with open3d backend
+Getting a Visualizer with open3d backend
 ------------------
 
-    >>> r_o3d = Renderer(backend="open3d")
+    >>> r_o3d = Visualizer(backend="open3d")
 
 Adding Geometries
 -----------------
