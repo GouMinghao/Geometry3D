@@ -3,19 +3,20 @@
 from decimal import Decimal
 from fractions import Fraction
 
+
 def unify_types(items):
     """Promote all items to the same type. The resulting type is the
     "most valueable" that an item already has as defined by the list
     (top = least valueable):
-    
+
     - int
-    
+
     - float
-    
+
     - decimal.Decimal
-    
+
     - fractions.Fraction
-    
+
     - user defined
     """
     type_values = {
@@ -34,4 +35,3 @@ def unify_types(items):
             types.append((0, type(item)))
     result_type = min(types)[1]
     return [result_type(i) for i in items]
-

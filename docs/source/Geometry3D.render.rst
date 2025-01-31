@@ -12,6 +12,14 @@ Geometry3D.render.arrow module
    :undoc-members:
    :show-inheritance:
 
+Geometry3D.render.baserenderer module
+-------------------------------------
+
+.. automodule:: Geometry3D.render.baserenderer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Geometry3D.render.renderer module
 ---------------------------------
 
@@ -24,6 +32,14 @@ Geometry3D.render.renderer\_matplotlib module
 ---------------------------------------------
 
 .. automodule:: Geometry3D.render.renderer_matplotlib
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Geometry3D.render.renderer\_open3d module
+-----------------------------------------
+
+.. automodule:: Geometry3D.render.renderer_open3d
    :members:
    :undoc-members:
    :show-inheritance:
