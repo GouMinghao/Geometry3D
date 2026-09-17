@@ -12,7 +12,7 @@ from math import pi, log10
 
 # epsilon to compare if two float numbers equal to each other
 
-SIG_FIGURES = 10
+SIG_FIGURES = 6
 FLOAT_EPS = 1 / (10**SIG_FIGURES)
 
 
